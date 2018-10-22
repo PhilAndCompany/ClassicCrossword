@@ -1,6 +1,6 @@
 ﻿namespace ClassicCrossword
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -28,12 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.GridPanel = new System.Windows.Forms.Panel();
+            this.SuspendLayout();
+            // 
+            // GridPanel
+            // 
+            this.GridPanel.Location = new System.Drawing.Point(38, 12);
+            this.GridPanel.Name = "GridPanel";
+            this.GridPanel.Size = new System.Drawing.Size(467, 397);
+            this.GridPanel.TabIndex = 0;
+            // 
+            // MainForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(577, 453);
+            this.Controls.Add(this.GridPanel);
+            this.Name = "MainForm";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Panel GridPanel;
     }
 }
 
