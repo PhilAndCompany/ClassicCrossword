@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClassicCrossword
@@ -35,6 +30,7 @@ namespace ClassicCrossword
             {
                 var words = word[i].Split(' ')[0]; //удалить все что после слова
                 wordsListView.Items.Add(words);
+                wordsList.Add(words);
             }
 
             string[] question = File.ReadAllLines("Glavny.dict", Encoding.GetEncoding("windows-1251")).Take(10).ToArray();
@@ -42,6 +38,7 @@ namespace ClassicCrossword
             {
                 var questions = question[i].Substring(question[i].IndexOf(' ')); //удалить с пробелом все что до вопроса
                 questionsListView.Items.Add(questions);
+                questionsList.Add(questions);
             }
         }
 
