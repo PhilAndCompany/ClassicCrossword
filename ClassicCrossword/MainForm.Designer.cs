@@ -43,44 +43,48 @@
             // 
             this.GridPanel.Location = new System.Drawing.Point(22, 31);
             this.GridPanel.Name = "GridPanel";
-            this.GridPanel.Size = new System.Drawing.Size(467, 397);
+            this.GridPanel.Size = new System.Drawing.Size(467, 438);
             this.GridPanel.TabIndex = 0;
             // 
             // wordsListView
             // 
+            this.wordsListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.wordsListView.Location = new System.Drawing.Point(495, 31);
             this.wordsListView.Name = "wordsListView";
-            this.wordsListView.Size = new System.Drawing.Size(148, 312);
+            this.wordsListView.Size = new System.Drawing.Size(110, 352);
             this.wordsListView.TabIndex = 1;
             this.wordsListView.UseCompatibleStateImageBehavior = false;
+            this.wordsListView.View = System.Windows.Forms.View.Tile;
             // 
             // questionsListView
             // 
+            this.questionsListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.questionsListView.Location = new System.Drawing.Point(649, 31);
             this.questionsListView.Name = "questionsListView";
-            this.questionsListView.Size = new System.Drawing.Size(146, 312);
+            this.questionsListView.Size = new System.Drawing.Size(336, 351);
             this.questionsListView.TabIndex = 2;
             this.questionsListView.UseCompatibleStateImageBehavior = false;
+            this.questionsListView.View = System.Windows.Forms.View.Tile;
             // 
             // wordsTextBox
             // 
-            this.wordsTextBox.Location = new System.Drawing.Point(495, 349);
+            this.wordsTextBox.Location = new System.Drawing.Point(495, 389);
             this.wordsTextBox.Name = "wordsTextBox";
-            this.wordsTextBox.Size = new System.Drawing.Size(148, 20);
+            this.wordsTextBox.Size = new System.Drawing.Size(126, 20);
             this.wordsTextBox.TabIndex = 3;
             // 
             // questionsTextBox
             // 
-            this.questionsTextBox.Location = new System.Drawing.Point(650, 348);
+            this.questionsTextBox.Location = new System.Drawing.Point(650, 388);
             this.questionsTextBox.Name = "questionsTextBox";
-            this.questionsTextBox.Size = new System.Drawing.Size(146, 20);
+            this.questionsTextBox.Size = new System.Drawing.Size(335, 20);
             this.questionsTextBox.TabIndex = 4;
             // 
             // addwordButton
             // 
-            this.addwordButton.Location = new System.Drawing.Point(495, 375);
+            this.addwordButton.Location = new System.Drawing.Point(494, 415);
             this.addwordButton.Name = "addwordButton";
-            this.addwordButton.Size = new System.Drawing.Size(148, 23);
+            this.addwordButton.Size = new System.Drawing.Size(127, 23);
             this.addwordButton.TabIndex = 5;
             this.addwordButton.Text = "Добавить слово";
             this.addwordButton.UseVisualStyleBackColor = true;
@@ -88,9 +92,9 @@
             // 
             // deletewordButton
             // 
-            this.deletewordButton.Location = new System.Drawing.Point(496, 405);
+            this.deletewordButton.Location = new System.Drawing.Point(495, 445);
             this.deletewordButton.Name = "deletewordButton";
-            this.deletewordButton.Size = new System.Drawing.Size(147, 23);
+            this.deletewordButton.Size = new System.Drawing.Size(126, 23);
             this.deletewordButton.TabIndex = 6;
             this.deletewordButton.Text = "Удалить слово";
             this.deletewordButton.UseVisualStyleBackColor = true;
@@ -98,7 +102,7 @@
             // 
             // addquestionButton
             // 
-            this.addquestionButton.Location = new System.Drawing.Point(650, 374);
+            this.addquestionButton.Location = new System.Drawing.Point(649, 414);
             this.addquestionButton.Name = "addquestionButton";
             this.addquestionButton.Size = new System.Drawing.Size(145, 23);
             this.addquestionButton.TabIndex = 7;
@@ -108,7 +112,7 @@
             // 
             // deletequestionButton
             // 
-            this.deletequestionButton.Location = new System.Drawing.Point(650, 405);
+            this.deletequestionButton.Location = new System.Drawing.Point(649, 445);
             this.deletequestionButton.Name = "deletequestionButton";
             this.deletequestionButton.Size = new System.Drawing.Size(145, 23);
             this.deletequestionButton.TabIndex = 8;
@@ -120,7 +124,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(807, 466);
+            this.ClientSize = new System.Drawing.Size(999, 502);
             this.Controls.Add(this.deletequestionButton);
             this.Controls.Add(this.addquestionButton);
             this.Controls.Add(this.deletewordButton);
