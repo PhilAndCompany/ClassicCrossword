@@ -133,16 +133,6 @@ namespace ClassicCrossword.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap listed_items {
-            get {
-                object obj = ResourceManager.GetObject("listed-items", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap page_with_one_curled_corner {
             get {
                 object obj = ResourceManager.GetObject("page-with-one-curled-corner", resourceCulture);

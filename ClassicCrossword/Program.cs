@@ -16,7 +16,9 @@ namespace ClassicCrossword
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new StartWindow());
+            Application.Run(new RegistrationWindow());
+            Application.Run(new UserWindow());
         }
     }
 }
