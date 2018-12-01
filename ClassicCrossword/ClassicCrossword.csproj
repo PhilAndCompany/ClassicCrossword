@@ -55,6 +55,24 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegistrationWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegistrationWindow.Designer.cs">
+      <DependentUpon>RegistrationWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StartWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StartWindow.Designer.cs">
+      <DependentUpon>StartWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserWindow.Designer.cs">
+      <DependentUpon>UserWindow.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -66,7 +84,17 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="RegistrationWindow.resx">
+      <DependentUpon>RegistrationWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StartWindow.resx">
+      <DependentUpon>StartWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserWindow.resx">
+      <DependentUpon>UserWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -79,6 +107,54 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page-with-one-curled-corner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gramophone-record.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\favourite-star.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\checkered.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\file-inbox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pair-of-glases.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\text-box-tool.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\text-alphabet-a.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\printer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\watch-dark-eye.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\question-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\listed-items.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\create-list-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\information-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\personal-avatar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button-on-off.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
