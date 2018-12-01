@@ -99,5 +99,42 @@ namespace ClassicCrossword
                 questionsList.RemoveAt(questionsList.Count - 1);
             }
         }
+
+        void GenerateCrossword()
+        {
+            List<char> temp1 = new List<char>();
+            List<char> temp2 = new List<char>(); 
+            for (int i = 0; i < wordsList.Count-1; i++)
+            {
+               // Array wordlistik = wordsList.ToArray();
+                temp1 = wordsList[0].ToList();
+                temp2 = wordsList[1].ToList();
+
+                if (temp1[i] == temp2[i]) // справниваем списки
+                {
+                    temp2.RemoveAt(i); // удалить совпадение по букве во втором списке
+                    break; // при первом нахождении брэйк
+                }
+             }
+
+            for (var i = 3; i < temp1.Count; i++)
+                {
+                    for (var j = 0; j < temp1.Count; j++)
+                    {
+                        Grid.GridArray[i,j].Text = temp1[j].ToString();
+                    }
+                break;
+                }
+
+            for (var i = 0; i < temp2.Count; i++)
+            {
+                Grid.GridArray[i + 4, 0].Text = temp2[i].ToString();
+            }
+        }
+
+        private void generatecrosswordButton_Click(object sender, EventArgs e)
+        {
+            GenerateCrossword();
+        }
     }
 }

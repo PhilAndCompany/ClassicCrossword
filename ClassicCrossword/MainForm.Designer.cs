@@ -37,6 +37,7 @@
             this.deletewordButton = new System.Windows.Forms.Button();
             this.addquestionButton = new System.Windows.Forms.Button();
             this.deletequestionButton = new System.Windows.Forms.Button();
+            this.generatecrosswordButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // GridPanel
@@ -120,11 +121,22 @@
             this.deletequestionButton.UseVisualStyleBackColor = true;
             this.deletequestionButton.Click += new System.EventHandler(this.deletequestionButton_Click);
             // 
+            // generatecrosswordButton
+            // 
+            this.generatecrosswordButton.Location = new System.Drawing.Point(821, 423);
+            this.generatecrosswordButton.Name = "generatecrosswordButton";
+            this.generatecrosswordButton.Size = new System.Drawing.Size(132, 45);
+            this.generatecrosswordButton.TabIndex = 9;
+            this.generatecrosswordButton.Text = "Сгенерировать кроссворд";
+            this.generatecrosswordButton.UseVisualStyleBackColor = true;
+            this.generatecrosswordButton.Click += new System.EventHandler(this.generatecrosswordButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(999, 502);
+            this.Controls.Add(this.generatecrosswordButton);
             this.Controls.Add(this.deletequestionButton);
             this.Controls.Add(this.addquestionButton);
             this.Controls.Add(this.deletewordButton);
@@ -153,6 +165,7 @@
         private System.Windows.Forms.Button deletewordButton;
         private System.Windows.Forms.Button addquestionButton;
         private System.Windows.Forms.Button deletequestionButton;
+        private System.Windows.Forms.Button generatecrosswordButton;
     }
 }
 
