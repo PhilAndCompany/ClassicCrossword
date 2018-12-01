@@ -127,7 +127,7 @@
             this.generatecrosswordButton.Name = "generatecrosswordButton";
             this.generatecrosswordButton.Size = new System.Drawing.Size(132, 45);
             this.generatecrosswordButton.TabIndex = 9;
-            this.generatecrosswordButton.Text = "Сгенерировать";
+            this.generatecrosswordButton.Text = "Сгенерировать кроссворд";
             this.generatecrosswordButton.UseVisualStyleBackColor = true;
             this.generatecrosswordButton.Click += new System.EventHandler(this.generatecrosswordButton_Click);
             // 
