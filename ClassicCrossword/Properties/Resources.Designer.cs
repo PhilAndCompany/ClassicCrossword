@@ -63,6 +63,16 @@ namespace ClassicCrossword.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap big_trash_container_from_side_view {
+            get {
+                object obj = ResourceManager.GetObject("big-trash-container-from-side-view", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap button_on_off {
             get {
                 object obj = ResourceManager.GetObject("button-on-off", resourceCulture);
@@ -123,9 +133,29 @@ namespace ClassicCrossword.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap gross_pencil {
+            get {
+                object obj = ResourceManager.GetObject("gross-pencil", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap information_button {
             get {
                 object obj = ResourceManager.GetObject("information-button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap monitor_brightness_symbol {
+            get {
+                object obj = ResourceManager.GetObject("monitor-brightness-symbol", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -176,6 +206,16 @@ namespace ClassicCrossword.Properties {
         internal static System.Drawing.Bitmap question_button {
             get {
                 object obj = ResourceManager.GetObject("question-button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sorted {
+            get {
+                object obj = ResourceManager.GetObject("sorted", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
