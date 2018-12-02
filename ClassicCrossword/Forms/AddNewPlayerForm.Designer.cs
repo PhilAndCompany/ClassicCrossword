@@ -30,8 +30,8 @@
         {
             this.labelPassword = new System.Windows.Forms.Label();
             this.labelLogin = new System.Windows.Forms.Label();
-            this.textBoxPassword = new System.Windows.Forms.TextBox();
-            this.textBoxLogin = new System.Windows.Forms.TextBox();
+            this.tbPassword = new System.Windows.Forms.TextBox();
+            this.tbLogin = new System.Windows.Forms.TextBox();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.labelAddAccount = new System.Windows.Forms.Label();
@@ -59,19 +59,19 @@
             this.labelLogin.Text = "Логин:";
             this.labelLogin.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // textBoxPassword
+            // tbPassword
             // 
-            this.textBoxPassword.Location = new System.Drawing.Point(126, 125);
-            this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(146, 20);
-            this.textBoxPassword.TabIndex = 20;
+            this.tbPassword.Location = new System.Drawing.Point(126, 125);
+            this.tbPassword.Name = "tbPassword";
+            this.tbPassword.Size = new System.Drawing.Size(146, 20);
+            this.tbPassword.TabIndex = 20;
             // 
-            // textBoxLogin
+            // tbLogin
             // 
-            this.textBoxLogin.Location = new System.Drawing.Point(126, 77);
-            this.textBoxLogin.Name = "textBoxLogin";
-            this.textBoxLogin.Size = new System.Drawing.Size(146, 20);
-            this.textBoxLogin.TabIndex = 19;
+            this.tbLogin.Location = new System.Drawing.Point(126, 77);
+            this.tbLogin.Name = "tbLogin";
+            this.tbLogin.Size = new System.Drawing.Size(146, 20);
+            this.tbLogin.TabIndex = 19;
             // 
             // buttonAdd
             // 
@@ -81,6 +81,7 @@
             this.buttonAdd.TabIndex = 23;
             this.buttonAdd.Text = "Добавить";
             this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // buttonCancel
             // 
@@ -111,8 +112,8 @@
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.labelLogin);
-            this.Controls.Add(this.textBoxPassword);
-            this.Controls.Add(this.textBoxLogin);
+            this.Controls.Add(this.tbPassword);
+            this.Controls.Add(this.tbLogin);
             this.MaximizeBox = false;
             this.Name = "AddNewPlayerForm";
             this.Text = "EFM - ДОБАВИТЬ ИГРОКА";
@@ -125,8 +126,8 @@
 
         private System.Windows.Forms.Label labelPassword;
         private System.Windows.Forms.Label labelLogin;
-        private System.Windows.Forms.TextBox textBoxPassword;
-        private System.Windows.Forms.TextBox textBoxLogin;
+        private System.Windows.Forms.TextBox tbPassword;
+        private System.Windows.Forms.TextBox tbLogin;
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Label labelAddAccount;

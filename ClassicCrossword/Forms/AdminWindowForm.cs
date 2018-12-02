@@ -34,7 +34,19 @@ namespace ClassicCrossword
 
         private void добавитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var addTypeOfDevicesForm = new AddNewPlayerForm();
+            addTypeOfDevicesForm.Closing += AddNewPlayerForm_Closing;
+            addTypeOfDevicesForm.ShowDialog();
+        }
 
+        private void AddNewPlayerForm_Closing(object sender, CancelEventArgs e)
+        {
+            playerTableAdapter.Fill(crosswordDataSet.Player);
+        }
+
+        private void AdminWindowForm_Load(object sender, EventArgs e)
+        {
+            playerTableAdapter.Fill(crosswordDataSet.Player);
         }
     }
 }

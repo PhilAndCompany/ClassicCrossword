@@ -47,6 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\UserController.cs" />
+    <Compile Include="CrosswordDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CrosswordDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DAO\UserDAO.cs" />
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\Player.cs" />
@@ -127,6 +132,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="CrosswordDataSet.xsc">
+      <DependentUpon>CrosswordDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="CrosswordDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CrosswordDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="CrosswordDataSet.xss">
+      <DependentUpon>CrosswordDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
