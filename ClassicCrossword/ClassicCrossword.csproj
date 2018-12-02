@@ -46,63 +46,77 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddNewPlayerForm.cs">
+    <Compile Include="Controller\UserController.cs" />
+    <Compile Include="DAO\UserDAO.cs" />
+    <Compile Include="Model\Admin.cs" />
+    <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Grid.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Forms\AddNewPlayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddNewPlayerForm.Designer.cs">
+    <Compile Include="Forms\AddNewPlayerForm.Designer.cs">
       <DependentUpon>AddNewPlayerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdminWindowForm.cs">
+    <EmbeddedResource Include="Forms\AddNewPlayerForm.resx">
+      <DependentUpon>AddNewPlayerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Forms\AdminWindowForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AdminWindowForm.Designer.cs">
+    <Compile Include="Forms\AdminWindowForm.Designer.cs">
       <DependentUpon>AdminWindowForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditPlayerForm.cs">
+    <EmbeddedResource Include="Forms\AdminWindowForm.resx">
+      <DependentUpon>AdminWindowForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Forms\EditPlayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditPlayerForm.Designer.cs">
+    <Compile Include="Forms\EditPlayerForm.Designer.cs">
       <DependentUpon>EditPlayerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Grid.cs" />
-    <Compile Include="MainForm.cs">
+    <EmbeddedResource Include="Forms\EditPlayerForm.resx">
+      <DependentUpon>EditPlayerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegistrationWindow.cs">
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Forms\RegistrationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RegistrationWindow.Designer.cs">
-      <DependentUpon>RegistrationWindow.cs</DependentUpon>
+    <Compile Include="Forms\RegistrationForm.Designer.cs">
+      <DependentUpon>RegistrationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="StartWindow.cs">
+    <EmbeddedResource Include="Forms\RegistrationForm.resx">
+      <DependentUpon>RegistrationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Forms\AuthForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StartWindow.Designer.cs">
-      <DependentUpon>StartWindow.cs</DependentUpon>
+    <Compile Include="Forms\AuthForm.Designer.cs">
+      <DependentUpon>AuthForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserWindow.cs">
+    <EmbeddedResource Include="Forms\AuthForm.resx">
+      <DependentUpon>AuthForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Forms\UserWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserWindow.Designer.cs">
+    <Compile Include="Forms\UserWindow.Designer.cs">
       <DependentUpon>UserWindow.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AddNewPlayerForm.resx">
-      <DependentUpon>AddNewPlayerForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\UserWindow.resx">
+      <DependentUpon>UserWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AdminWindowForm.resx">
-      <DependentUpon>AdminWindowForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditPlayerForm.resx">
-      <DependentUpon>EditPlayerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -113,15 +127,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="RegistrationWindow.resx">
-      <DependentUpon>RegistrationWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="StartWindow.resx">
-      <DependentUpon>StartWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserWindow.resx">
-      <DependentUpon>UserWindow.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
