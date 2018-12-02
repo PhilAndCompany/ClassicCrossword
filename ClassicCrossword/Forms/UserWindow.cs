@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ClassicCrossword
+namespace ClassicCrossword.Forms
 {
     public partial class UserWindow : Form
     {

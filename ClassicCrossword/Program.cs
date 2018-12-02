@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClassicCrossword.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,9 +17,24 @@ namespace ClassicCrossword
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new StartWindow());
-            Application.Run(new RegistrationWindow());
-            Application.Run(new UserWindow());
+            try
+            {
+                var authForm = new AuthForm();
+                if (authForm.ShowDialog() == DialogResult.OK)
+                {
+                    if(authForm.Usr.Status.Equals("admin"))
+                        Application.Run(new RegistrationForm());
+                    else
+                        Application.Run(new RegistrationForm());
+
+                }
+                //Application.Run(new MainForm(authForm.Usr));
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Произошла ошибка в работе системы!", "Ошибка в работе", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

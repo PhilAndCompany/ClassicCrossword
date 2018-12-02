@@ -1,4 +1,4 @@
-﻿namespace ClassicCrossword
+﻿namespace ClassicCrossword.Forms
 {
     partial class UserWindow
     {

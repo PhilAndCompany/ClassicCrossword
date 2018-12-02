@@ -1,6 +1,6 @@
-﻿namespace ClassicCrossword
+﻿namespace ClassicCrossword.Forms
 {
-    partial class RegistrationWindow
+    partial class RegistrationForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegistrationWindow));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegistrationForm));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.tbPassword2 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbPassword1 = new System.Windows.Forms.TextBox();
+            this.tbLogin = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -60,6 +60,7 @@
             this.button1.TabIndex = 21;
             this.button1.Text = "ЗАРЕГИСТРИРОВАТЬСЯ";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label4
             // 
@@ -72,12 +73,12 @@
             this.label4.Text = "Повторите пароль:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // textBox3
+            // tbPassword2
             // 
-            this.textBox3.Location = new System.Drawing.Point(313, 295);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(162, 20);
-            this.textBox3.TabIndex = 19;
+            this.tbPassword2.Location = new System.Drawing.Point(313, 295);
+            this.tbPassword2.Name = "tbPassword2";
+            this.tbPassword2.Size = new System.Drawing.Size(162, 20);
+            this.tbPassword2.TabIndex = 19;
             // 
             // label3
             // 
@@ -101,19 +102,19 @@
             this.label2.Text = "Имя пользователя:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // textBox2
+            // tbPassword1
             // 
-            this.textBox2.Location = new System.Drawing.Point(313, 255);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(162, 20);
-            this.textBox2.TabIndex = 16;
+            this.tbPassword1.Location = new System.Drawing.Point(313, 255);
+            this.tbPassword1.Name = "tbPassword1";
+            this.tbPassword1.Size = new System.Drawing.Size(162, 20);
+            this.tbPassword1.TabIndex = 16;
             // 
-            // textBox1
+            // tbLogin
             // 
-            this.textBox1.Location = new System.Drawing.Point(313, 216);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(162, 20);
-            this.textBox1.TabIndex = 15;
+            this.tbLogin.Location = new System.Drawing.Point(313, 216);
+            this.tbLogin.Name = "tbLogin";
+            this.tbLogin.Size = new System.Drawing.Size(162, 20);
+            this.tbLogin.TabIndex = 15;
             // 
             // label1
             // 
@@ -125,7 +126,7 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "РЕГИСТРАЦИЯ НОВОГО ПОЛЬЗОВАТЕЛЯ";
             // 
-            // RegistrationWindow
+            // RegistrationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -133,13 +134,13 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.tbPassword2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbPassword1);
+            this.Controls.Add(this.tbLogin);
             this.Controls.Add(this.label1);
-            this.Name = "RegistrationWindow";
+            this.Name = "RegistrationForm";
             this.Text = "RegistrationWindow";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -152,11 +153,11 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox tbPassword2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbPassword1;
+        private System.Windows.Forms.TextBox tbLogin;
         private System.Windows.Forms.Label label1;
     }
 }
