@@ -8,6 +8,6 @@ namespace ClassicCrossword.Model
 {
     public class Player : User
     {
-        public Player(string login, string pass, string status) : base(login, pass, status) { }
+        public Player(string login, string pass) : base(login, pass) { }
     }
 }

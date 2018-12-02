@@ -21,6 +21,7 @@ namespace ClassicCrossword.Forms
         {
             InitializeComponent();
             this.ActiveControl = tbLogin;
+            Usr = new Admin("admin", "admin");
             usrController = new UserController();
         }
 
@@ -57,18 +58,26 @@ namespace ClassicCrossword.Forms
                 {
                     try
                     {
-                        Usr = usrController.GetUserByAuthorization(tbLogin.Text.Trim(), tbPassword.Text.Trim());
-                        if (Usr == null)
-                        {
-                            MessageBox.Show("Неверный логин или пароль!", "Ошибка входа в систему", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            tbPassword.Text = "Пароль";
-                            tbPassword.ForeColor = Color.Gray;
-                            tbPassword.UseSystemPasswordChar = false;
-                        }
-                        else
+                        if (Usr.Login.Equals(tbLogin.Text.Trim()) && Usr.Pass.Equals(tbPassword.Text.Trim()))
                         {
                             DialogResult = DialogResult.OK;
                             this.Dispose();
+                        }
+                        else
+                        {
+                            Usr = usrController.GetUserByAuthorization(tbLogin.Text.Trim(), tbPassword.Text.Trim());
+                            if (Usr == null)
+                            {
+                                MessageBox.Show("Неверный логин или пароль!", "Ошибка входа в систему", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                tbPassword.Text = "Пароль";
+                                tbPassword.ForeColor = Color.Gray;
+                                tbPassword.UseSystemPasswordChar = false;
+                            }
+                            else
+                            {
+                                DialogResult = DialogResult.OK;
+                                this.Dispose();
+                            }
                         }
                     }
                     catch (Exception)

@@ -1,4 +1,5 @@
 ﻿using ClassicCrossword.Forms;
+using ClassicCrossword.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,14 +23,12 @@ namespace ClassicCrossword
                 var authForm = new AuthForm();
                 if (authForm.ShowDialog() == DialogResult.OK)
                 {
-                    if(authForm.Usr.Status.Equals("admin"))
+                    if (authForm.Usr.GetType() == typeof(Admin))
                         Application.Run(new RegistrationForm());
                     else
                         Application.Run(new RegistrationForm());
 
                 }
-                //Application.Run(new MainForm(authForm.Usr));
-
             }
             catch (Exception)
             {

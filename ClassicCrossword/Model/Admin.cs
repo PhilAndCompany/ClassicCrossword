@@ -8,6 +8,6 @@ namespace ClassicCrossword.Model
 {
     public class Admin : User
     {
-        public Admin(string login, string pass, string status) : base(login, pass, status) { }
+        public Admin(string login, string pass) : base(login, pass) { }
     }
 }

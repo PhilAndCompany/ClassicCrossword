@@ -10,13 +10,11 @@ namespace ClassicCrossword.Model
     {
         public string Login { get; set; }
         public string Pass { get; set; }
-        public string Status { get; set; }
 
-        public User(string login, string pass, string status)
+        public User(string login, string pass)
         {
             Login = login;
             Pass = pass;
-            Status = status;
         }
     }
 }

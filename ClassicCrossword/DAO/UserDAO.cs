@@ -11,13 +11,33 @@ namespace ClassicCrossword.DAO
 {
     public class UserDAO
     {
+
+        public void Insert(Player player)
+        {
+            try
+            {
+                SqlConnection sqlConnection = Connect();
+                string sql = string.Format("Insert into Player (login, pass) Values ('{0}', '{1}');", player.Login, player.Pass);
+
+                using (SqlCommand cmd = new SqlCommand(sql, sqlConnection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                Disconnect(sqlConnection);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
+
         public User GetUserByAuthorization(string login, string password)
         {
             User user = null;
             try
             {
                 SqlConnection sqlConnection = Connect();
-                string sql = string.Format("Select status From Uzer Where login= Lower('{0}') AND pass='{1}'", login.ToLower(), password);
+                string sql = string.Format("Select login, pass From Player Where login= Lower('{0}') AND pass='{1}'", login.ToLower(), password);
 
 
                 SqlCommand cmd = sqlConnection.CreateCommand();
@@ -25,11 +45,7 @@ namespace ClassicCrossword.DAO
                 SqlDataReader dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
-                    if (dataReader[0].ToString().Equals("admin"))
-                        user = new Admin(login, password, dataReader[0].ToString());
-                    else if (dataReader[0].ToString().Equals("player"))
-                        user = new Player(login, password, dataReader[0].ToString());
-
+                    user = new Player(dataReader[0].ToString(), dataReader[1].ToString());
                 }
                 dataReader.Close();
                 Disconnect(sqlConnection);
