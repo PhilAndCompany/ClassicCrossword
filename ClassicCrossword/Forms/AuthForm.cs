@@ -21,12 +21,12 @@ namespace ClassicCrossword.Forms
         {
             InitializeComponent();
             this.ActiveControl = tbLogin;
-            Usr = new Admin("admin", "admin");
             usrController = new UserController();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Usr = new Admin("admin", "admin");
             bool isEmpty = false;
             if (tbLogin.Text.Equals("Логин") || tbLogin.Text.Trim().Equals(""))
             {
