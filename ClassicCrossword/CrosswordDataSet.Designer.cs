@@ -279,6 +279,8 @@ namespace ClassicCrossword {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class PlayerDataTable : global::System.Data.TypedTableBase<PlayerRow> {
             
+            private global::System.Data.DataColumn columnid;
+            
             private global::System.Data.DataColumn columnlogin;
             
             private global::System.Data.DataColumn columnpass;
@@ -314,6 +316,14 @@ namespace ClassicCrossword {
             protected PlayerDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn idColumn {
+                get {
+                    return this.columnid;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -372,6 +382,7 @@ namespace ClassicCrossword {
             public PlayerRow AddPlayerRow(string login, string pass) {
                 PlayerRow rowPlayerRow = ((PlayerRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
+                        null,
                         login,
                         pass};
                 rowPlayerRow.ItemArray = columnValuesArray;
@@ -381,9 +392,9 @@ namespace ClassicCrossword {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public PlayerRow FindBylogin(string login) {
+            public PlayerRow FindByid(int id) {
                 return ((PlayerRow)(this.Rows.Find(new object[] {
-                            login})));
+                            id})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -403,6 +414,7 @@ namespace ClassicCrossword {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             internal void InitVars() {
+                this.columnid = base.Columns["id"];
                 this.columnlogin = base.Columns["login"];
                 this.columnpass = base.Columns["pass"];
             }
@@ -410,14 +422,21 @@ namespace ClassicCrossword {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             private void InitClass() {
+                this.columnid = new global::System.Data.DataColumn("id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnid);
                 this.columnlogin = new global::System.Data.DataColumn("login", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnlogin);
                 this.columnpass = new global::System.Data.DataColumn("pass", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnpass);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnlogin}, true));
+                                this.columnid}, true));
+                this.columnid.AutoIncrement = true;
+                this.columnid.AutoIncrementSeed = -1;
+                this.columnid.AutoIncrementStep = -1;
+                this.columnid.AllowDBNull = false;
+                this.columnid.ReadOnly = true;
+                this.columnid.Unique = true;
                 this.columnlogin.AllowDBNull = false;
-                this.columnlogin.Unique = true;
                 this.columnlogin.MaxLength = 15;
                 this.columnpass.AllowDBNull = false;
                 this.columnpass.MaxLength = 15;
@@ -559,6 +578,17 @@ namespace ClassicCrossword {
             internal PlayerRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
                 this.tablePlayer = ((PlayerDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int id {
+                get {
+                    return ((int)(this[this.tablePlayer.idColumn]));
+                }
+                set {
+                    this[this.tablePlayer.idColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -743,33 +773,37 @@ namespace ClassicCrossword.CrosswordDataSetTableAdapters {
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "Player";
+            tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("login", "login");
             tableMapping.ColumnMappings.Add("pass", "pass");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Player] WHERE (([login] = @Original_login) AND ([pass] = @Orig" +
-                "inal_pass))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Player] WHERE (([id] = @Original_id) AND ([login] = @Original_" +
+                "login) AND ([pass] = @Original_pass))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_login", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "login", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_pass", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "pass", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Player] ([login], [pass]) VALUES (@login, @pass);\r\nSELECT logi" +
-                "n, pass FROM Player WHERE (login = @login)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Player] ([login], [pass]) VALUES (@login, @pass);\r\nSELECT id, " +
+                "login, pass FROM Player WHERE (id = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@login", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "login", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@pass", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "pass", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Player] SET [login] = @login, [pass] = @pass WHERE (([login] = @Ori" +
-                "ginal_login) AND ([pass] = @Original_pass));\r\nSELECT login, pass FROM Player WHE" +
-                "RE (login = @login)";
+            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Player] SET [login] = @login, [pass] = @pass WHERE (([id] = @Origin" +
+                "al_id) AND ([login] = @Original_login) AND ([pass] = @Original_pass));\r\nSELECT i" +
+                "d, login, pass FROM Player WHERE (id = @id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@login", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "login", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@pass", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "pass", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_login", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "login", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_pass", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "pass", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -785,7 +819,7 @@ namespace ClassicCrossword.CrosswordDataSetTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT login, pass FROM dbo.Player";
+            this._commandCollection[0].CommandText = "SELECT id, login, pass FROM dbo.Player";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -846,18 +880,19 @@ namespace ClassicCrossword.CrosswordDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(string Original_login, string Original_pass) {
+        public virtual int Delete(int Original_id, string Original_login, string Original_pass) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_id));
             if ((Original_login == null)) {
                 throw new global::System.ArgumentNullException("Original_login");
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[0].Value = ((string)(Original_login));
+                this.Adapter.DeleteCommand.Parameters[1].Value = ((string)(Original_login));
             }
             if ((Original_pass == null)) {
                 throw new global::System.ArgumentNullException("Original_pass");
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[1].Value = ((string)(Original_pass));
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_pass));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -912,7 +947,7 @@ namespace ClassicCrossword.CrosswordDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string login, string pass, string Original_login, string Original_pass) {
+        public virtual int Update(string login, string pass, int Original_id, string Original_login, string Original_pass, int id) {
             if ((login == null)) {
                 throw new global::System.ArgumentNullException("login");
             }
@@ -925,18 +960,20 @@ namespace ClassicCrossword.CrosswordDataSetTableAdapters {
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(pass));
             }
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(Original_id));
             if ((Original_login == null)) {
                 throw new global::System.ArgumentNullException("Original_login");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(Original_login));
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Original_login));
             }
             if ((Original_pass == null)) {
                 throw new global::System.ArgumentNullException("Original_pass");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Original_pass));
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Original_pass));
             }
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -957,8 +994,8 @@ namespace ClassicCrossword.CrosswordDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string pass, string Original_login, string Original_pass) {
-            return this.Update(Original_login, pass, Original_login, Original_pass);
+        public virtual int Update(string login, string pass, int Original_id, string Original_login, string Original_pass) {
+            return this.Update(login, pass, Original_id, Original_login, Original_pass, Original_id);
         }
     }
     

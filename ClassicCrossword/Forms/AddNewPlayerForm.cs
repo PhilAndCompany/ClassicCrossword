@@ -15,11 +15,20 @@ namespace ClassicCrossword
 {
     public partial class AddNewPlayerForm : Form
     {
+        private int id;
         UserController usrController;
-        Player player;
+
         public AddNewPlayerForm()
         {
             InitializeComponent();
+            this.ActiveControl = tbLogin;
+            usrController = new UserController();
+        }
+
+        public AddNewPlayerForm(int id, string login, string pass)
+        {
+            InitializeComponent(login, pass);
+            this.id = id;
             this.ActiveControl = tbLogin;
             usrController = new UserController();
         }
@@ -34,9 +43,35 @@ namespace ClassicCrossword
             {
                 try
                 {
-                    player = new Player(tbLogin.Text.Trim(), tbPassword.Text.Trim());
-                    usrController.Insert(player);
-                    this.Close();
+                    if (id == 0)
+                    {
+                        Player player = new Player(tbLogin.Text.Trim(), tbPassword.Text.Trim());
+                        if (!usrController.Insert(player))
+                        {
+                            MessageBox.Show("Невозможно добавить нового игрока!\nИгрок с таким логином уже существует.", "Ошибка добавления", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else this.Close();
+                    }
+                    else
+                    {
+                        try
+                        {
+                            Player player = new Player(id, tbLogin.Text.Trim(), tbPassword.Text.Trim());
+                            if (!usrController.Update(player))
+                            {
+                                MessageBox.Show("Невозможно добавить нового игрока!\nИгрок с таким логином уже существует.", "Ошибка добавления", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            else this.Close();
+                        }
+                        catch (System.Data.SqlClient.SqlException)
+                        {
+                            MessageBox.Show("Невозможно изменить тип товара!\nТип товара с таким именем уже существует.", "Ошибка изменения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("Ошибка работы с базой данных!", "Изменение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
                 }
                 catch (SqlException)
                 {

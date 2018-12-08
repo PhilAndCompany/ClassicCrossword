@@ -79,7 +79,6 @@
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPageAccounts = new System.Windows.Forms.TabPage();
             this.groupBoxAccounts = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.menuStripAccount = new System.Windows.Forms.MenuStrip();
             this.добавитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.редактироватьToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -90,9 +89,11 @@
             this.оПрограммеToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.обАвторахToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.crosswordBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.playerTableAdapter = new ClassicCrossword.CrosswordDataSetTableAdapters.PlayerTableAdapter();
             this.crosswordDataSet = new ClassicCrossword.CrosswordDataSet();
+            this.playerTableAdapter = new ClassicCrossword.CrosswordDataSetTableAdapters.PlayerTableAdapter();
+            this.crosswordBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.loginDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.passDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVocabularyOfC)).BeginInit();
@@ -107,10 +108,10 @@
             this.menuStripVocabulary.SuspendLayout();
             this.tabPageAccounts.SuspendLayout();
             this.groupBoxAccounts.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStripAccount.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.crosswordBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.crosswordDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.crosswordBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // labelSearchByMask
@@ -573,24 +574,6 @@
             this.groupBoxAccounts.TabStop = false;
             this.groupBoxAccounts.Text = "Учетные записи";
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.loginDataGridViewTextBoxColumn,
-            this.passDataGridViewTextBoxColumn});
-            this.dataGridView1.DataSource = this.crosswordBindingSource;
-            this.dataGridView1.EnableHeadersVisualStyles = false;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 19);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(782, 503);
-            this.dataGridView1.TabIndex = 0;
-            // 
             // menuStripAccount
             // 
             this.menuStripAccount.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -616,7 +599,6 @@
             // 
             // редактироватьToolStripMenuItem2
             // 
-            this.редактироватьToolStripMenuItem2.Enabled = false;
             this.редактироватьToolStripMenuItem2.Image = global::ClassicCrossword.Properties.Resources.gross_pencil;
             this.редактироватьToolStripMenuItem2.Name = "редактироватьToolStripMenuItem2";
             this.редактироватьToolStripMenuItem2.Size = new System.Drawing.Size(115, 20);
@@ -625,7 +607,6 @@
             // 
             // удалитьToolStripMenuItem
             // 
-            this.удалитьToolStripMenuItem.Enabled = false;
             this.удалитьToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.big_trash_container_from_side_view;
             this.удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
             this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
@@ -680,31 +661,55 @@
             this.выходToolStripMenuItem2.Size = new System.Drawing.Size(69, 20);
             this.выходToolStripMenuItem2.Text = "Выход";
             // 
-            // crosswordBindingSource
-            // 
-            this.crosswordBindingSource.DataMember = "Player";
-            this.crosswordBindingSource.DataSource = this.crosswordDataSet;
-            // 
-            // playerTableAdapter
-            // 
-            this.playerTableAdapter.ClearBeforeFill = true;
-            // 
             // crosswordDataSet
             // 
             this.crosswordDataSet.DataSetName = "CrosswordDataSet";
             this.crosswordDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
+            // playerTableAdapter
+            // 
+            this.playerTableAdapter.ClearBeforeFill = true;
+            // 
+            // crosswordBindingSource
+            // 
+            this.crosswordBindingSource.DataMember = "Player";
+            this.crosswordBindingSource.DataSource = this.crosswordDataSet;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.idDataGridViewTextBoxColumn,
+            this.loginDataGridViewTextBoxColumn,
+            this.passDataGridViewTextBoxColumn});
+            this.dataGridView1.DataSource = this.crosswordBindingSource;
+            this.dataGridView1.EnableHeadersVisualStyles = false;
+            this.dataGridView1.Location = new System.Drawing.Point(6, 19);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.Size = new System.Drawing.Size(788, 150);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            this.idDataGridViewTextBoxColumn.DataPropertyName = "id";
+            this.idDataGridViewTextBoxColumn.HeaderText = "id";
+            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            this.idDataGridViewTextBoxColumn.ReadOnly = true;
+            this.idDataGridViewTextBoxColumn.Visible = false;
+            // 
             // loginDataGridViewTextBoxColumn
             // 
             this.loginDataGridViewTextBoxColumn.DataPropertyName = "login";
-            this.loginDataGridViewTextBoxColumn.HeaderText = "Логин";
+            this.loginDataGridViewTextBoxColumn.HeaderText = "login";
             this.loginDataGridViewTextBoxColumn.Name = "loginDataGridViewTextBoxColumn";
             this.loginDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // passDataGridViewTextBoxColumn
             // 
             this.passDataGridViewTextBoxColumn.DataPropertyName = "pass";
-            this.passDataGridViewTextBoxColumn.HeaderText = "Пароль";
+            this.passDataGridViewTextBoxColumn.HeaderText = "pass";
             this.passDataGridViewTextBoxColumn.Name = "passDataGridViewTextBoxColumn";
             this.passDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -738,11 +743,11 @@
             this.tabPageAccounts.ResumeLayout(false);
             this.tabPageAccounts.PerformLayout();
             this.groupBoxAccounts.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStripAccount.ResumeLayout(false);
             this.menuStripAccount.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.crosswordBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.crosswordDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.crosswordBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -807,10 +812,11 @@
         private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem2;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnWord;
         private System.Windows.Forms.DataGridViewTextBoxColumn columnDefinition;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.BindingSource crosswordBindingSource;
-        private CrosswordDataSetTableAdapters.PlayerTableAdapter playerTableAdapter;
         private CrosswordDataSet crosswordDataSet;
+        private CrosswordDataSetTableAdapters.PlayerTableAdapter playerTableAdapter;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn loginDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn passDataGridViewTextBoxColumn;
     }

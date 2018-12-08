@@ -10,9 +10,21 @@ namespace ClassicCrossword.Controller
 {
     public class UserController
     {
-        public void Insert(Player player)
+        public bool Insert(Player player)
         {
-            new UserDAO().Insert(player);
+            if (new UserDAO().Insert(player)) return true;
+            else return false;
+        }
+
+        public bool Update(Player player)
+        {
+            if (new UserDAO().Update(player)) return true;
+            else return false;
+        }
+
+        public void DeleteById(int id)
+        {
+            new UserDAO().DeleteById(id);
         }
 
         public User GetUserByAuthorization(string login, string password)
