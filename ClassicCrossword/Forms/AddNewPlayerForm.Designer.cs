@@ -159,7 +159,6 @@
             // 
             this.tbPassword.Location = new System.Drawing.Point(126, 125);
             this.tbPassword.Name = "tbPassword";
-            this.tbPassword.Text = pass;
             this.tbPassword.Size = new System.Drawing.Size(146, 20);
             this.tbPassword.TabIndex = 20;
             // 
@@ -167,7 +166,6 @@
             // 
             this.tbLogin.Location = new System.Drawing.Point(126, 77);
             this.tbLogin.Name = "tbLogin";
-            this.tbLogin.Text = login;
             this.tbLogin.Size = new System.Drawing.Size(146, 20);
             this.tbLogin.TabIndex = 19;
             // 
@@ -204,7 +202,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(307, 261);
+            this.ClientSize = new System.Drawing.Size(312, 261);
             this.Controls.Add(this.labelAddAccount);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonAdd);

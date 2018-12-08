@@ -76,15 +76,6 @@
     <EmbeddedResource Include="Forms\AdminWindowForm.resx">
       <DependentUpon>AdminWindowForm.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Forms\EditPlayerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\EditPlayerForm.Designer.cs">
-      <DependentUpon>EditPlayerForm.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Forms\EditPlayerForm.resx">
-      <DependentUpon>EditPlayerForm.cs</DependentUpon>
-    </EmbeddedResource>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
