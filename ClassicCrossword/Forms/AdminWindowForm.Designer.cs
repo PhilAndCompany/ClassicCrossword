@@ -721,7 +721,7 @@
             this.Controls.Add(this.tabControlMenu);
             this.MaximizeBox = false;
             this.Name = "AdminWindowForm";
-            this.Text = "EFM - %ADMINNAME%";
+            this.Text = "EFM - ADMIN";
             this.Load += new System.EventHandler(this.AdminWindowForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVocabularyOfC)).EndInit();
             this.groupBoxVocabularyOfC.ResumeLayout(false);
