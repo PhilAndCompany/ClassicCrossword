@@ -71,6 +71,5 @@ namespace ClassicCrossword
             playerTableAdapter.Fill(crosswordDataSet.Player);
             idDataGridViewTextBoxColumn.Visible = false;
         }
-
     }
 }
