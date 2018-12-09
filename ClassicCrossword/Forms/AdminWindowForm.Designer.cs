@@ -32,15 +32,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminWindowForm));
             this.labelSearchByMask = new System.Windows.Forms.Label();
             this.textBoxSearchByMask = new System.Windows.Forms.TextBox();
-            this.columnNotion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewVocabularyOfC = new System.Windows.Forms.DataGridView();
+            this.dgvtbcNot1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBoxVocabularyOfC = new System.Windows.Forms.GroupBox();
             this.textBoxVocabularyWordsCountOnC = new System.Windows.Forms.TextBox();
             this.labelVocabularyWordsCountOnC = new System.Windows.Forms.Label();
             this.buttonCheck = new System.Windows.Forms.Button();
-            this.groupBoxCrossword = new System.Windows.Forms.GroupBox();
             this.tabControlMenu = new System.Windows.Forms.TabControl();
             this.tabPageCrossword = new System.Windows.Forms.TabPage();
+            this.mainPanel = new System.Windows.Forms.Panel();
             this.buttonGenerate = new System.Windows.Forms.Button();
             this.groupBoxVocabularyInstruments = new System.Windows.Forms.GroupBox();
             this.buttonClearMask = new System.Windows.Forms.Button();
@@ -48,7 +48,7 @@
             this.buttonSortByLength = new System.Windows.Forms.Button();
             this.menuStripCrossword = new System.Windows.Forms.MenuStrip();
             this.создатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.редактироватьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.выбратьсловарьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.параметрыКроссвордаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.очиститьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,8 +65,8 @@
             this.textBoxVocabularyWordsCountOnV = new System.Windows.Forms.TextBox();
             this.labelabelVocabularyWordsCountOnV = new System.Windows.Forms.Label();
             this.dataGridViewVocabularyOfV = new System.Windows.Forms.DataGridView();
-            this.columnWord = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.columnDefinition = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvtbcNot2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvtbcDef = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStripVocabulary = new System.Windows.Forms.MenuStrip();
             this.создатьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.редактироватьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -131,23 +131,21 @@
             this.textBoxSearchByMask.Size = new System.Drawing.Size(108, 20);
             this.textBoxSearchByMask.TabIndex = 28;
             // 
-            // columnNotion
-            // 
-            this.columnNotion.HeaderText = "Понятие";
-            this.columnNotion.Name = "columnNotion";
-            this.columnNotion.ReadOnly = true;
-            // 
             // dataGridViewVocabularyOfC
             // 
             this.dataGridViewVocabularyOfC.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewVocabularyOfC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewVocabularyOfC.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.columnNotion});
+            this.dgvtbcNot1});
             this.dataGridViewVocabularyOfC.Location = new System.Drawing.Point(6, 19);
             this.dataGridViewVocabularyOfC.Name = "dataGridViewVocabularyOfC";
-            this.dataGridViewVocabularyOfC.ReadOnly = true;
             this.dataGridViewVocabularyOfC.Size = new System.Drawing.Size(254, 382);
             this.dataGridViewVocabularyOfC.TabIndex = 0;
+            // 
+            // dgvtbcNot1
+            // 
+            this.dgvtbcNot1.HeaderText = "Понятие";
+            this.dgvtbcNot1.Name = "dgvtbcNot1";
             // 
             // groupBoxVocabularyOfC
             // 
@@ -190,16 +188,6 @@
             this.buttonCheck.Text = "ПРОВЕРИТЬ";
             this.buttonCheck.UseVisualStyleBackColor = true;
             // 
-            // groupBoxCrossword
-            // 
-            this.groupBoxCrossword.Enabled = false;
-            this.groupBoxCrossword.Location = new System.Drawing.Point(3, 30);
-            this.groupBoxCrossword.Name = "groupBoxCrossword";
-            this.groupBoxCrossword.Size = new System.Drawing.Size(531, 433);
-            this.groupBoxCrossword.TabIndex = 23;
-            this.groupBoxCrossword.TabStop = false;
-            this.groupBoxCrossword.Text = "КРОССВОРД %CROSSWORDNAME%";
-            // 
             // tabControlMenu
             // 
             this.tabControlMenu.Controls.Add(this.tabPageCrossword);
@@ -213,10 +201,10 @@
             // 
             // tabPageCrossword
             // 
+            this.tabPageCrossword.Controls.Add(this.mainPanel);
             this.tabPageCrossword.Controls.Add(this.buttonGenerate);
             this.tabPageCrossword.Controls.Add(this.groupBoxVocabularyInstruments);
             this.tabPageCrossword.Controls.Add(this.groupBoxVocabularyOfC);
-            this.tabPageCrossword.Controls.Add(this.groupBoxCrossword);
             this.tabPageCrossword.Controls.Add(this.buttonCheck);
             this.tabPageCrossword.Controls.Add(this.menuStripCrossword);
             this.tabPageCrossword.Location = new System.Drawing.Point(4, 22);
@@ -227,9 +215,15 @@
             this.tabPageCrossword.Text = "Кроссворд";
             this.tabPageCrossword.UseVisualStyleBackColor = true;
             // 
+            // mainPanel
+            // 
+            this.mainPanel.Location = new System.Drawing.Point(7, 31);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(527, 441);
+            this.mainPanel.TabIndex = 36;
+            // 
             // buttonGenerate
             // 
-            this.buttonGenerate.Enabled = false;
             this.buttonGenerate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonGenerate.Location = new System.Drawing.Point(172, 514);
             this.buttonGenerate.Name = "buttonGenerate";
@@ -237,6 +231,7 @@
             this.buttonGenerate.TabIndex = 35;
             this.buttonGenerate.Text = "СГЕНЕРИРОВАТЬ";
             this.buttonGenerate.UseVisualStyleBackColor = true;
+            this.buttonGenerate.Click += new System.EventHandler(this.buttonGenerate_Click);
             // 
             // groupBoxVocabularyInstruments
             // 
@@ -288,7 +283,7 @@
             // 
             this.menuStripCrossword.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.создатьToolStripMenuItem,
-            this.редактироватьToolStripMenuItem,
+            this.выбратьсловарьToolStripMenuItem,
             this.параметрыКроссвордаToolStripMenuItem,
             this.сохранитьToolStripMenuItem,
             this.очиститьToolStripMenuItem,
@@ -308,12 +303,13 @@
             this.создатьToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
             this.создатьToolStripMenuItem.Text = "Создать";
             // 
-            // редактироватьToolStripMenuItem
+            // выбратьсловарьToolStripMenuItem
             // 
-            this.редактироватьToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.gross_pencil;
-            this.редактироватьToolStripMenuItem.Name = "редактироватьToolStripMenuItem";
-            this.редактироватьToolStripMenuItem.Size = new System.Drawing.Size(115, 20);
-            this.редактироватьToolStripMenuItem.Text = "Редактировать";
+            this.выбратьсловарьToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.gross_pencil;
+            this.выбратьсловарьToolStripMenuItem.Name = "выбратьсловарьToolStripMenuItem";
+            this.выбратьсловарьToolStripMenuItem.Size = new System.Drawing.Size(130, 20);
+            this.выбратьсловарьToolStripMenuItem.Text = "Выбрать словарь";
+            this.выбратьсловарьToolStripMenuItem.Click += new System.EventHandler(this.выбратьсловарьToolStripMenuItem_Click);
             // 
             // параметрыКроссвордаToolStripMenuItem
             // 
@@ -450,24 +446,22 @@
             this.dataGridViewVocabularyOfV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridViewVocabularyOfV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewVocabularyOfV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.columnWord,
-            this.columnDefinition});
+            this.dgvtbcNot2,
+            this.dgvtbcDef});
             this.dataGridViewVocabularyOfV.Location = new System.Drawing.Point(6, 19);
             this.dataGridViewVocabularyOfV.Name = "dataGridViewVocabularyOfV";
             this.dataGridViewVocabularyOfV.Size = new System.Drawing.Size(788, 463);
             this.dataGridViewVocabularyOfV.TabIndex = 0;
             // 
-            // columnWord
+            // dgvtbcNot2
             // 
-            this.columnWord.HeaderText = "Слово";
-            this.columnWord.Name = "columnWord";
-            this.columnWord.ReadOnly = true;
+            this.dgvtbcNot2.HeaderText = "Понятие";
+            this.dgvtbcNot2.Name = "dgvtbcNot2";
             // 
-            // columnDefinition
+            // dgvtbcDef
             // 
-            this.columnDefinition.HeaderText = "Определение";
-            this.columnDefinition.Name = "columnDefinition";
-            this.columnDefinition.ReadOnly = true;
+            this.dgvtbcDef.HeaderText = "Определение";
+            this.dgvtbcDef.Name = "dgvtbcDef";
             // 
             // menuStripVocabulary
             // 
@@ -495,8 +489,8 @@
             // 
             this.редактироватьToolStripMenuItem1.Image = global::ClassicCrossword.Properties.Resources.gross_pencil;
             this.редактироватьToolStripMenuItem1.Name = "редактироватьToolStripMenuItem1";
-            this.редактироватьToolStripMenuItem1.Size = new System.Drawing.Size(115, 20);
-            this.редактироватьToolStripMenuItem1.Text = "Редактировать";
+            this.редактироватьToolStripMenuItem1.Size = new System.Drawing.Size(130, 20);
+            this.редактироватьToolStripMenuItem1.Text = "Выбрать словарь";
             // 
             // сохранитьСловарьtoolStripMenuItem1
             // 
@@ -601,14 +595,14 @@
             // loginDataGridViewTextBoxColumn
             // 
             this.loginDataGridViewTextBoxColumn.DataPropertyName = "login";
-            this.loginDataGridViewTextBoxColumn.HeaderText = "login";
+            this.loginDataGridViewTextBoxColumn.HeaderText = "Логин";
             this.loginDataGridViewTextBoxColumn.Name = "loginDataGridViewTextBoxColumn";
             this.loginDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // passDataGridViewTextBoxColumn
             // 
             this.passDataGridViewTextBoxColumn.DataPropertyName = "pass";
-            this.passDataGridViewTextBoxColumn.HeaderText = "pass";
+            this.passDataGridViewTextBoxColumn.HeaderText = "Пароль";
             this.passDataGridViewTextBoxColumn.Name = "passDataGridViewTextBoxColumn";
             this.passDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -757,12 +751,10 @@
         private System.Windows.Forms.TextBox textBoxSearchByMask;
         private System.Windows.Forms.Button buttonSortByLength;
         private System.Windows.Forms.Button buttonSortByAlphabet;
-        private System.Windows.Forms.DataGridViewTextBoxColumn columnNotion;
         private System.Windows.Forms.DataGridView dataGridViewVocabularyOfC;
         private System.Windows.Forms.GroupBox groupBoxVocabularyOfC;
         private System.Windows.Forms.Button buttonCheck;
         private System.Windows.Forms.Label labelVocabularyWordsCountOnC;
-        private System.Windows.Forms.GroupBox groupBoxCrossword;
         private System.Windows.Forms.TabControl tabControlMenu;
         private System.Windows.Forms.TabPage tabPageCrossword;
         private System.Windows.Forms.TabPage tabPageVocabulary;
@@ -771,7 +763,7 @@
         private System.Windows.Forms.GroupBox groupBoxVocabularyInstruments;
         private System.Windows.Forms.MenuStrip menuStripCrossword;
         private System.Windows.Forms.ToolStripMenuItem создатьToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem редактироватьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem выбратьсловарьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem параметрыКроссвордаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сохранитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem очиститьToolStripMenuItem;
@@ -810,14 +802,16 @@
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem обАвторахToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn columnWord;
-        private System.Windows.Forms.DataGridViewTextBoxColumn columnDefinition;
         private System.Windows.Forms.BindingSource crosswordBindingSource;
         private CrosswordDataSet crosswordDataSet;
         private CrosswordDataSetTableAdapters.PlayerTableAdapter playerTableAdapter;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Panel mainPanel;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn loginDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn passDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvtbcNot1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvtbcNot2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvtbcDef;
     }
 }

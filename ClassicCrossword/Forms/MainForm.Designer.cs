@@ -89,7 +89,6 @@
             this.addwordButton.TabIndex = 5;
             this.addwordButton.Text = "Добавить слово";
             this.addwordButton.UseVisualStyleBackColor = true;
-            this.addwordButton.Click += new System.EventHandler(this.addwordButton_Click);
             // 
             // deletewordButton
             // 
@@ -99,7 +98,6 @@
             this.deletewordButton.TabIndex = 6;
             this.deletewordButton.Text = "Удалить слово";
             this.deletewordButton.UseVisualStyleBackColor = true;
-            this.deletewordButton.Click += new System.EventHandler(this.deletewordButton_Click);
             // 
             // addquestionButton
             // 
@@ -109,7 +107,6 @@
             this.addquestionButton.TabIndex = 7;
             this.addquestionButton.Text = "Добавить вопрос";
             this.addquestionButton.UseVisualStyleBackColor = true;
-            this.addquestionButton.Click += new System.EventHandler(this.addquestionButton_Click);
             // 
             // deletequestionButton
             // 
@@ -119,7 +116,6 @@
             this.deletequestionButton.TabIndex = 8;
             this.deletequestionButton.Text = "Удалить вопрос";
             this.deletequestionButton.UseVisualStyleBackColor = true;
-            this.deletequestionButton.Click += new System.EventHandler(this.deletequestionButton_Click);
             // 
             // generatecrosswordButton
             // 

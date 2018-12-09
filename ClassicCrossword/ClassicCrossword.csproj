@@ -54,9 +54,10 @@
     </Compile>
     <Compile Include="DAO\UserDAO.cs" />
     <Compile Include="Model\Admin.cs" />
+    <Compile Include="Model\Crossword.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\User.cs" />
-    <Compile Include="Grid.cs" />
+    <Compile Include="Model\Grid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Forms\AddNewPlayerForm.cs">
       <SubType>Form</SubType>
@@ -181,9 +182,6 @@
     <None Include="Resources\question-button.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\listed-items.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\create-list-button.png" />
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +204,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\monitor-brightness-symbol.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
