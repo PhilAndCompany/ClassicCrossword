@@ -29,6 +29,8 @@ namespace ClassicCrossword
         {
             InitializeComponent(login, pass);
             this.id = id;
+            tbLogin.Text = login;
+            tbPassword.Text = pass;
             this.ActiveControl = tbLogin;
             usrController = new UserController();
         }
