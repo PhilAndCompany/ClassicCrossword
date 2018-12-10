@@ -19,17 +19,16 @@ namespace ClassicCrossword
         public static int n = 20; // максимальное число строк в сетке
         public static int m = 20; // максимальное число столбцов в сетке
 
-        //private Dictionary<string, string> dict = new Dictionary<string, string>();
-        //private List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
+        private Dictionary<string, string> dict = new Dictionary<string, string>();
+        private List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
 
-        private List<string> listNot = new List<string>();
-        private List<string> listDef = new List<string>();
+        private List<string> listNot;
+        private List<string> listDef;
 
         List<string> notUsedList;
         List<string> tmpList;
 
         Crossword _board = new Crossword(n, m);
-
 
         public AdminWindowForm()
         {
@@ -92,21 +91,16 @@ namespace ClassicCrossword
             Grid.Create(mainPanel, n+2, m+2); // создание сетки заданной размерности
 
             parseDict(@"..\..\Dict\Glavny.dict");
-            //list.AddRange(dict);
+            list.AddRange(dict);
 
-            int i = 0;
-            foreach (var item in listNot)
+            listNot = dict.Keys.ToList();
+            listDef = dict.Values.ToList();
+
+            foreach (var item in list)
             {
-                dataGridViewVocabularyOfC.Rows.Add(item);
-                dataGridViewVocabularyOfV.Rows.Add();
-                dataGridViewVocabularyOfV.Rows[i].Cells["dgvtbcNot2"].Value = item;
-                i++;
-            }
-            i = 0;
-            foreach (var item in listDef)
-            {
-                dataGridViewVocabularyOfV.Rows[i].Cells["dgvtbcDef"].Value = item;
-                i++;
+                
+                dataGridViewVocabularyOfC.Rows.Add(item.Key);
+                dataGridViewVocabularyOfV.Rows.Add(item.Key, item.Value);
             }
         }
 
@@ -118,14 +112,14 @@ namespace ClassicCrossword
 
         private void parseDict(string filename)
         {
-            string[] words = File.ReadAllLines(filename, Encoding.GetEncoding("windows-1251")).Take(10).ToArray();
+            string[] words = File.ReadAllLines(filename, Encoding.GetEncoding("windows-1251")).Take(100).ToArray();
             for (int i = 0; i < words.Length; i++)
             {
                 string word = words[i].Split(' ')[0];
                 string question = words[i].Substring(words[i].IndexOf(' '));
-                listNot.Add(word);
-                listDef.Add(question);
-                //dict.Add(word, question);
+                //listNot.Add(word);
+                //listDef.Add(question);
+                dict.Add(word, question);
             }
         }
 
@@ -229,6 +223,28 @@ namespace ClassicCrossword
                     }
                 }
             }
+        }
+
+        private void сохранитьСловарьtoolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            dict.Clear();
+
+            for (int i = 0; i < dataGridViewVocabularyOfV.RowCount - 1; i++)
+            {
+                    dict.Add(dataGridViewVocabularyOfV.Rows[i].Cells[0].Value.ToString(), dataGridViewVocabularyOfV.Rows[i].Cells[1].Value.ToString());
+            }
+
+            list.Clear();
+            list.AddRange(dict);
+
+            string s = "";
+            
+            foreach (var item in list)
+            {
+                s += item.Key + " " + item.Value + "\n";
+            }
+
+
         }
     }
 }

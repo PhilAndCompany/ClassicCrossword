@@ -152,7 +152,6 @@
             this.groupBoxVocabularyOfC.Controls.Add(this.textBoxVocabularyWordsCountOnC);
             this.groupBoxVocabularyOfC.Controls.Add(this.dataGridViewVocabularyOfC);
             this.groupBoxVocabularyOfC.Controls.Add(this.labelVocabularyWordsCountOnC);
-            this.groupBoxVocabularyOfC.Enabled = false;
             this.groupBoxVocabularyOfC.Location = new System.Drawing.Point(540, 30);
             this.groupBoxVocabularyOfC.Name = "groupBoxVocabularyOfC";
             this.groupBoxVocabularyOfC.Size = new System.Drawing.Size(266, 433);
@@ -415,7 +414,6 @@
             this.groupBoxVocabularyOfV.Controls.Add(this.textBoxVocabularyWordsCountOnV);
             this.groupBoxVocabularyOfV.Controls.Add(this.labelabelVocabularyWordsCountOnV);
             this.groupBoxVocabularyOfV.Controls.Add(this.dataGridViewVocabularyOfV);
-            this.groupBoxVocabularyOfV.Enabled = false;
             this.groupBoxVocabularyOfV.Location = new System.Drawing.Point(6, 30);
             this.groupBoxVocabularyOfV.Name = "groupBoxVocabularyOfV";
             this.groupBoxVocabularyOfV.Size = new System.Drawing.Size(800, 524);
@@ -494,11 +492,11 @@
             // 
             // сохранитьСловарьtoolStripMenuItem1
             // 
-            this.сохранитьСловарьtoolStripMenuItem1.Enabled = false;
             this.сохранитьСловарьtoolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("сохранитьСловарьtoolStripMenuItem1.Image")));
             this.сохранитьСловарьtoolStripMenuItem1.Name = "сохранитьСловарьtoolStripMenuItem1";
             this.сохранитьСловарьtoolStripMenuItem1.Size = new System.Drawing.Size(141, 20);
             this.сохранитьСловарьtoolStripMenuItem1.Text = "Сохранить словарь";
+            this.сохранитьСловарьtoolStripMenuItem1.Click += new System.EventHandler(this.сохранитьСловарьtoolStripMenuItem1_Click);
             // 
             // очиститьToolStripMenuItem1
             // 
