@@ -280,7 +280,7 @@
             this.выходToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.выходToolStripMenuItem.Text = "Выход";
             // 
-            // UserWindow
+            // UserWindowForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -294,7 +294,8 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.menuStrip1);
-            this.Name = "UserWindow";
+            this.Name = "UserWindowForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EFM - %USERNAME%";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

@@ -96,6 +96,8 @@
             this.обАвторахToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.playerTableAdapter = new ClassicCrossword.CrosswordDataSetTableAdapters.PlayerTableAdapter();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVocabularyOfC)).BeginInit();
             this.groupBoxVocabularyOfC.SuspendLayout();
             this.tabControlMenu.SuspendLayout();
@@ -482,6 +484,7 @@
             this.создатьToolStripMenuItem1.Name = "создатьToolStripMenuItem1";
             this.создатьToolStripMenuItem1.Size = new System.Drawing.Size(78, 20);
             this.создатьToolStripMenuItem1.Text = "Создать";
+            this.создатьToolStripMenuItem1.Click += new System.EventHandler(this.создатьToolStripMenuItem1_Click);
             // 
             // редактироватьToolStripMenuItem1
             // 
@@ -489,6 +492,7 @@
             this.редактироватьToolStripMenuItem1.Name = "редактироватьToolStripMenuItem1";
             this.редактироватьToolStripMenuItem1.Size = new System.Drawing.Size(130, 20);
             this.редактироватьToolStripMenuItem1.Text = "Выбрать словарь";
+            this.редактироватьToolStripMenuItem1.Click += new System.EventHandler(this.редактироватьToolStripMenuItem1_Click);
             // 
             // сохранитьСловарьtoolStripMenuItem1
             // 
@@ -705,6 +709,10 @@
             // 
             this.playerTableAdapter.ClearBeforeFill = true;
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // AdminWindowForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -713,6 +721,7 @@
             this.Controls.Add(this.tabControlMenu);
             this.MaximizeBox = false;
             this.Name = "AdminWindowForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EFM - ADMIN";
             this.Load += new System.EventHandler(this.AdminWindowForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVocabularyOfC)).EndInit();
@@ -811,5 +820,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvtbcNot1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvtbcNot2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvtbcDef;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
