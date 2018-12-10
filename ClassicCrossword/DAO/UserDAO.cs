@@ -171,7 +171,7 @@ namespace ClassicCrossword.DAO
             SqlConnection sqlConnection = null;
             try
             {
-                string connectionString = @"Data Source=VLAD;Initial Catalog=CrosswordDB;Integrated Security=True";
+                string connectionString = @"Data Source=localhost;Initial Catalog=CrosswordDB;Integrated Security=True";
                 sqlConnection = new SqlConnection();
                 sqlConnection.ConnectionString = connectionString;
                 sqlConnection.Open();
