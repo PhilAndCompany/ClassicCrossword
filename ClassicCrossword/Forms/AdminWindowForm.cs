@@ -91,7 +91,7 @@ namespace ClassicCrossword
 
             Grid.Create(mainPanel, n+2, m+2); // создание сетки заданной размерности
 
-            parseDict("Glavny.dict");
+            parseDict(@"..\..\Dict\Glavny.dict");
             //list.AddRange(dict);
 
             int i = 0;
