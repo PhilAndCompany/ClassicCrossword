@@ -317,7 +317,7 @@ namespace ClassicCrossword
             {
                 BinaryFormatter formatter = new BinaryFormatter();
 
-                using (FileStream fs = new FileStream("def.crs", FileMode.OpenOrCreate))
+                using (FileStream fs = new FileStream(@"..\..\Crosswords\def.crs", FileMode.OpenOrCreate))
                 {
                     formatter.Serialize(fs, _board);
 

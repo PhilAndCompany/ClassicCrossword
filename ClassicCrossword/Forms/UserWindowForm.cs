@@ -26,7 +26,7 @@ namespace ClassicCrossword.Forms
         {
             BinaryFormatter formatter = new BinaryFormatter();
             
-            using (FileStream fs = new FileStream("def.crs", FileMode.OpenOrCreate))
+            using (FileStream fs = new FileStream(@"..\..\Crosswords\def.crs", FileMode.OpenOrCreate))
             {
                 _board = (Crossword)formatter.Deserialize(fs);
             }
