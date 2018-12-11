@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ClassicCrossword
 {
@@ -88,7 +89,7 @@ namespace ClassicCrossword
             playerTableAdapter.Fill(crosswordDataSet.Player);
             idDataGridViewTextBoxColumn.Visible = false;
 
-            Grid.Create(mainPanel, n+2, m+2); // создание сетки заданной размерности
+            Grid.Create(mainPanel, n + 2, m + 2); // создание сетки заданной размерности
 
             parseDict(@"..\..\Dict\Glavny.dict");
             list.AddRange(dict);
@@ -206,9 +207,9 @@ namespace ClassicCrossword
         void Numeration()
         {
             int point = 1;
-            for (var i = 1; i < n + 1; i++)
+            for (var i = 1; i < _board.N + 1; i++)
             {
-                for (var j = 1; j < m + 1; j++)
+                for (var j = 1; j < _board.M + 1; j++)
                 {
                     if (Grid.tbArray[i - 1, j].Text == "" && Grid.tbArray[i, j].Text != "" && Grid.tbArray[i + 1, j].Text != "")
                     {
@@ -239,7 +240,7 @@ namespace ClassicCrossword
 
                 for (int i = 0; i < dataGridViewVocabularyOfV.RowCount - 1; i++)
                 {
-                dict.Add(dataGridViewVocabularyOfV.Rows[i].Cells[0].Value.ToString(), dataGridViewVocabularyOfV.Rows[i].Cells[1].Value.ToString());
+                    dict.Add(dataGridViewVocabularyOfV.Rows[i].Cells[0].Value.ToString(), dataGridViewVocabularyOfV.Rows[i].Cells[1].Value.ToString());
                 }
 
                 list.Clear();
@@ -308,6 +309,23 @@ namespace ClassicCrossword
             listDef.Clear();
 
             textBoxVocabularyWordsCountOnV.Clear();
+        }
+
+        private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+
+                using (FileStream fs = new FileStream("def.crs", FileMode.OpenOrCreate))
+                {
+                    formatter.Serialize(fs, _board);
+
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

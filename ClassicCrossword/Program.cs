@@ -26,7 +26,7 @@ namespace ClassicCrossword
                     if (authForm.Usr.GetType() == typeof(Admin))
                         Application.Run(new AdminWindowForm());
                     else
-                        Application.Run(new RegistrationForm());
+                        Application.Run(new UserWindowForm());
 
                 }
             }

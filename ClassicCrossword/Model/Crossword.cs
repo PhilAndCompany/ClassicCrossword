@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClassicCrossword.Model
 {
+    [Serializable]
     public class Crossword
     {
         const string Letters = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyz";
@@ -13,9 +14,7 @@ namespace ClassicCrossword.Model
         readonly int[,] _vWords;
         readonly int[] _dirX = { 0, 1 };
         readonly int[] _dirY = { 1, 0 };
-        char[,] _board;
-        readonly int _n;
-        readonly int _m;
+        private char[,] _board;
         int _hCount, _vCount;
         private static IList<string> _wordsToInsert;
         private static char[,] _tempBoard;
@@ -24,72 +23,62 @@ namespace ClassicCrossword.Model
         Random _rand = new Random();
         private List<string> temp = new List<string>();
 
+        public char this[int i, int j]
+        {
+            get{ return _board[i, j]; }
+            set{ _board[i, j] = value; }
+        }
+
+        public int N { get; set; }
+
+        public int M { get; set; }
+
+        public char[,] GetBoard
+        {
+            get { return _board; }
+            set { _board = value; }
+        }
+
         public List<string> Temp
         {
             get { return temp; }
             set { temp = value; }
         }
 
+        public Crossword() {}
+
         public Crossword(int xDimen, int yDimen)
         {
             _board = new char[xDimen, yDimen];
             _hWords = new int[xDimen, yDimen];
             _vWords = new int[xDimen, yDimen];
-            _n = xDimen;
-            _m = yDimen;
+            N = xDimen;
+            M = yDimen;
             _rand = new Random();
 
-            for (var i = 0; i < _n; i++)
-                for (var j = 0; j < _m; j++)
+            for (var i = 0; i < N; i++)
+                for (var j = 0; j < M; j++)
                     _board[i, j] = ' ';
         }
 
         public override string ToString()
         {
             string result = "";
-            for (int i = 0; i < _n; i++)
+            for (int i = 0; i < N; i++)
             {
-                for (int j = 0; j < _m; j++)
+                for (int j = 0; j < M; j++)
                 {
                     result += Letters.Contains(_board[i, j].ToString()) ? _board[i, j] : ' ';
                 }
-                if (i < _n - 1)
+                if (i < N - 1)
                     result += '\n';
             }
             return result;
         }
 
-        public char this[int i, int j]
-        {
-            get
-            {
-                return _board[i, j];
-            }
-            set
-            {
-                _board[i, j] = value;
-            }
-        }
-
-        public int N
-        {
-            get
-            {
-                return _n;
-            }
-        }
-
-        public int M
-        {
-            get
-            {
-                return _m;
-            }
-        }
-
         bool IsValidPosition(int x, int y)
         {
-            return x >= 0 && y >= 0 && x < _n && y < _m;
+            return x >= 0 && y >= 0 && x < N && y < M;
         }
 
         int CanBePlaced(string word, int x, int y, int dir)
@@ -185,9 +174,9 @@ namespace ClassicCrossword.Model
         {
             var max = 0;
             var positions = new List<Tuple<int, int, int>>();
-            for (var x = 0; x < _n; x++)
+            for (var x = 0; x < N; x++)
             {
-                for (var y = 0; y < _m; y++)
+                for (var y = 0; y < M; y++)
                 {
                     for (var i = 0; i < _dirX.Length; i++)
                     {
@@ -225,19 +214,11 @@ namespace ClassicCrossword.Model
             return Letters.Contains(a.ToString());
         }
 
-        public char[,] GetBoard
-        {
-            get
-            {
-                return _board;
-            }
-        }
-
         public void Reset()
         {
-            for (var i = 0; i < _n; i++)
+            for (var i = 0; i < N; i++)
             {
-                for (var j = 0; j < _m; j++)
+                for (var j = 0; j < M; j++)
                 {
                     _board[i, j] = ' ';
                     _vWords[i, j] = 0;

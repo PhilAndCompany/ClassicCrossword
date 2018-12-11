@@ -34,7 +34,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.решатьКроссвордToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,6 +52,7 @@
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.обАвторахToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainPanel = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,9 +101,9 @@
             // groupBox3
             // 
             this.groupBox3.Enabled = false;
-            this.groupBox3.Location = new System.Drawing.Point(487, 287);
+            this.groupBox3.Location = new System.Drawing.Point(545, 243);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(325, 210);
+            this.groupBox3.Size = new System.Drawing.Size(325, 225);
             this.groupBox3.TabIndex = 12;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "По вертикали:";
@@ -111,22 +111,12 @@
             // groupBox2
             // 
             this.groupBox2.Enabled = false;
-            this.groupBox2.Location = new System.Drawing.Point(487, 54);
+            this.groupBox2.Location = new System.Drawing.Point(545, 27);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(325, 210);
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "По горизонтали:";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Enabled = false;
-            this.groupBox1.Location = new System.Drawing.Point(22, 54);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(448, 443);
-            this.groupBox1.TabIndex = 10;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "КРОССВОРД %CROSSWORDNAME%";
             // 
             // label3
             // 
@@ -150,7 +140,7 @@
             this.выходToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(844, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(890, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -170,6 +160,7 @@
             this.новыйКроссвордToolStripMenuItem.Name = "новыйКроссвордToolStripMenuItem";
             this.новыйКроссвордToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.новыйКроссвордToolStripMenuItem.Text = "Новый кроссворд";
+            this.новыйКроссвордToolStripMenuItem.Click += new System.EventHandler(this.новыйКроссвордToolStripMenuItem_Click);
             // 
             // загрузитьСохраненныйToolStripMenuItem
             // 
@@ -280,18 +271,25 @@
             this.выходToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.выходToolStripMenuItem.Text = "Выход";
             // 
+            // mainPanel
+            // 
+            this.mainPanel.Location = new System.Drawing.Point(12, 27);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(527, 441);
+            this.mainPanel.TabIndex = 37;
+            // 
             // UserWindowForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(844, 601);
+            this.ClientSize = new System.Drawing.Size(890, 601);
+            this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.menuStrip1);
             this.Name = "UserWindowForm";
@@ -312,7 +310,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem печатьРешенияToolStripMenuItem;
@@ -331,5 +328,6 @@
         private System.Windows.Forms.ToolStripMenuItem руководствоПользователяToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem обАвторахToolStripMenuItem;
+        private System.Windows.Forms.Panel mainPanel;
     }
 }
