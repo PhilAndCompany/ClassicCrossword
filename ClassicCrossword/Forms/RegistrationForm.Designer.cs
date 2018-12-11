@@ -141,6 +141,7 @@
             this.Controls.Add(this.tbLogin);
             this.Controls.Add(this.label1);
             this.Name = "RegistrationForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RegistrationWindow";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

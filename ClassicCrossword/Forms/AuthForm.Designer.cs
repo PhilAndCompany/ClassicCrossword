@@ -133,6 +133,7 @@
             this.Controls.Add(this.tbLogin);
             this.Controls.Add(this.labelAuthorization);
             this.Name = "AuthForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EFM - АВТОРИЗАЦИЯ";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

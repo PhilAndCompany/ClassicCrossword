@@ -24,7 +24,11 @@ namespace ClassicCrossword.Model
         Random _rand = new Random();
         private List<string> temp = new List<string>();
 
-        public List<string> Temp { get => temp; set => temp = value; }
+        public List<string> Temp
+        {
+            get { return temp; }
+            set { temp = value; }
+        }
 
         public Crossword(int xDimen, int yDimen)
         {

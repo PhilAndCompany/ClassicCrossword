@@ -115,10 +115,13 @@ namespace ClassicCrossword
             string[] words = File.ReadAllLines(filename, Encoding.GetEncoding("windows-1251")).Take(100).ToArray();
             for (int i = 0; i < words.Length; i++)
             {
-                string word = words[i].Split(' ')[0];
-                string question = words[i].Substring(words[i].IndexOf(' '));
+                string word = words[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];
+                string question = words[i].Substring(words[i].IndexOf(' ') + 1); //TODO убрать костыль
+
                 dict.Add(word, question);
             }
+
+            textBoxVocabularyWordsCountOnV.Text = words.Length.ToString();
         }
 
         private void выбратьсловарьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -225,24 +228,86 @@ namespace ClassicCrossword
 
         private void сохранитьСловарьtoolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            dict.Clear();
-
-            for (int i = 0; i < dataGridViewVocabularyOfV.RowCount - 1; i++)
+            saveFileDialog1.DefaultExt = ".dict";
+            saveFileDialog1.InitialDirectory = @"..\..\Dict\";
+            saveFileDialog1.AddExtension = true;
+            saveFileDialog1.FileName = "Vocabulary";
+            saveFileDialog1.Filter = "Файл словаря (*.dict)|*.dict";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                dict.Clear();
+
+                for (int i = 0; i < dataGridViewVocabularyOfV.RowCount - 1; i++)
+                {
                 dict.Add(dataGridViewVocabularyOfV.Rows[i].Cells[0].Value.ToString(), dataGridViewVocabularyOfV.Rows[i].Cells[1].Value.ToString());
+                }
+
+                list.Clear();
+                list.AddRange(dict);
+
+                string s = "";
+
+                foreach (var item in list)
+                {
+                    s += item.Key + " " + item.Value + "\n";
+                }
+
+                using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName, false, System.Text.Encoding.Default))
+                {
+                    sw.WriteLine(s);
+                }
+
+                //textBox1.Text = folderBrowserDialog1.SelectedPath;
+
+
             }
+           
 
-            list.Clear();
-            list.AddRange(dict);
 
-            string s = "";
-            
-            foreach (var item in list)
+        }
+
+        private void редактироватьToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.DefaultExt = ".dict";
+            openFileDialog1.InitialDirectory = @"..\..\Dict\";
+            openFileDialog1.AddExtension = true;
+            openFileDialog1.FileName = "Default";
+            openFileDialog1.Filter = "Файл словаря (*.dict)|*.dict";
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                s += item.Key + " " + item.Value + "\n";
+                dict.Clear();
+                list.Clear();
+                listNot.Clear();
+                listDef.Clear();
+                dataGridViewVocabularyOfV.Rows.Clear();
+
+                parseDict(openFileDialog1.FileName);
+                list.AddRange(dict);
+
+                listNot = dict.Keys.ToList();
+                listDef = dict.Values.ToList();
+
+                foreach (var item in list)
+                {
+                    dataGridViewVocabularyOfC.Rows.Add(item.Key);
+                    dataGridViewVocabularyOfV.Rows.Add(item.Key, item.Value);
+                }
             }
+        }
 
+        private void создатьToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            while (dataGridViewVocabularyOfV.Rows.Count > 1)
+                for (int i = 0; i < dataGridViewVocabularyOfV.Rows.Count - 1; i++)
+                    dataGridViewVocabularyOfV.Rows.Remove(dataGridViewVocabularyOfV.Rows[i]);
 
+            dict.Clear();
+            list.Clear();
+            listNot.Clear();
+            listDef.Clear();
+
+            textBoxVocabularyWordsCountOnV.Clear();
         }
     }
 }
