@@ -100,7 +100,7 @@
             this.labelAddAccount.Name = "labelAddAccount";
             this.labelAddAccount.Size = new System.Drawing.Size(262, 29);
             this.labelAddAccount.TabIndex = 25;
-            this.labelAddAccount.Text = "ДОБАВИТЬ ИГРОКА";
+            this.labelAddAccount.Text = "ДОБАВЛЕНИЕ ИГРОКА";
             // 
             // AddNewPlayerForm
             // 
@@ -116,7 +116,7 @@
             this.Controls.Add(this.tbLogin);
             this.MaximizeBox = false;
             this.Name = "AddNewPlayerForm";
-            this.Text = "EFM - ДОБАВИТЬ ИГРОКА";
+            this.Text = "EFM - ДОБАВЛЕНИЕ ИГРОКА";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -175,7 +175,7 @@
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(75, 23);
             this.buttonAdd.TabIndex = 23;
-            this.buttonAdd.Text = "Добавить";
+            this.buttonAdd.Text = "Изменить";
             this.buttonAdd.UseVisualStyleBackColor = true;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
@@ -196,7 +196,7 @@
             this.labelAddAccount.Name = "labelAddAccount";
             this.labelAddAccount.Size = new System.Drawing.Size(262, 29);
             this.labelAddAccount.TabIndex = 25;
-            this.labelAddAccount.Text = "ДОБАВИТЬ ИГРОКА";
+            this.labelAddAccount.Text = "ИЗМЕНЕНИЕ ИГРОКА";
             // 
             // AddNewPlayerForm
             // 
@@ -213,7 +213,7 @@
             this.MaximizeBox = false;
             this.Name = "AddNewPlayerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "EFM - ДОБАВИТЬ ИГРОКА";
+            this.Text = "EFM - ИЗМЕНЕНИЕ ИГРОКА";
             this.ResumeLayout(false);
             this.PerformLayout();
 
