@@ -117,8 +117,6 @@ namespace ClassicCrossword
             {
                 string word = words[i].Split(' ')[0];
                 string question = words[i].Substring(words[i].IndexOf(' '));
-                //listNot.Add(word);
-                //listDef.Add(question);
                 dict.Add(word, question);
             }
         }
@@ -231,7 +229,7 @@ namespace ClassicCrossword
 
             for (int i = 0; i < dataGridViewVocabularyOfV.RowCount - 1; i++)
             {
-                    dict.Add(dataGridViewVocabularyOfV.Rows[i].Cells[0].Value.ToString(), dataGridViewVocabularyOfV.Rows[i].Cells[1].Value.ToString());
+                dict.Add(dataGridViewVocabularyOfV.Rows[i].Cells[0].Value.ToString(), dataGridViewVocabularyOfV.Rows[i].Cells[1].Value.ToString());
             }
 
             list.Clear();
