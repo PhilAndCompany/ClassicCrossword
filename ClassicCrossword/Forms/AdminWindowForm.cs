@@ -135,8 +135,11 @@ namespace ClassicCrossword
             {
                 string word = words[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];
                 string question = words[i].Substring(words[i].IndexOf(' ') + 1); //TODO убрать костыль
-
-                dict.Add(word, question);
+                try
+                {
+                    dict.Add(word, question);
+                }
+                catch (Exception) { continue; }
             }
 
             textBoxVocabularyWordsCountOnV.Text = words.Length.ToString();
