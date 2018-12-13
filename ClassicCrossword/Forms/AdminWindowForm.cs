@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.RegularExpressions;
 
 namespace ClassicCrossword
 {
@@ -28,6 +29,12 @@ namespace ClassicCrossword
 
         List<string> notUsedList;
         List<string> tmpList;
+
+        private int dir;
+        private int colInd;
+        private int rowInd;
+
+        private string mask = "";
 
         Crossword _board = new Crossword(n, m);
 
@@ -89,7 +96,18 @@ namespace ClassicCrossword
             playerTableAdapter.Fill(crosswordDataSet.Player);
             idDataGridViewTextBoxColumn.Visible = false;
 
-            Grid.Create(mainPanel, n + 2, m + 2); // создание сетки заданной размерности
+            Font font = new Font("Microsoft Sans Serif", 8.0f, FontStyle.Bold);
+            dataGridView2.Font = font;
+
+            int k;
+            for (int i = 0; i < m+2; i++)
+            {
+                k = dataGridView2.Columns.Add(i.ToString(), i.ToString());
+                dataGridView2.Columns[k].Width = 25;
+            }
+
+            for (int i = 0; i < n+2; i++)
+                dataGridView2.Rows.Add();
 
             parseDict(@"..\..\Dict\Glavny.dict");
             list.AddRange(dict);
@@ -99,7 +117,6 @@ namespace ClassicCrossword
 
             foreach (var item in list)
             {
-                
                 dataGridViewVocabularyOfC.Rows.Add(item.Key);
                 dataGridViewVocabularyOfV.Rows.Add(item.Key, item.Value);
             }
@@ -113,7 +130,7 @@ namespace ClassicCrossword
 
         private void parseDict(string filename)
         {
-            string[] words = File.ReadAllLines(filename, Encoding.GetEncoding("windows-1251")).Take(100).ToArray();
+            string[] words = File.ReadAllLines(filename, Encoding.GetEncoding("windows-1251")).Take(500).ToArray();
             for (int i = 0; i < words.Length; i++)
             {
                 string word = words[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];
@@ -127,7 +144,32 @@ namespace ClassicCrossword
 
         private void выбратьсловарьToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            openFileDialog1.DefaultExt = ".dict";
+            openFileDialog1.InitialDirectory = @"..\..\Dict\";
+            openFileDialog1.AddExtension = true;
+            openFileDialog1.FileName = "Default";
+            openFileDialog1.Filter = "Файл словаря (*.dict)|*.dict";
 
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                dict.Clear();
+                list.Clear();
+                listNot.Clear();
+                listDef.Clear();
+                dataGridViewVocabularyOfV.Rows.Clear();
+
+                parseDict(openFileDialog1.FileName);
+                list.AddRange(dict);
+
+                listNot = dict.Keys.ToList();
+                listDef = dict.Values.ToList();
+
+                foreach (var item in list)
+                {
+                    dataGridViewVocabularyOfC.Rows.Add(item.Key);
+                    dataGridViewVocabularyOfV.Rows.Add(item.Key, item.Value);
+                }
+            }
         }
 
         private void buttonGenerate_Click(object sender, EventArgs e)
@@ -138,10 +180,30 @@ namespace ClassicCrossword
             GenerateCrossword();
         }
 
+        void clearDGV(DataGridView dgv) {
+            for (int i = 0; i < dgv.RowCount; i++)
+            {
+                for (int j = 0; j < dgv.ColumnCount; j++)
+                {
+                    dgv.Rows[i].Cells[j].Value = "";
+                }
+            }
+        }
+
+        void delDGV(DataGridView dgv)
+        {
+            while (dgv.Rows.Count != 1)
+            {
+                dgv.Rows.RemoveAt(0);
+            }
+        }
+
         void GenerateCrossword()
         {
             _board.Reset();
-            Grid.ClearBoard(mainPanel, n+2, m+2);
+
+            clearDGV(dataGridView2);
+            //Grid.ClearBoard(mainPanel, n+2, m+2);
 
             notUsedList = new List<string>();
             tmpList = new List<string>();
@@ -193,10 +255,7 @@ namespace ClassicCrossword
                     var letter = board[i, j] == '*' ? ' ' : board[i, j];
                     if (letter != ' ') count--;
                     if (letter != ' ')
-                    {
-                        Grid.tbArray[i + 1, j + 1].Text = letter.ToString();
-                        Grid.tbArray[i + 1, j + 1].Enabled = true;
-                    }
+                        dataGridView2.Rows[i+1].Cells[j+1].Value = letter.ToString();
                     p++;
                 }
             }
@@ -211,16 +270,14 @@ namespace ClassicCrossword
             {
                 for (var j = 1; j < _board.M + 1; j++)
                 {
-                    if (Grid.tbArray[i - 1, j].Text == "" && Grid.tbArray[i, j].Text != "" && Grid.tbArray[i + 1, j].Text != "")
+                    if (dataGridView2.Rows[i-1].Cells[j].Value.ToString().Equals("") && !dataGridView2.Rows[i].Cells[j].Value.ToString().Equals("") && !dataGridView2.Rows[i+1].Cells[j].Value.ToString().Equals(""))
                     {
-                        Grid.tbArray[i - 1, j].Text = point.ToString();
-                        //QuestionList.Items.Add(point.ToString() + ")");
+                        dataGridView2.Rows[i-1].Cells[j].Value = point.ToString();
                         point++;
                     }
-                    if (Grid.tbArray[i, j - 1].Text == "" && Grid.tbArray[i, j].Text != "" && Grid.tbArray[i, j + 1].Text != "")
+                    if (dataGridView2.Rows[i].Cells[j-1].Value.ToString().Equals("") && !dataGridView2.Rows[i].Cells[j].Value.ToString().Equals("") && !dataGridView2.Rows[i].Cells[j+1].Value.ToString().Equals(""))
                     {
-                        Grid.tbArray[i, j - 1].Text = point.ToString();
-                        //QuestionList.Items.Add(point.ToString() + ")");
+                        dataGridView2.Rows[i].Cells[j-1].Value = point.ToString();
                         point++;
                     }
                 }
@@ -257,14 +314,8 @@ namespace ClassicCrossword
                 {
                     sw.WriteLine(s);
                 }
-
                 //textBox1.Text = folderBrowserDialog1.SelectedPath;
-
-
             }
-           
-
-
         }
 
         private void редактироватьToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -326,6 +377,136 @@ namespace ClassicCrossword
             catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void dataGridView2_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridView2.SelectedCells.Count == 2)
+            {
+                mask = "";
+                if (dataGridView2.SelectedCells[0].RowIndex == dataGridView2.SelectedCells[1].RowIndex &&
+                    dataGridView2.SelectedCells[0].ColumnIndex == dataGridView2.SelectedCells[1].ColumnIndex + 1)
+                {//вправо
+                    dir = 3;
+                    rowInd = dataGridView2.SelectedCells[1].RowIndex;
+                    if (dataGridView2.SelectedCells[1].Value.ToString().Equals(""))
+                        mask = "^\\w" + dataGridView2.SelectedCells[0].Value.ToString();
+                    else if (dataGridView2.SelectedCells[0].Value.ToString().Equals(""))
+                        mask = '^' + dataGridView2.SelectedCells[1].Value.ToString() + "\\w";
+                    else mask = dataGridView2.SelectedCells[1].Value.ToString() + dataGridView2.SelectedCells[0].Value.ToString();
+                }
+                else if (dataGridView2.SelectedCells[0].RowIndex == dataGridView2.SelectedCells[1].RowIndex &&
+                    dataGridView2.SelectedCells[0].ColumnIndex == dataGridView2.SelectedCells[1].ColumnIndex - 1)
+                {//влево
+                    dir = 1;
+                    rowInd = dataGridView2.SelectedCells[1].RowIndex;
+                    if (dataGridView2.SelectedCells[0].Value.ToString().Equals(""))
+                        mask = "^\\w" + dataGridView2.SelectedCells[1].Value.ToString();
+                    else if (dataGridView2.SelectedCells[1].Value.ToString().Equals(""))
+                        mask = '^' + dataGridView2.SelectedCells[0].Value.ToString() + "\\w";
+                    else mask = dataGridView2.SelectedCells[1].Value.ToString() + dataGridView2.SelectedCells[0].Value.ToString();
+                }
+                else if (dataGridView2.SelectedCells[0].RowIndex == dataGridView2.SelectedCells[1].RowIndex + 1 &&
+                    dataGridView2.SelectedCells[0].ColumnIndex == dataGridView2.SelectedCells[1].ColumnIndex)
+                {//вниз
+                    dir = 0;
+                    colInd = dataGridView2.SelectedCells[1].ColumnIndex;
+                    if (dataGridView2.SelectedCells[1].Value.ToString().Equals(""))
+                        mask = "^\\w" + dataGridView2.SelectedCells[0].Value.ToString();
+                    else if (dataGridView2.SelectedCells[0].Value.ToString().Equals(""))
+                        mask = '^' + dataGridView2.SelectedCells[1].Value.ToString() + "\\w";
+                    else mask = dataGridView2.SelectedCells[1].Value.ToString() + dataGridView2.SelectedCells[0].Value.ToString();
+                }
+                else if (dataGridView2.SelectedCells[0].RowIndex == dataGridView2.SelectedCells[1].RowIndex - 1 &&
+                    dataGridView2.SelectedCells[0].ColumnIndex == dataGridView2.SelectedCells[1].ColumnIndex)
+                {//вверх
+                    dir = 2;
+                    colInd = dataGridView2.SelectedCells[1].ColumnIndex;
+                    if (dataGridView2.SelectedCells[0].Value.ToString().Equals(""))
+                        mask = "^\\w" + dataGridView2.SelectedCells[1].Value.ToString();
+                    else if (dataGridView2.SelectedCells[1].Value.ToString().Equals(""))
+                        mask = '^' + dataGridView2.SelectedCells[0].Value.ToString() + "\\w";
+                    else mask = dataGridView2.SelectedCells[1].Value.ToString() + dataGridView2.SelectedCells[0].Value.ToString();
+                }
+                else
+                    MessageBox.Show("Неверная область");
+            }
+            if (dataGridView2.SelectedCells.Count > 2)
+            {
+                if (dir == 3)
+                {
+                    if (!(dataGridView2.SelectedCells[0].ColumnIndex == dataGridView2.SelectedCells[1].ColumnIndex + 1) ||
+                        rowInd != dataGridView2.SelectedCells[0].RowIndex)
+                        MessageBox.Show("Неверная область");
+                    else
+                    {
+                        if (dataGridView2.SelectedCells[0].Value.ToString().Equals(""))
+                            mask += "\\w";
+                        else mask += dataGridView2.SelectedCells[0].Value.ToString();
+                        updateDGV(dataGridView2, mask);
+                    }
+
+                }
+                else if (dir == 1)
+                {
+                    if (!(dataGridView2.SelectedCells[0].ColumnIndex == dataGridView2.SelectedCells[1].ColumnIndex - 1) ||
+                        rowInd != dataGridView2.SelectedCells[0].RowIndex)
+                        MessageBox.Show("Неверная область");
+                    else
+                    {
+                        if (dataGridView2.SelectedCells[0].Value.ToString().Equals(""))
+                            mask = mask.Insert(0, "\\w");
+                        else mask = mask.Insert(0, dataGridView2.SelectedCells[0].Value.ToString());
+                        updateDGV(dataGridView2, mask);
+                    }
+                }
+                else if (dir == 0)
+                {
+                    if (!(dataGridView2.SelectedCells[0].RowIndex == dataGridView2.SelectedCells[1].RowIndex + 1) ||
+                        colInd != dataGridView2.SelectedCells[0].ColumnIndex)
+                        MessageBox.Show("Неверная область");
+                    else
+                    {
+                        if (dataGridView2.SelectedCells[0].Value.ToString().Equals(""))
+                            mask += "\\w";
+                        else mask += dataGridView2.SelectedCells[0].Value.ToString();
+                        updateDGV(dataGridView2, mask);
+                    }
+                }
+                else
+                {
+                    if (!(dataGridView2.SelectedCells[0].RowIndex == dataGridView2.SelectedCells[1].RowIndex - 1) ||
+                        colInd != dataGridView2.SelectedCells[0].ColumnIndex)
+                        MessageBox.Show("Неверная область");
+                    else {
+                        if (dataGridView2.SelectedCells[0].Value.ToString().Equals(""))
+                            mask = mask.Insert(0, "\\w");
+                        else mask = mask.Insert(0, dataGridView2.SelectedCells[0].Value.ToString());
+                        updateDGV(dataGridView2, mask);
+                    }
+                }
+            }
+        }
+
+        void updateDGV(DataGridView dgv, string pat) {
+
+            listNot = dict.Keys.ToList();
+            delDGV(dataGridViewVocabularyOfC);
+            foreach (var item in listNot)
+            {
+                if (Regex.IsMatch(item, pat, RegexOptions.IgnoreCase))
+                {
+                    dataGridViewVocabularyOfC.Rows.Add(item);
+                }
+            }
+
+        }
+
+        private void buttonClearMask_Click(object sender, EventArgs e)
+        {
+            list.AddRange(dict);
+            foreach (var item in list)
+                dataGridViewVocabularyOfC.Rows.Add(item.Key);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace ClassicCrossword.Model
             int bw = 20;
 
             tbArray = new TextBox[count1, count2];
+            
             for (int i = 0; i < count1; i++)
             {
                 x = 0;
@@ -66,7 +67,7 @@ namespace ClassicCrossword.Model
         public static void ClearNotUsed(int count1, int count2)
         {
             for (var i = 0; i < count1; i++)
-                for (var j = 0; j < count2; j++)
+                for (var j = 0; j < count2; j++) 
                     if (tbArray[i, j].Text == "")
                         tbArray[i, j].Enabled = false;
         }
@@ -74,7 +75,7 @@ namespace ClassicCrossword.Model
         public static void KillTB(int count1, int count2)
         {
             for (var i = 0; i < count1; i++)
-                for (var j = 0; j < count2; j++)
+                for (var j = 0; j < count2; j++) 
                     tbArray[i, j].Dispose();
         }
     }

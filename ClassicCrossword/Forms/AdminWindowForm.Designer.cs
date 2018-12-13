@@ -41,6 +41,7 @@
             this.tabControlMenu = new System.Windows.Forms.TabControl();
             this.tabPageCrossword = new System.Windows.Forms.TabPage();
             this.mainPanel = new System.Windows.Forms.Panel();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.buttonGenerate = new System.Windows.Forms.Button();
             this.groupBoxVocabularyInstruments = new System.Windows.Forms.GroupBox();
             this.buttonClearMask = new System.Windows.Forms.Button();
@@ -99,10 +100,13 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
+            this.saveFileDialog3 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVocabularyOfC)).BeginInit();
             this.groupBoxVocabularyOfC.SuspendLayout();
             this.tabControlMenu.SuspendLayout();
             this.tabPageCrossword.SuspendLayout();
+            this.mainPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBoxVocabularyInstruments.SuspendLayout();
             this.menuStripCrossword.SuspendLayout();
             this.tabPageVocabulary.SuspendLayout();
@@ -219,10 +223,26 @@
             // 
             // mainPanel
             // 
+            this.mainPanel.Controls.Add(this.dataGridView2);
             this.mainPanel.Location = new System.Drawing.Point(7, 31);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(527, 441);
             this.mainPanel.TabIndex = 36;
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.AllowUserToResizeColumns = false;
+            this.dataGridView2.AllowUserToResizeRows = false;
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.ColumnHeadersVisible = false;
+            this.dataGridView2.EnableHeadersVisualStyles = false;
+            this.dataGridView2.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.RowHeadersVisible = false;
+            this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dataGridView2.Size = new System.Drawing.Size(521, 435);
+            this.dataGridView2.TabIndex = 0;
+            this.dataGridView2.SelectionChanged += new System.EventHandler(this.dataGridView2_SelectionChanged);
             // 
             // buttonGenerate
             // 
@@ -259,6 +279,7 @@
             this.buttonClearMask.Size = new System.Drawing.Size(32, 32);
             this.buttonClearMask.TabIndex = 32;
             this.buttonClearMask.UseVisualStyleBackColor = true;
+            this.buttonClearMask.Click += new System.EventHandler(this.buttonClearMask_Click);
             // 
             // buttonSortByAlphabet
             // 
@@ -449,8 +470,11 @@
             this.dataGridViewVocabularyOfV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvtbcNot2,
             this.dgvtbcDef});
+            this.dataGridViewVocabularyOfV.EnableHeadersVisualStyles = false;
             this.dataGridViewVocabularyOfV.Location = new System.Drawing.Point(6, 19);
             this.dataGridViewVocabularyOfV.Name = "dataGridViewVocabularyOfV";
+            this.dataGridViewVocabularyOfV.RowHeadersVisible = false;
+            this.dataGridViewVocabularyOfV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridViewVocabularyOfV.Size = new System.Drawing.Size(788, 463);
             this.dataGridViewVocabularyOfV.TabIndex = 0;
             // 
@@ -584,6 +608,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(6, 19);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(788, 150);
             this.dataGridView1.TabIndex = 0;
             // 
@@ -731,6 +756,8 @@
             this.tabControlMenu.ResumeLayout(false);
             this.tabPageCrossword.ResumeLayout(false);
             this.tabPageCrossword.PerformLayout();
+            this.mainPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.groupBoxVocabularyInstruments.ResumeLayout(false);
             this.groupBoxVocabularyInstruments.PerformLayout();
             this.menuStripCrossword.ResumeLayout(false);
@@ -824,5 +851,7 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog2;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog3;
+        private System.Windows.Forms.DataGridView dataGridView2;
     }
 }

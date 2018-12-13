@@ -31,7 +31,18 @@ namespace ClassicCrossword.Forms
                 _board = (Crossword)formatter.Deserialize(fs);
             }
 
-            Grid.Create(mainPanel, _board.N + 2, _board.M + 2);
+            Font font = new Font("Microsoft Sans Serif", 8.0f, FontStyle.Bold);
+            dataGridView2.Font = font;
+
+            int k;
+            for (int i = 0; i < _board.M + 2; i++)
+            {
+                k = dataGridView2.Columns.Add(i.ToString(), i.ToString());
+                dataGridView2.Columns[k].Width = 25;
+            }
+
+            for (int i = 0; i < _board.N + 2; i++)
+                dataGridView2.Rows.Add();
 
             Actualize();
         }
@@ -58,10 +69,7 @@ namespace ClassicCrossword.Forms
                     var letter = board[i, j] == '*' ? ' ' : board[i, j];
                     if (letter != ' ') count--;
                     if (letter != ' ')
-                    {
-                        Grid.tbArray[i + 1, j + 1].Text = "";
-                        Grid.tbArray[i + 1, j + 1].Enabled = true;
-                    }
+                        dataGridView2.Rows[i + 1].Cells[j + 1].Value = letter.ToString();
                     p++;
                 }
             }
@@ -79,18 +87,21 @@ namespace ClassicCrossword.Forms
                 {
                     if (tmp[i - 1, j] == ' ' && tmp[i, j] != ' ' && tmp[i + 1, j] != ' ')
                     {
-                        Grid.tbArray[i - 1, j].Text = point.ToString();
-                        //QuestionList.Items.Add(point.ToString() + ")");
+                        dataGridView2.Rows[i - 1].Cells[j].Value = point.ToString();
                         point++;
                     }
                     if (tmp[i, j - 1] == ' ' && tmp[i, j] != ' ' && tmp[i, j + 1] != ' ')
                     {
-                        Grid.tbArray[i, j - 1].Text = point.ToString();
-                        //QuestionList.Items.Add(point.ToString() + ")");
+                        dataGridView2.Rows[i].Cells[j - 1].Value = point.ToString();
                         point++;
                     }
                 }
             }
+        }
+
+        private void UserWindowForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
