@@ -170,6 +170,17 @@ namespace ClassicCrossword.Model
             return -1;
         }
 
+        public int AddWord(string word, int x, int y, int dir)
+        {
+            if (dir == 0)
+                _hCount++;
+            else
+                _vCount++;
+            var value = dir == 0 ? _hCount : _vCount;
+            PutWord(word, x, y, dir, value);
+            return dir;
+        }
+
         List<Tuple<int, int, int>> FindPositions(string word)
         {
             var max = 0;

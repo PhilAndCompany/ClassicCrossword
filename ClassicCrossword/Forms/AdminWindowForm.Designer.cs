@@ -144,15 +144,22 @@
             this.dataGridViewVocabularyOfC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewVocabularyOfC.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvtbcNot1});
+            this.dataGridViewVocabularyOfC.EnableHeadersVisualStyles = false;
             this.dataGridViewVocabularyOfC.Location = new System.Drawing.Point(6, 19);
+            this.dataGridViewVocabularyOfC.MultiSelect = false;
             this.dataGridViewVocabularyOfC.Name = "dataGridViewVocabularyOfC";
+            this.dataGridViewVocabularyOfC.ReadOnly = true;
+            this.dataGridViewVocabularyOfC.RowHeadersVisible = false;
+            this.dataGridViewVocabularyOfC.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridViewVocabularyOfC.Size = new System.Drawing.Size(254, 382);
             this.dataGridViewVocabularyOfC.TabIndex = 0;
+            this.dataGridViewVocabularyOfC.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewVocabularyOfC_CellContentClick);
             // 
             // dgvtbcNot1
             // 
             this.dgvtbcNot1.HeaderText = "Понятие";
             this.dgvtbcNot1.Name = "dgvtbcNot1";
+            this.dgvtbcNot1.ReadOnly = true;
             // 
             // groupBoxVocabularyOfC
             // 
@@ -231,6 +238,8 @@
             // 
             // dataGridView2
             // 
+            this.dataGridView2.AllowUserToAddRows = false;
+            this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.AllowUserToResizeColumns = false;
             this.dataGridView2.AllowUserToResizeRows = false;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -262,7 +271,6 @@
             this.groupBoxVocabularyInstruments.Controls.Add(this.buttonSortByAlphabet);
             this.groupBoxVocabularyInstruments.Controls.Add(this.buttonSortByLength);
             this.groupBoxVocabularyInstruments.Controls.Add(this.labelSearchByMask);
-            this.groupBoxVocabularyInstruments.Enabled = false;
             this.groupBoxVocabularyInstruments.Location = new System.Drawing.Point(540, 469);
             this.groupBoxVocabularyInstruments.Name = "groupBoxVocabularyInstruments";
             this.groupBoxVocabularyInstruments.Size = new System.Drawing.Size(266, 85);
