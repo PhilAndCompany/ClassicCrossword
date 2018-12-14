@@ -42,7 +42,14 @@ namespace ClassicCrossword.Forms
             }
 
             for (int i = 0; i < _board.N + 2; i++)
-                dataGridView2.Rows.Add();
+            {
+                k = dataGridView2.Rows.Add();
+                dataGridView2.Rows[k].Height = 25;
+            }
+
+            for (var i = 0; i < _board.N + 2; i++)
+                for (var j = 0; j < _board.M + 2; j++)
+                    dataGridView2.Rows[i].Cells[j].Value = " ";
 
             Actualize();
         }
@@ -57,8 +64,8 @@ namespace ClassicCrossword.Forms
             {
                 for (int j = 0; j < _board.M; j++)
                 {
-                    var letter = board[i, j] == '*' ? ' ' : board[i, j];
-                    tmpBoard[i + 1, j + 1] = letter;
+                    //var letter = board[i, j] == '*' ? ' ' : board[i, j];
+                    tmpBoard[i + 1, j + 1] = board[i, j];
                 }
             }
             var p = 0;
@@ -85,12 +92,12 @@ namespace ClassicCrossword.Forms
             {
                 for (var j = 1; j < _board.M + 1; j++)
                 {
-                    if (tmp[i - 1, j] == ' ' && tmp[i, j] != ' ' && tmp[i + 1, j] != ' ')
+                    if (tmp[i - 1, j].Equals('*') && !tmp[i, j].Equals(' ') && !tmp[i + 1, j].Equals(' '))
                     {
                         dataGridView2.Rows[i - 1].Cells[j].Value = point.ToString();
                         point++;
                     }
-                    if (tmp[i, j - 1] == ' ' && tmp[i, j] != ' ' && tmp[i, j + 1] != ' ')
+                    if (tmp[i, j - 1].Equals('*') && !tmp[i, j].Equals(' ') && !tmp[i, j + 1].Equals(' '))
                     {
                         dataGridView2.Rows[i].Cells[j - 1].Value = point.ToString();
                         point++;
