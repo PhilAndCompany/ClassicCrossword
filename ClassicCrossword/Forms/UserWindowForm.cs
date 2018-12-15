@@ -60,15 +60,10 @@ namespace ClassicCrossword.Forms
             var count = _board.N * _board.M;
             var board = _board.GetBoard;
 
-            char[,] tmpBoard = new char[_board.N+2, _board.M+2];
-            for (int i = 0; i < _board.N; i++)
-            {
-                for (int j = 0; j < _board.M; j++)
-                {
-                    //var letter = board[i, j] == '*' ? ' ' : board[i, j];
-                    tmpBoard[i + 1, j + 1] = board[i, j];
-                }
-            }
+            string[,] tmpBoard = new string[_board.N+2, _board.M+2];
+            for (int i = 0; i < _board.N+2; i++)
+                for (int j = 0; j < _board.M+2; j++)
+                    tmpBoard[i, j] = " ";
 
             var p = 0;
             for (var i = 0; i < _board.N; i++)
@@ -78,7 +73,14 @@ namespace ClassicCrossword.Forms
                     var letter = board[i, j] == '*' ? ' ' : board[i, j];
                     if (letter != ' ') count--;
                     if (letter != ' ')
-                        dataGridView2.Rows[i + 1].Cells[j + 1].Value = letter.ToString();
+                    {
+                        dataGridView2.Rows[i + 1].Cells[j + 1].Value = "_";
+                        tmpBoard[i + 1, j + 1] = letter.ToString();
+                    }
+                    else
+                    {
+                        tmpBoard[i + 1, j + 1] = " ";
+                    }
                     p++;
                 }
             }
@@ -86,7 +88,7 @@ namespace ClassicCrossword.Forms
         }
 
         //расстановка нумерации кроссворда и вопросов    
-        void Numeration(char[,] tmp)
+        void Numeration(string[,] tmp)
         {
             int point = 1;
             var board = _board.GetBoard;
@@ -94,12 +96,12 @@ namespace ClassicCrossword.Forms
             {
                 for (var j = 1; j < _board.M + 1; j++)
                 {
-                    if (tmp[i - 1, j].Equals(' ') && !tmp[i, j].Equals(' ') && !tmp[i + 1, j].Equals(' '))
+                    if (tmp[i - 1, j].Equals(" ") && !tmp[i, j].Equals(" ") && !tmp[i + 1, j].Equals(" "))
                     {
                         dataGridView2.Rows[i - 1].Cells[j].Value = point.ToString();
                         point++;
                     }
-                    if (tmp[i, j - 1].Equals(' ') && !tmp[i, j].Equals(' ') && !tmp[i, j + 1].Equals(' '))
+                    if (tmp[i, j - 1].Equals(" ") && !tmp[i, j].Equals(" ") && !tmp[i, j + 1].Equals(" "))
                     {
                         dataGridView2.Rows[i].Cells[j - 1].Value = point.ToString();
                         point++;
