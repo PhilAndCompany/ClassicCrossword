@@ -112,8 +112,14 @@ namespace ClassicCrossword
             }
 
             for (var i = 0; i < _board.N + 2; i++)
+            {
                 for (var j = 0; j < _board.M + 2; j++)
+                {
                     dgvCrossword.Rows[i].Cells[j].Value = " ";
+                    dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
+                    dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.Black;
+                }
+            }
 
             parseDict(@"..\..\Dict\Glavny.dict");
             list.AddRange(dict);
@@ -183,6 +189,14 @@ namespace ClassicCrossword
 
         private void buttonGenerate_Click(object sender, EventArgs e)
         {
+            for (var i = 0; i < _board.N + 2; i++)
+            {
+                for (var j = 0; j < _board.M + 2; j++)
+                {
+                    dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.Black;
+                    dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
+                }
+            }
             listNot.Sort(Comparer);
             listNot.Reverse();
             _board.Temp = listNot;
@@ -245,8 +259,10 @@ namespace ClassicCrossword
                     var letter = board[i, j] == '*' ? ' ' : board[i, j];
                     if (letter != ' ') count--;
                     if (letter != ' ')
-                        dgvCrossword.Rows[i+1].Cells[j+1].Value = letter.ToString();
-                    else dgvCrossword.Rows[i + 1].Cells[j + 1].Value = " ";
+                    {
+                        dgvCrossword.Rows[i + 1].Cells[j + 1].Value = letter.ToString();
+                        dgvCrossword.Rows[i + 1].Cells[j + 1].Style.BackColor = Color.White;
+                    }
                     p++;
                 }
             }
@@ -264,11 +280,13 @@ namespace ClassicCrossword
                     if (dgvCrossword.Rows[i-1].Cells[j].Value.ToString().Equals(" ") && !dgvCrossword.Rows[i].Cells[j].Value.ToString().Equals(" ") && !dgvCrossword.Rows[i+1].Cells[j].Value.ToString().Equals(" "))
                     {
                         dgvCrossword.Rows[i-1].Cells[j].Value = point.ToString();
+                        dgvCrossword.Rows[i - 1].Cells[j].Style.ForeColor = Color.White;
                         point++;
                     }
                     if (dgvCrossword.Rows[i].Cells[j-1].Value.ToString().Equals(" ") && !dgvCrossword.Rows[i].Cells[j].Value.ToString().Equals(" ") && !dgvCrossword.Rows[i].Cells[j+1].Value.ToString().Equals(" "))
                     {
                         dgvCrossword.Rows[i].Cells[j-1].Value = point.ToString();
+                        dgvCrossword.Rows[i].Cells[j - 1].Style.ForeColor = Color.White;
                         point++;
                     }
                 }

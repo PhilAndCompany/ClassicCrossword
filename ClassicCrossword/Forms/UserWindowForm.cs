@@ -32,24 +32,30 @@ namespace ClassicCrossword.Forms
             }
 
             Font font = new Font("Microsoft Sans Serif", 8.0f, FontStyle.Bold);
-            dataGridView2.Font = font;
+            dgvCrossword.Font = font;
 
             int k;
             for (int i = 0; i < _board.M + 2; i++)
             {
-                k = dataGridView2.Columns.Add(i.ToString(), i.ToString());
-                dataGridView2.Columns[k].Width = 25;
+                k = dgvCrossword.Columns.Add(i.ToString(), i.ToString());
+                dgvCrossword.Columns[k].Width = 25;
             }
 
             for (int i = 0; i < _board.N + 2; i++)
             {
-                k = dataGridView2.Rows.Add();
-                dataGridView2.Rows[k].Height = 25;
+                k = dgvCrossword.Rows.Add();
+                dgvCrossword.Rows[k].Height = 25;
             }
 
             for (var i = 0; i < _board.N + 2; i++)
+            {
                 for (var j = 0; j < _board.M + 2; j++)
-                    dataGridView2.Rows[i].Cells[j].Value = " ";
+                {
+                    dgvCrossword.Rows[i].Cells[j].Value = " ";
+                    dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
+                    dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.Black;
+                }
+            }
 
             Actualize();
         }
@@ -61,8 +67,8 @@ namespace ClassicCrossword.Forms
             var board = _board.GetBoard;
 
             string[,] tmpBoard = new string[_board.N+2, _board.M+2];
-            for (int i = 0; i < _board.N+2; i++)
-                for (int j = 0; j < _board.M+2; j++)
+            for (int i = 0; i < _board.N + 2; i++)
+                for (int j = 0; j < _board.M + 2; j++)
                     tmpBoard[i, j] = " ";
 
             var p = 0;
@@ -74,12 +80,10 @@ namespace ClassicCrossword.Forms
                     if (letter != ' ') count--;
                     if (letter != ' ')
                     {
-                        dataGridView2.Rows[i + 1].Cells[j + 1].Value = "_";
+                        dgvCrossword.Rows[i + 1].Cells[j + 1].Value = "";
+                        dgvCrossword.Rows[i + 1].Cells[j + 1].ReadOnly = false;
+                        dgvCrossword.Rows[i + 1].Cells[j + 1].Style.BackColor = Color.White;
                         tmpBoard[i + 1, j + 1] = letter.ToString();
-                    }
-                    else
-                    {
-                        tmpBoard[i + 1, j + 1] = " ";
                     }
                     p++;
                 }
@@ -98,12 +102,14 @@ namespace ClassicCrossword.Forms
                 {
                     if (tmp[i - 1, j].Equals(" ") && !tmp[i, j].Equals(" ") && !tmp[i + 1, j].Equals(" "))
                     {
-                        dataGridView2.Rows[i - 1].Cells[j].Value = point.ToString();
+                        dgvCrossword.Rows[i - 1].Cells[j].Value = point.ToString();
+                        dgvCrossword.Rows[i-1].Cells[j].Style.ForeColor = Color.White;
                         point++;
                     }
                     if (tmp[i, j - 1].Equals(" ") && !tmp[i, j].Equals(" ") && !tmp[i, j + 1].Equals(" "))
                     {
-                        dataGridView2.Rows[i].Cells[j - 1].Value = point.ToString();
+                        dgvCrossword.Rows[i].Cells[j - 1].Value = point.ToString();
+                        dgvCrossword.Rows[i].Cells[j-1].Style.ForeColor = Color.White;
                         point++;
                     }
                 }

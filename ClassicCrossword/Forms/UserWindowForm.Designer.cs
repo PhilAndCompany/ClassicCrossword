@@ -55,14 +55,14 @@
             this.обАвторахToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainPanel = new System.Windows.Forms.Panel();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.dgvCrossword = new System.Windows.Forms.DataGridView();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.mainPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCrossword)).BeginInit();
             this.SuspendLayout();
             // 
             // button2
@@ -306,27 +306,27 @@
             // 
             // mainPanel
             // 
-            this.mainPanel.Controls.Add(this.dataGridView2);
+            this.mainPanel.Controls.Add(this.dgvCrossword);
             this.mainPanel.Location = new System.Drawing.Point(12, 27);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(527, 441);
             this.mainPanel.TabIndex = 37;
             // 
-            // dataGridView2
+            // dgvCrossword
             // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.AllowUserToResizeColumns = false;
-            this.dataGridView2.AllowUserToResizeRows = false;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.ColumnHeadersVisible = false;
-            this.dataGridView2.EnableHeadersVisualStyles = false;
-            this.dataGridView2.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowHeadersVisible = false;
-            this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(521, 435);
-            this.dataGridView2.TabIndex = 38;
+            this.dgvCrossword.AllowUserToAddRows = false;
+            this.dgvCrossword.AllowUserToDeleteRows = false;
+            this.dgvCrossword.AllowUserToResizeColumns = false;
+            this.dgvCrossword.AllowUserToResizeRows = false;
+            this.dgvCrossword.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCrossword.ColumnHeadersVisible = false;
+            this.dgvCrossword.EnableHeadersVisualStyles = false;
+            this.dgvCrossword.Location = new System.Drawing.Point(3, 3);
+            this.dgvCrossword.Name = "dgvCrossword";
+            this.dgvCrossword.RowHeadersVisible = false;
+            this.dgvCrossword.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dgvCrossword.Size = new System.Drawing.Size(521, 435);
+            this.dgvCrossword.TabIndex = 38;
             // 
             // UserWindowForm
             // 
@@ -353,7 +353,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.mainPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCrossword)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -386,7 +386,7 @@
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem обАвторахToolStripMenuItem;
         private System.Windows.Forms.Panel mainPanel;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView dgvCrossword;
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.DataGridView dataGridView1;
     }
