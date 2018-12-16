@@ -12,24 +12,24 @@ namespace ClassicCrossword.Controller
     {
         public bool Insert(Player player)
         {
-            if (new UserDAO().Insert(player)) return true;
+            if (new UserMSSQLDAO().Insert(player)) return true;
             else return false;
         }
 
         public bool Update(Player player)
         {
-            if (new UserDAO().Update(player)) return true;
+            if (new UserMSSQLDAO().Update(player)) return true;
             else return false;
         }
 
         public void DeleteById(int id)
         {
-            new UserDAO().DeleteById(id);
+            new UserMSSQLDAO().DeleteById(id);
         }
 
         public User GetUserByAuthorization(string login, string password)
         {
-            return new UserDAO().GetUserByAuthorization(login, password);
+            return new UserMSSQLDAO().GetUserByAuthorization(login, password);
         }
 
     }

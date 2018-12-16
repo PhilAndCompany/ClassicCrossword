@@ -52,7 +52,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CrosswordDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="DAO\UserDAO.cs" />
+    <Compile Include="DAO\IUserDAO.cs" />
+    <Compile Include="DAO\UserMSSQLDAO.cs" />
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\Crossword.cs" />
     <Compile Include="Model\Player.cs" />

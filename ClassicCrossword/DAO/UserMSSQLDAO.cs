@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ClassicCrossword.DAO
 {
-    public class UserDAO
+    public class UserMSSQLDAO : IUserDAO
     {
 
         public bool Insert(Player player)
