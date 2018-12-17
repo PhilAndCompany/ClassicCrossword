@@ -137,7 +137,7 @@ namespace ClassicCrossword
         private void parseDict(string filename)
         {
             string[] words = File.ReadAllLines(filename, Encoding.GetEncoding("windows-1251")).Take(500).ToArray();
-            for (int i = 0; i < words.Length; i++)
+            for (int i = 0; i < words.Length - 1; i++)
             {
                 string word = words[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];
                 string question = words[i].Substring(words[i].IndexOf(' ') + 1); //TODO убрать костыль
@@ -145,10 +145,14 @@ namespace ClassicCrossword
                 {
                     dict.Add(word, question);
                 }
-                catch (Exception) { continue; }
+                catch (ArgumentException)
+                {
+                    MessageBox.Show("В словаре имеются одинаковые понятия");
+                    return;
+                }
             }
-
-            textBoxVocabularyWordsCountOnV.Text = words.Length.ToString();
+            int cntWords = words.Length - 1;
+            textBoxVocabularyWordsCountOnV.Text = cntWords.ToString();
         }
 
         private void выбратьсловарьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -156,7 +160,7 @@ namespace ClassicCrossword
             openFileDialog1.DefaultExt = ".dict";
             openFileDialog1.InitialDirectory = @"..\..\Dict\";
             openFileDialog1.AddExtension = true;
-            openFileDialog1.FileName = "Default";
+            openFileDialog1.FileName = "";
             openFileDialog1.Filter = "Файл словаря (*.dict)|*.dict";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -165,7 +169,7 @@ namespace ClassicCrossword
                 list.Clear();
                 listNot.Clear();
                 listDef.Clear();
-                dataGridViewVocabularyOfV.Rows.Clear();
+                dataGridViewVocabularyOfC.Rows.Clear();
 
                 parseDict(openFileDialog1.FileName);
                 list.AddRange(dict);
@@ -174,10 +178,7 @@ namespace ClassicCrossword
                 listDef = dict.Values.ToList();
 
                 foreach (var item in list)
-                {
                     dataGridViewVocabularyOfC.Rows.Add(item.Key);
-                    dataGridViewVocabularyOfV.Rows.Add(item.Key, item.Value);
-                }
             }
         }
 
@@ -304,14 +305,6 @@ namespace ClassicCrossword
             }
         }
 
-        void delDGV(DataGridView dgv)
-        {
-            while (dgv.Rows.Count != 1)
-            {
-                dgv.Rows.RemoveAt(0);
-            }
-        }
-
         private void сохранитьСловарьtoolStripMenuItem1_Click(object sender, EventArgs e)
         {
             saveFileDialog1.DefaultExt = ".dict";
@@ -319,31 +312,59 @@ namespace ClassicCrossword
             saveFileDialog1.AddExtension = true;
             saveFileDialog1.FileName = "Vocabulary";
             saveFileDialog1.Filter = "Файл словаря (*.dict)|*.dict";
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            try
             {
-                dict.Clear();
-
-                for (int i = 0; i < dataGridViewVocabularyOfV.RowCount - 1; i++)
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    dict.Add(dataGridViewVocabularyOfV.Rows[i].Cells[0].Value.ToString(), dataGridViewVocabularyOfV.Rows[i].Cells[1].Value.ToString());
+                    dict.Clear();
+                    try
+                    {
+                        for (int i = 0; i < dataGridViewVocabularyOfV.RowCount - 1; i++)
+                        {
+                            dict.Add(dataGridViewVocabularyOfV.Rows[i].Cells[0].Value.ToString(), dataGridViewVocabularyOfV.Rows[i].Cells[1].Value.ToString());
+                        }
+                    }
+                    catch (NullReferenceException)
+                    {
+                        MessageBox.Show("Вы не ввели понятие или определение");
+                        return;
+                    }
+                    catch (ArgumentException)
+                    {
+                        MessageBox.Show("Добавление в словарь одинаковых понятий невозможно");
+                        return;
+                    }
+                    list.Clear();
+                    list.AddRange(dict);
+
+                    string s = "";
+                    foreach (var item in list)
+                    {
+                        string def = FirstUpper(item.Value);
+                        s += item.Key.ToUpper() + " " + def + "\n";
+                    }
+
+                    using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName, false, System.Text.Encoding.Default))
+                    {
+                        sw.WriteLine(s);
+                    }
+                    MessageBox.Show("Словарь успешно создан");
                 }
-
-                list.Clear();
-                list.AddRange(dict);
-
-                string s = "";
-
-                foreach (var item in list)
-                {
-                    s += item.Key + " " + item.Value + "\n";
-                }
-
-                using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName, false, System.Text.Encoding.Default))
-                {
-                    sw.WriteLine(s);
-                }
-                //textBox1.Text = folderBrowserDialog1.SelectedPath;
             }
+            catch (Exception) { MessageBox.Show("Выйдите из режима редактирования"); }
+        }
+
+        static string FirstUpper(string str)
+        {
+            string[] s = str.Split(' ');
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i].Length > 1)
+                    s[i] = s[i].Substring(0, 1).ToUpper() + s[i].Substring(1, s[i].Length - 1).ToLower();
+                else s[i] = s[i].ToUpper();
+            }
+            return string.Join(" ", s);
         }
 
         private void редактироватьToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -351,7 +372,7 @@ namespace ClassicCrossword
             openFileDialog1.DefaultExt = ".dict";
             openFileDialog1.InitialDirectory = @"..\..\Dict\";
             openFileDialog1.AddExtension = true;
-            openFileDialog1.FileName = "Default";
+            openFileDialog1.FileName = "";
             openFileDialog1.Filter = "Файл словаря (*.dict)|*.dict";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -360,6 +381,7 @@ namespace ClassicCrossword
                 list.Clear();
                 listNot.Clear();
                 listDef.Clear();
+
                 dataGridViewVocabularyOfV.Rows.Clear();
 
                 parseDict(openFileDialog1.FileName);
@@ -369,10 +391,7 @@ namespace ClassicCrossword
                 listDef = dict.Values.ToList();
 
                 foreach (var item in list)
-                {
-                    dataGridViewVocabularyOfC.Rows.Add(item.Key);
                     dataGridViewVocabularyOfV.Rows.Add(item.Key, item.Value);
-                }
             }
         }
 
@@ -603,7 +622,7 @@ namespace ClassicCrossword
         void updateDGV(DataGridView dgv, string pat) {
 
             listNot = dict.Keys.ToList();
-            delDGV(dataGridViewVocabularyOfC);
+            dataGridViewVocabularyOfC.Rows.Clear();
             foreach (var item in listNot)
             {
                 if (Regex.IsMatch(item, pat, RegexOptions.IgnoreCase))
@@ -616,7 +635,7 @@ namespace ClassicCrossword
 
         private void buttonClearMask_Click(object sender, EventArgs e)
         {
-            delDGV(dataGridViewVocabularyOfC);
+            dataGridViewVocabularyOfC.Rows.Clear();
             foreach (var item in list)
                 dataGridViewVocabularyOfC.Rows.Add(item.Key);
         }
@@ -656,6 +675,27 @@ namespace ClassicCrossword
 
                 Actualize();
             }
+        }
+
+        private void очиститьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _board.Reset();
+
+            for (var i = 0; i < _board.N + 2; i++)
+            {
+                for (var j = 0; j < _board.M + 2; j++)
+                {
+                    dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.Black;
+                    dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
+                }
+            }
+
+            clearDGV(dgvCrossword);
+        }
+
+        private void создатьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataGridViewVocabularyOfV.Rows.Clear();
         }
     }
 }

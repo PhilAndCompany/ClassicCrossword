@@ -127,6 +127,7 @@
     <None Include="CrosswordDataSet.xss">
       <DependentUpon>CrosswordDataSet.xsd</DependentUpon>
     </None>
+    <None Include="Crosswords\def.crs" />
     <None Include="Dict\Glavny.dict" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -198,9 +199,7 @@
   <ItemGroup>
     <None Include="Resources\monitor-brightness-symbol.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Crosswords\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
