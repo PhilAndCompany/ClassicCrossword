@@ -9,7 +9,7 @@ namespace ClassicCrossword.DAO
 {
     interface IUserDAO
     {
-        bool Insert(Player player);
+        bool Insert(Player player); //вставка
 
         bool Update(Player player);
 
