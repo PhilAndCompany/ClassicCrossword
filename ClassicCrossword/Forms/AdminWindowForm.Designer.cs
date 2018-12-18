@@ -70,9 +70,7 @@
             this.dgvtbcDef = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStripVocabulary = new System.Windows.Forms.MenuStrip();
             this.создатьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.редактироватьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьСловарьtoolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.очиститьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.руководствоПользователяToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -175,6 +173,7 @@
             // 
             // textBoxVocabularyWordsCountOnC
             // 
+            this.textBoxVocabularyWordsCountOnC.Enabled = false;
             this.textBoxVocabularyWordsCountOnC.Location = new System.Drawing.Point(179, 407);
             this.textBoxVocabularyWordsCountOnC.Name = "textBoxVocabularyWordsCountOnC";
             this.textBoxVocabularyWordsCountOnC.ReadOnly = true;
@@ -334,6 +333,7 @@
             this.создатьToolStripMenuItem.Name = "создатьToolStripMenuItem";
             this.создатьToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
             this.создатьToolStripMenuItem.Text = "Создать";
+            this.создатьToolStripMenuItem.Click += new System.EventHandler(this.создатьToolStripMenuItem_Click);
             // 
             // выбратьсловарьToolStripMenuItem
             // 
@@ -360,11 +360,11 @@
             // 
             // очиститьToolStripMenuItem
             // 
-            this.очиститьToolStripMenuItem.Enabled = false;
             this.очиститьToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.big_trash_container_from_side_view;
             this.очиститьToolStripMenuItem.Name = "очиститьToolStripMenuItem";
             this.очиститьToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
             this.очиститьToolStripMenuItem.Text = "Очистить";
+            this.очиститьToolStripMenuItem.Click += new System.EventHandler(this.очиститьToolStripMenuItem_Click);
             // 
             // печатьToolStripMenuItem1
             // 
@@ -456,6 +456,7 @@
             // 
             // textBoxVocabularyWordsCountOnV
             // 
+            this.textBoxVocabularyWordsCountOnV.Enabled = false;
             this.textBoxVocabularyWordsCountOnV.Location = new System.Drawing.Point(461, 496);
             this.textBoxVocabularyWordsCountOnV.Name = "textBoxVocabularyWordsCountOnV";
             this.textBoxVocabularyWordsCountOnV.ReadOnly = true;
@@ -486,6 +487,8 @@
             this.dataGridViewVocabularyOfV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridViewVocabularyOfV.Size = new System.Drawing.Size(788, 463);
             this.dataGridViewVocabularyOfV.TabIndex = 0;
+            this.dataGridViewVocabularyOfV.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewVocabularyOfV_CellEndEdit);
+            this.dataGridViewVocabularyOfV.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewVocabularyOfV_EditingControlShowing);
             // 
             // dgvtbcNot2
             // 
@@ -501,9 +504,7 @@
             // 
             this.menuStripVocabulary.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.создатьToolStripMenuItem1,
-            this.редактироватьToolStripMenuItem1,
             this.сохранитьСловарьtoolStripMenuItem1,
-            this.очиститьToolStripMenuItem1,
             this.справкаToolStripMenuItem,
             this.выходToolStripMenuItem});
             this.menuStripVocabulary.Location = new System.Drawing.Point(3, 3);
@@ -520,14 +521,6 @@
             this.создатьToolStripMenuItem1.Text = "Создать";
             this.создатьToolStripMenuItem1.Click += new System.EventHandler(this.создатьToolStripMenuItem1_Click);
             // 
-            // редактироватьToolStripMenuItem1
-            // 
-            this.редактироватьToolStripMenuItem1.Image = global::ClassicCrossword.Properties.Resources.gross_pencil;
-            this.редактироватьToolStripMenuItem1.Name = "редактироватьToolStripMenuItem1";
-            this.редактироватьToolStripMenuItem1.Size = new System.Drawing.Size(130, 20);
-            this.редактироватьToolStripMenuItem1.Text = "Выбрать словарь";
-            this.редактироватьToolStripMenuItem1.Click += new System.EventHandler(this.редактироватьToolStripMenuItem1_Click);
-            // 
             // сохранитьСловарьtoolStripMenuItem1
             // 
             this.сохранитьСловарьtoolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("сохранитьСловарьtoolStripMenuItem1.Image")));
@@ -535,14 +528,6 @@
             this.сохранитьСловарьtoolStripMenuItem1.Size = new System.Drawing.Size(141, 20);
             this.сохранитьСловарьtoolStripMenuItem1.Text = "Сохранить словарь";
             this.сохранитьСловарьtoolStripMenuItem1.Click += new System.EventHandler(this.сохранитьСловарьtoolStripMenuItem1_Click);
-            // 
-            // очиститьToolStripMenuItem1
-            // 
-            this.очиститьToolStripMenuItem1.Enabled = false;
-            this.очиститьToolStripMenuItem1.Image = global::ClassicCrossword.Properties.Resources.big_trash_container_from_side_view;
-            this.очиститьToolStripMenuItem1.Name = "очиститьToolStripMenuItem1";
-            this.очиститьToolStripMenuItem1.Size = new System.Drawing.Size(87, 20);
-            this.очиститьToolStripMenuItem1.Text = "Очистить";
             // 
             // справкаToolStripMenuItem
             // 
@@ -607,6 +592,8 @@
             // dataGridView1
             // 
             this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idDataGridViewTextBoxColumn,
@@ -806,7 +793,6 @@
         private System.Windows.Forms.Button buttonClearMask;
         private System.Windows.Forms.GroupBox groupBoxVocabularyInstruments;
         private System.Windows.Forms.MenuStrip menuStripCrossword;
-        private System.Windows.Forms.ToolStripMenuItem создатьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem выбратьсловарьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem параметрыКроссвордаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сохранитьToolStripMenuItem;
@@ -824,9 +810,7 @@
         private System.Windows.Forms.DataGridView dataGridViewVocabularyOfV;
         private System.Windows.Forms.MenuStrip menuStripVocabulary;
         private System.Windows.Forms.ToolStripMenuItem создатьToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem редактироватьToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem сохранитьСловарьtoolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem очиститьToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem руководствоПользователяToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem1;
@@ -862,5 +846,6 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog2;
         private System.Windows.Forms.SaveFileDialog saveFileDialog3;
         private System.Windows.Forms.DataGridView dgvCrossword;
+        private System.Windows.Forms.ToolStripMenuItem создатьToolStripMenuItem;
     }
 }
