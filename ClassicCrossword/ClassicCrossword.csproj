@@ -58,7 +58,6 @@
     <Compile Include="Model\Crossword.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\User.cs" />
-    <Compile Include="Model\Grid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Forms\AddNewPlayerForm.cs">
       <SubType>Form</SubType>
