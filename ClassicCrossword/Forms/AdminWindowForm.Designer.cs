@@ -48,7 +48,6 @@
             this.buttonSortByAlphabet = new System.Windows.Forms.Button();
             this.buttonSortByLength = new System.Windows.Forms.Button();
             this.menuStripCrossword = new System.Windows.Forms.MenuStrip();
-            this.создатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выбратьсловарьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.параметрыКроссвордаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,7 +71,6 @@
             this.создатьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.редактироватьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьСловарьtoolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.очиститьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.руководствоПользователяToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,6 +99,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             this.saveFileDialog3 = new System.Windows.Forms.SaveFileDialog();
+            this.создатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVocabularyOfC)).BeginInit();
             this.groupBoxVocabularyOfC.SuspendLayout();
             this.tabControlMenu.SuspendLayout();
@@ -328,13 +327,6 @@
             this.menuStripCrossword.TabIndex = 34;
             this.menuStripCrossword.Text = "menuStrip2";
             // 
-            // создатьToolStripMenuItem
-            // 
-            this.создатьToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.page_with_one_curled_corner;
-            this.создатьToolStripMenuItem.Name = "создатьToolStripMenuItem";
-            this.создатьToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
-            this.создатьToolStripMenuItem.Text = "Создать";
-            // 
             // выбратьсловарьToolStripMenuItem
             // 
             this.выбратьсловарьToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.gross_pencil;
@@ -360,11 +352,11 @@
             // 
             // очиститьToolStripMenuItem
             // 
-            this.очиститьToolStripMenuItem.Enabled = false;
             this.очиститьToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.big_trash_container_from_side_view;
             this.очиститьToolStripMenuItem.Name = "очиститьToolStripMenuItem";
             this.очиститьToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
             this.очиститьToolStripMenuItem.Text = "Очистить";
+            this.очиститьToolStripMenuItem.Click += new System.EventHandler(this.очиститьToolStripMenuItem_Click);
             // 
             // печатьToolStripMenuItem1
             // 
@@ -503,7 +495,6 @@
             this.создатьToolStripMenuItem1,
             this.редактироватьToolStripMenuItem1,
             this.сохранитьСловарьtoolStripMenuItem1,
-            this.очиститьToolStripMenuItem1,
             this.справкаToolStripMenuItem,
             this.выходToolStripMenuItem});
             this.menuStripVocabulary.Location = new System.Drawing.Point(3, 3);
@@ -535,14 +526,6 @@
             this.сохранитьСловарьtoolStripMenuItem1.Size = new System.Drawing.Size(141, 20);
             this.сохранитьСловарьtoolStripMenuItem1.Text = "Сохранить словарь";
             this.сохранитьСловарьtoolStripMenuItem1.Click += new System.EventHandler(this.сохранитьСловарьtoolStripMenuItem1_Click);
-            // 
-            // очиститьToolStripMenuItem1
-            // 
-            this.очиститьToolStripMenuItem1.Enabled = false;
-            this.очиститьToolStripMenuItem1.Image = global::ClassicCrossword.Properties.Resources.big_trash_container_from_side_view;
-            this.очиститьToolStripMenuItem1.Name = "очиститьToolStripMenuItem1";
-            this.очиститьToolStripMenuItem1.Size = new System.Drawing.Size(87, 20);
-            this.очиститьToolStripMenuItem1.Text = "Очистить";
             // 
             // справкаToolStripMenuItem
             // 
@@ -607,6 +590,8 @@
             // dataGridView1
             // 
             this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idDataGridViewTextBoxColumn,
@@ -748,6 +733,14 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // создатьToolStripMenuItem
+            // 
+            this.создатьToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.page_with_one_curled_corner;
+            this.создатьToolStripMenuItem.Name = "создатьToolStripMenuItem";
+            this.создатьToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
+            this.создатьToolStripMenuItem.Text = "Создать";
+            this.создатьToolStripMenuItem.Click += new System.EventHandler(this.создатьToolStripMenuItem_Click);
+            // 
             // AdminWindowForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -806,7 +799,6 @@
         private System.Windows.Forms.Button buttonClearMask;
         private System.Windows.Forms.GroupBox groupBoxVocabularyInstruments;
         private System.Windows.Forms.MenuStrip menuStripCrossword;
-        private System.Windows.Forms.ToolStripMenuItem создатьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem выбратьсловарьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem параметрыКроссвордаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сохранитьToolStripMenuItem;
@@ -826,7 +818,6 @@
         private System.Windows.Forms.ToolStripMenuItem создатьToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem редактироватьToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem сохранитьСловарьtoolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem очиститьToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem руководствоПользователяToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem1;
@@ -862,5 +853,6 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog2;
         private System.Windows.Forms.SaveFileDialog saveFileDialog3;
         private System.Windows.Forms.DataGridView dgvCrossword;
+        private System.Windows.Forms.ToolStripMenuItem создатьToolStripMenuItem;
     }
 }
