@@ -56,6 +56,8 @@
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainPanel = new System.Windows.Forms.Panel();
             this.dgvCrossword = new System.Windows.Forms.DataGridView();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -186,13 +188,14 @@
             this.решатьКроссвордToolStripMenuItem.Name = "решатьКроссвордToolStripMenuItem";
             this.решатьКроссвордToolStripMenuItem.Size = new System.Drawing.Size(137, 20);
             this.решатьКроссвордToolStripMenuItem.Text = "Решать кроссворд";
+            this.решатьКроссвордToolStripMenuItem.Click += new System.EventHandler(this.решатьКроссвордToolStripMenuItem_Click);
             // 
             // новыйКроссвордToolStripMenuItem
             // 
             this.новыйКроссвордToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.page_with_one_curled_corner;
             this.новыйКроссвордToolStripMenuItem.Name = "новыйКроссвордToolStripMenuItem";
             this.новыйКроссвордToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.новыйКроссвордToolStripMenuItem.Text = "Новый кроссворд";
+            this.новыйКроссвордToolStripMenuItem.Text = "Выбрать кроссворд";
             this.новыйКроссвордToolStripMenuItem.Click += new System.EventHandler(this.новыйКроссвордToolStripMenuItem_Click);
             // 
             // загрузитьСохраненныйToolStripMenuItem
@@ -328,6 +331,10 @@
             this.dgvCrossword.Size = new System.Drawing.Size(521, 435);
             this.dgvCrossword.TabIndex = 38;
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // UserWindowForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -389,5 +396,7 @@
         private System.Windows.Forms.DataGridView dgvCrossword;
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }

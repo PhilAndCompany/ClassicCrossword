@@ -15,7 +15,10 @@ namespace ClassicCrossword.Forms
 {
     public partial class UserWindowForm : Form
     {
-        Crossword _board;
+        public static int n = 20; // максимальное число строк в сетке
+        public static int m = 20; // максимальное число столбцов в сетке
+
+        Crossword _board = new Crossword(n, m);
 
         public UserWindowForm()
         {
@@ -24,40 +27,36 @@ namespace ClassicCrossword.Forms
 
         private void новыйКроссвордToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BinaryFormatter formatter = new BinaryFormatter();
-            
-            using (FileStream fs = new FileStream(@"..\..\Crosswords\def.crs", FileMode.OpenOrCreate))
-            {
-                _board = (Crossword)formatter.Deserialize(fs);
-            }
+            openFileDialog1.DefaultExt = ".crs";
+            openFileDialog1.InitialDirectory = @"..\..\Crosswords\";
+            openFileDialog1.AddExtension = true;
+            openFileDialog1.FileName = "";
+            openFileDialog1.Filter = "Файл кроссворда (*.crs)|*.crs";
 
-            Font font = new Font("Microsoft Sans Serif", 8.0f, FontStyle.Bold);
-            dgvCrossword.Font = font;
-
-            int k;
-            for (int i = 0; i < _board.M + 2; i++)
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                k = dgvCrossword.Columns.Add(i.ToString(), i.ToString());
-                dgvCrossword.Columns[k].Width = 25;
-            }
+                clearDGV(dgvCrossword);
 
-            for (int i = 0; i < _board.N + 2; i++)
-            {
-                k = dgvCrossword.Rows.Add();
-                dgvCrossword.Rows[k].Height = 25;
-            }
+                BinaryFormatter formatter = new BinaryFormatter();
 
-            for (var i = 0; i < _board.N + 2; i++)
-            {
-                for (var j = 0; j < _board.M + 2; j++)
+                using (FileStream fs = new FileStream(openFileDialog1.FileName, FileMode.OpenOrCreate))
                 {
-                    dgvCrossword.Rows[i].Cells[j].Value = " ";
-                    dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
-                    dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.Black;
+                    _board = (Crossword)formatter.Deserialize(fs);
                 }
-            }
 
-            Actualize();
+                for (var i = 0; i < _board.N + 2; i++)
+                {
+                    for (var j = 0; j < _board.M + 2; j++)
+                    {
+                        dgvCrossword.Rows[i].Cells[j].Value = " ";
+                        dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
+                        dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.Black;
+                        dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
+                    }
+                }
+
+                Actualize();
+            }
         }
 
         //заполнение сетки на форме символами для кроссворда
@@ -116,7 +115,48 @@ namespace ClassicCrossword.Forms
             }
         }
 
+        void clearDGV(DataGridView dgv)
+        {
+            for (int i = 0; i < dgv.RowCount; i++)
+            {
+                for (int j = 0; j < dgv.ColumnCount; j++)
+                {
+                    dgv.Rows[i].Cells[j].Value = " ";
+                }
+            }
+        }
+
         private void UserWindowForm_Load(object sender, EventArgs e)
+        {
+            Font font = new Font("Microsoft Sans Serif", 8.0f, FontStyle.Bold);
+            dgvCrossword.Font = font;
+
+            int k;
+            for (int i = 0; i < m + 2; i++)
+            {
+                k = dgvCrossword.Columns.Add(i.ToString(), i.ToString());
+                dgvCrossword.Columns[k].Width = 25;
+            }
+
+            for (int i = 0; i < n + 2; i++)
+            {
+                k = dgvCrossword.Rows.Add();
+                dgvCrossword.Rows[k].Height = 25;
+            }
+
+            for (var i = 0; i < n + 2; i++)
+            {
+                for (var j = 0; j < m + 2; j++)
+                {
+                    dgvCrossword.Rows[i].Cells[j].Value = " ";
+                    dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
+                    dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.Black;
+                    dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
+                }
+            }
+        }
+
+        private void решатьКроссвордToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }

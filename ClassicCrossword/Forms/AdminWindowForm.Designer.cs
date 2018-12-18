@@ -71,6 +71,7 @@
             this.menuStripVocabulary = new System.Windows.Forms.MenuStrip();
             this.создатьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьСловарьtoolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.удалитьСтрокуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.руководствоПользователяToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,9 +98,6 @@
             this.playerTableAdapter = new ClassicCrossword.CrosswordDataSetTableAdapters.PlayerTableAdapter();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
-            this.saveFileDialog3 = new System.Windows.Forms.SaveFileDialog();
-            this.удалитьСтрокуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVocabularyOfC)).BeginInit();
             this.groupBoxVocabularyOfC.SuspendLayout();
             this.tabControlMenu.SuspendLayout();
@@ -209,7 +207,7 @@
             this.tabControlMenu.Location = new System.Drawing.Point(12, 12);
             this.tabControlMenu.Name = "tabControlMenu";
             this.tabControlMenu.SelectedIndex = 0;
-            this.tabControlMenu.Size = new System.Drawing.Size(820, 586);
+            this.tabControlMenu.Size = new System.Drawing.Size(824, 586);
             this.tabControlMenu.TabIndex = 32;
             // 
             // tabPageCrossword
@@ -223,7 +221,7 @@
             this.tabPageCrossword.Location = new System.Drawing.Point(4, 22);
             this.tabPageCrossword.Name = "tabPageCrossword";
             this.tabPageCrossword.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCrossword.Size = new System.Drawing.Size(812, 560);
+            this.tabPageCrossword.Size = new System.Drawing.Size(816, 560);
             this.tabPageCrossword.TabIndex = 0;
             this.tabPageCrossword.Text = "Кроссворд";
             this.tabPageCrossword.UseVisualStyleBackColor = true;
@@ -324,7 +322,7 @@
             this.выходToolStripMenuItem1});
             this.menuStripCrossword.Location = new System.Drawing.Point(3, 3);
             this.menuStripCrossword.Name = "menuStripCrossword";
-            this.menuStripCrossword.Size = new System.Drawing.Size(806, 24);
+            this.menuStripCrossword.Size = new System.Drawing.Size(810, 24);
             this.menuStripCrossword.TabIndex = 34;
             this.menuStripCrossword.Text = "menuStrip2";
             // 
@@ -438,7 +436,7 @@
             this.tabPageVocabulary.Location = new System.Drawing.Point(4, 22);
             this.tabPageVocabulary.Name = "tabPageVocabulary";
             this.tabPageVocabulary.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageVocabulary.Size = new System.Drawing.Size(812, 560);
+            this.tabPageVocabulary.Size = new System.Drawing.Size(924, 560);
             this.tabPageVocabulary.TabIndex = 1;
             this.tabPageVocabulary.Text = "Словари";
             this.tabPageVocabulary.UseVisualStyleBackColor = true;
@@ -512,7 +510,7 @@
             this.выходToolStripMenuItem});
             this.menuStripVocabulary.Location = new System.Drawing.Point(3, 3);
             this.menuStripVocabulary.Name = "menuStripVocabulary";
-            this.menuStripVocabulary.Size = new System.Drawing.Size(806, 24);
+            this.menuStripVocabulary.Size = new System.Drawing.Size(918, 24);
             this.menuStripVocabulary.TabIndex = 4;
             this.menuStripVocabulary.Text = "menuStripVocabulary";
             // 
@@ -531,6 +529,13 @@
             this.сохранитьСловарьtoolStripMenuItem1.Size = new System.Drawing.Size(141, 20);
             this.сохранитьСловарьtoolStripMenuItem1.Text = "Сохранить словарь";
             this.сохранитьСловарьtoolStripMenuItem1.Click += new System.EventHandler(this.сохранитьСловарьtoolStripMenuItem1_Click);
+            // 
+            // удалитьСтрокуToolStripMenuItem
+            // 
+            this.удалитьСтрокуToolStripMenuItem.Name = "удалитьСтрокуToolStripMenuItem";
+            this.удалитьСтрокуToolStripMenuItem.Size = new System.Drawing.Size(103, 20);
+            this.удалитьСтрокуToolStripMenuItem.Text = "Удалить строку";
+            this.удалитьСтрокуToolStripMenuItem.Click += new System.EventHandler(this.удалитьСтрокуToolStripMenuItem_Click);
             // 
             // справкаToolStripMenuItem
             // 
@@ -577,7 +582,7 @@
             this.tabPageAccounts.Controls.Add(this.menuStripAccount);
             this.tabPageAccounts.Location = new System.Drawing.Point(4, 22);
             this.tabPageAccounts.Name = "tabPageAccounts";
-            this.tabPageAccounts.Size = new System.Drawing.Size(812, 560);
+            this.tabPageAccounts.Size = new System.Drawing.Size(924, 560);
             this.tabPageAccounts.TabIndex = 2;
             this.tabPageAccounts.Text = "Учетные записи";
             this.tabPageAccounts.UseVisualStyleBackColor = true;
@@ -654,7 +659,7 @@
             this.выходToolStripMenuItem2});
             this.menuStripAccount.Location = new System.Drawing.Point(0, 0);
             this.menuStripAccount.Name = "menuStripAccount";
-            this.menuStripAccount.Size = new System.Drawing.Size(812, 24);
+            this.menuStripAccount.Size = new System.Drawing.Size(924, 24);
             this.menuStripAccount.TabIndex = 0;
             this.menuStripAccount.Text = "menuStrip2";
             // 
@@ -738,18 +743,11 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // удалитьСтрокуToolStripMenuItem
-            // 
-            this.удалитьСтрокуToolStripMenuItem.Name = "удалитьСтрокуToolStripMenuItem";
-            this.удалитьСтрокуToolStripMenuItem.Size = new System.Drawing.Size(103, 20);
-            this.удалитьСтрокуToolStripMenuItem.Text = "Удалить строку";
-            this.удалитьСтрокуToolStripMenuItem.Click += new System.EventHandler(this.удалитьСтрокуToolStripMenuItem_Click);
-            // 
             // AdminWindowForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(844, 601);
+            this.ClientSize = new System.Drawing.Size(838, 601);
             this.Controls.Add(this.tabControlMenu);
             this.MaximizeBox = false;
             this.Name = "AdminWindowForm";
@@ -853,8 +851,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvtbcDef;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog2;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog3;
         private System.Windows.Forms.DataGridView dgvCrossword;
         private System.Windows.Forms.ToolStripMenuItem создатьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem удалитьСтрокуToolStripMenuItem;

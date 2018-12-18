@@ -119,8 +119,10 @@ namespace ClassicCrossword
                     dgvCrossword.Rows[i].Cells[j].Value = " ";
                     dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
                     dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.Black;
+                    dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
                 }
             }
+
             try
             {
                 parseDict(@"..\..\Dict\Glavny.dict");
@@ -225,6 +227,9 @@ namespace ClassicCrossword
                     dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
                 }
             }
+            _board.Reset();
+            clearDGV(dgvCrossword);
+
             listNot.Sort(Comparer);
             listNot.Reverse();
             _board.Temp = listNot;
@@ -233,10 +238,6 @@ namespace ClassicCrossword
 
         void GenerateCrossword()
         {
-            _board.Reset();
-
-            clearDGV(dgvCrossword);
-
             notUsedList = new List<string>();
             tmpList = new List<string>();
             GenCrossword(listNot, listNot.Count);
@@ -359,10 +360,7 @@ namespace ClassicCrossword
 
             string s = "";
             foreach (var item in list)
-            {
-                string def = FirstUpper(item.Value);
-                s += item.Key.ToUpper() + " " + def + "\n";
-            }
+                s += item.Key + " " + item.Value + "\n";
 
             saveFileDialog1.DefaultExt = ".dict";
             saveFileDialog1.InitialDirectory = @"..\..\Dict\";
@@ -412,19 +410,28 @@ namespace ClassicCrossword
 
         private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
+            saveFileDialog1.DefaultExt = ".crs";
+            saveFileDialog1.InitialDirectory = @"..\..\Crosswords\";
+            saveFileDialog1.AddExtension = true;
+            saveFileDialog1.FileName = "Crossword";
+            saveFileDialog1.Filter = "Файл кроссворда (*.crs)|*.crs";
 
-                using (FileStream fs = new FileStream(@"..\..\Crosswords\def.crs", FileMode.OpenOrCreate))
-                {
-                    formatter.Serialize(fs, _board);
-                    MessageBox.Show("Кроссворд сохранен");
-                }
-            }
-            catch (Exception ex)
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show(ex.Message);
+                try
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+
+                    using (FileStream fs = new FileStream(saveFileDialog1.FileName, FileMode.OpenOrCreate))
+                    {
+                        formatter.Serialize(fs, _board);
+                        MessageBox.Show("Кроссворд сохранен");
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Ошибка при сохранении кроссворда");
+                }
             }
         }
 
@@ -703,7 +710,16 @@ namespace ClassicCrossword
 
         private void создатьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dataGridViewVocabularyOfV.Rows.Clear();
+            for (var i = 0; i < _board.N + 2; i++)
+            {
+                for (var j = 0; j < _board.M + 2; j++)
+                {
+                    dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.Black;
+                    dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
+                }
+            }
+            _board.Reset();
+            clearDGV(dgvCrossword);
         }
 
         private void dataGridViewVocabularyOfV_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)

@@ -126,6 +126,7 @@
     <None Include="CrosswordDataSet.xss">
       <DependentUpon>CrosswordDataSet.xsd</DependentUpon>
     </None>
+    <None Include="Crosswords\Crossword.crs" />
     <None Include="Crosswords\def.crs" />
     <None Include="Dict\Glavny.dict" />
     <None Include="Properties\Settings.settings">
