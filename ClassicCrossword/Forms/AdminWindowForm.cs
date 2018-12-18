@@ -132,6 +132,10 @@ namespace ClassicCrossword
                 textBoxVocabularyWordsCountOnV.Text = "0";
                 return;
             }
+
+            groupBoxVocabularyOfC.Text = "Glavny.dict";
+            groupBoxVocabularyOfV.Text = "Glavny.dict";
+
             list.AddRange(dict);
 
             listNot = dict.Keys.ToList();
@@ -185,6 +189,10 @@ namespace ClassicCrossword
                     textBoxVocabularyWordsCountOnV.Text = "0";
                     return;
                 }
+
+                groupBoxVocabularyOfC.Text = openFileDialog1.SafeFileName;
+                groupBoxVocabularyOfV.Text = openFileDialog1.SafeFileName;
+
                 list.AddRange(dict);
 
                 listNot = dict.Keys.ToList();
@@ -326,47 +334,44 @@ namespace ClassicCrossword
 
         private void сохранитьСловарьtoolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            dict.Clear();
+
+            try
+            {
+                for (int i = 0; i < dataGridViewVocabularyOfV.RowCount - 1; i++)
+                {
+                    dict.Add(dataGridViewVocabularyOfV.Rows[i].Cells[0].Value.ToString(), dataGridViewVocabularyOfV.Rows[i].Cells[1].Value.ToString());
+                }
+            }
+            catch (ArgumentException)
+            {
+                MessageBox.Show("Добавление в словарь одинаковых понятий невозможно");
+                return;
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Вы не ввели понятие | определение или не вышли из режима редактирования");
+                return;
+            }
+
+            list.Clear();
+            list.AddRange(dict);
+
+            string s = "";
+            foreach (var item in list)
+            {
+                string def = FirstUpper(item.Value);
+                s += item.Key.ToUpper() + " " + def + "\n";
+            }
+
             saveFileDialog1.DefaultExt = ".dict";
             saveFileDialog1.InitialDirectory = @"..\..\Dict\";
             saveFileDialog1.AddExtension = true;
             saveFileDialog1.FileName = "Vocabulary";
             saveFileDialog1.Filter = "Файл словаря (*.dict)|*.dict";
+
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                dict.Clear();
-                try
-                {
-                    for (int i = 0; i < dataGridViewVocabularyOfV.RowCount - 1; i++)
-                    {
-                        dict.Add(dataGridViewVocabularyOfV.Rows[i].Cells[0].Value.ToString(), dataGridViewVocabularyOfV.Rows[i].Cells[1].Value.ToString());
-                    }
-                }
-                catch (ArgumentException)
-                {
-                    MessageBox.Show("Добавление в словарь одинаковых понятий невозможно");
-                    return;
-                }
-                catch (NullReferenceException)
-                {
-                    MessageBox.Show("Вы не ввели понятие или определение");
-                    return;
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Выйдите из режима редактирования");
-                    return;
-                }
-
-                list.Clear();
-                list.AddRange(dict);
-
-                string s = "";
-                foreach (var item in list)
-                {
-                    string def = FirstUpper(item.Value);
-                    s += item.Key.ToUpper() + " " + def + "\n";
-                }
-
                 using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName, false, System.Text.Encoding.UTF8))
                 {
                     sw.Write(s);
@@ -390,6 +395,9 @@ namespace ClassicCrossword
 
         private void создатьToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            groupBoxVocabularyOfC.Text = "";
+            groupBoxVocabularyOfV.Text = "";
+
             dataGridViewVocabularyOfC.Rows.Clear();
             dataGridViewVocabularyOfV.Rows.Clear();
 
@@ -718,13 +726,36 @@ namespace ClassicCrossword
 
         private void dataGridViewVocabularyOfV_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            string s = "";
-            if (e.ColumnIndex == 0)
-                dataGridViewVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = dataGridViewVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().ToUpper();
-            else
+            if (dataGridViewVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
-                s = FirstUpper(dataGridViewVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
-                dataGridViewVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = s;
+                string s = "";
+                if (e.ColumnIndex == 0)
+                    dataGridViewVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = dataGridViewVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().ToUpper();
+                else
+                {
+                    s = FirstUpper(dataGridViewVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                    dataGridViewVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = s;
+                }
+            }
+        }
+
+        private void dataGridViewVocabularyOfV_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            int number;
+            Int32.TryParse(textBoxVocabularyWordsCountOnV.Text, out number);
+            number++;
+            textBoxVocabularyWordsCountOnV.Text = number.ToString();
+        }
+
+        private void удалитьСтрокуToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewVocabularyOfV.SelectedCells.Count == 1)
+            {
+                dataGridViewVocabularyOfV.Rows.RemoveAt(dataGridViewVocabularyOfV.SelectedCells[0].RowIndex);
+                int number;
+                Int32.TryParse(textBoxVocabularyWordsCountOnV.Text, out number);
+                number--;
+                textBoxVocabularyWordsCountOnV.Text = number.ToString();
             }
         }
     }
