@@ -20,15 +20,15 @@ namespace ClassicCrossword
 
         public static int n = 20; // максимальное число строк в сетке
         public static int m = 20; // максимальное число столбцов в сетке
-
+        
         private Dictionary<string, string> dict = new Dictionary<string, string>();
         private List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
 
         private List<string> listNot;
         private List<string> listDef;
 
-        List<string> notUsedList;
-        List<string> tmpList;
+        private SortedDictionary<string, string> notUsedDict;
+        private SortedDictionary<string, string> tmpDict;
 
         private int dir;
         private int colInd;
@@ -218,12 +218,6 @@ namespace ClassicCrossword
             }
         }
 
-        static int Comparer(string a, string b)
-        {
-            var temp = a.Length.CompareTo(b.Length);
-            return temp == 0 ? a.CompareTo(b) : temp;
-        }
-
         private void buttonGenerate_Click(object sender, EventArgs e)
         {
             for (var i = 0; i < _board.N + 2; i++)
@@ -236,50 +230,65 @@ namespace ClassicCrossword
             }
             _board.Reset();
             clearDGV(dgvCrossword);
-
-            listNot.Sort(Comparer);
-            listNot.Reverse();
-            _board.Temp = listNot;
             GenerateCrossword();
+        }
+
+        class ComparerForDict : IComparer<string>
+        {
+            public int Compare(string not1, string not2)
+            {
+                if (not1.Length >= not2.Length)
+                    return -1;
+                else if (not1.Length < not2.Length)
+                    return 1;
+                else return 0;
+            }
         }
 
         void GenerateCrossword()
         {
-            notUsedList = new List<string>();
-            tmpList = new List<string>();
-            GenCrossword(listNot, listNot.Count);
-            Actualize();
+            notUsedDict = new SortedDictionary<string, string>();
+            tmpDict = new SortedDictionary<string, string>();
+            try
+            {
+                SortedDictionary<string, string> srcDict = new SortedDictionary<string, string>(dict, new ComparerForDict());
+                _board.Temp = srcDict.Keys.ToList();
+                GenCrossword(srcDict, srcDict.Count);
+
+                Actualize();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
-        void GenCrossword(List<string> list, int cnt)
+        void GenCrossword(SortedDictionary<string, string> sd, int cnt)
         {
-            tmpList.Clear();
-            foreach (var word in list)
+            tmpDict.Clear();
+            foreach (var item in sd)
             {
-                switch (_board.AddWord(word))
+                switch (_board.AddWord(item.Key, item.Value))
                 {
                     case 0:
-                        if (notUsedList.Contains(word))
-                            tmpList.Add(word);
+                        if (notUsedDict.Contains(item))
+                            tmpDict.Add(item.Key, item.Value);
                         break;
                     case 1:
-                        if (notUsedList.Contains(word))
-                            tmpList.Add(word);
+                        if (notUsedDict.Contains(item))
+                            tmpDict.Add(item.Key, item.Value);
                         break;
                     default:
-                        if (!notUsedList.Contains(word))
-                            notUsedList.Add(word);
+                        if (!notUsedDict.Contains(item))
+                            notUsedDict.Add(item.Key, item.Value);
                         break;
                 }
             }
-            foreach (var word in tmpList)
+            foreach (var item in tmpDict)
             {
-                notUsedList.Remove(word);
+                notUsedDict.Remove(item.Key);
             }
-            if (notUsedList.Count == 0 || notUsedList.Count == cnt)
+            if (notUsedDict.Count == 0 || notUsedDict.Count == cnt)
                 return;
             else
-                GenCrossword(notUsedList, notUsedList.Count);
+                GenCrossword(notUsedDict, notUsedDict.Count);
         }
 
         //заполнение сетки на форме символами для кроссворда
@@ -300,31 +309,6 @@ namespace ClassicCrossword
                         dgvCrossword.Rows[i + 1].Cells[j + 1].Style.BackColor = Color.White;
                     }
                     p++;
-                }
-            }
-            Numeration();
-        }
-
-        //расстановка нумерации кроссворда и вопросов    
-        void Numeration()
-        {
-            int point = 1;
-            for (var i = 1; i < _board.N + 1; i++)
-            {
-                for (var j = 1; j < _board.M + 1; j++)
-                {
-                    if (dgvCrossword.Rows[i - 1].Cells[j].Value.ToString().Equals(" ") && !dgvCrossword.Rows[i].Cells[j].Value.ToString().Equals(" ") && !dgvCrossword.Rows[i + 1].Cells[j].Value.ToString().Equals(" "))
-                    {
-                        dgvCrossword.Rows[i - 1].Cells[j].Value = point.ToString();
-                        dgvCrossword.Rows[i - 1].Cells[j].Style.ForeColor = Color.White;
-                        point++;
-                    }
-                    if (dgvCrossword.Rows[i].Cells[j - 1].Value.ToString().Equals(" ") && !dgvCrossword.Rows[i].Cells[j].Value.ToString().Equals(" ") && !dgvCrossword.Rows[i].Cells[j + 1].Value.ToString().Equals(" "))
-                    {
-                        dgvCrossword.Rows[i].Cells[j - 1].Value = point.ToString();
-                        dgvCrossword.Rows[i].Cells[j - 1].Style.ForeColor = Color.White;
-                        point++;
-                    }
                 }
             }
         }
@@ -674,45 +658,29 @@ namespace ClassicCrossword
                 {
                     int xPos = dgvCrossword.SelectedCells[dgvCrossword.SelectedCells.Count - 1].RowIndex - 1;
                     int yPos = dgvCrossword.SelectedCells[dgvCrossword.SelectedCells.Count - 1].ColumnIndex - 1;
-                    _board.AddWord(s, xPos, yPos, 0);
+                    _board.AddWord(s, dict[s], xPos, yPos, 0);
                 }
                 else if (dir == 1)
                 {
                     int xPos = dgvCrossword.SelectedCells[0].RowIndex - 1;
                     int yPos = dgvCrossword.SelectedCells[0].ColumnIndex - 1;
-                    _board.AddWord(s, xPos, yPos, 0);
+                    _board.AddWord(s, dict[s], xPos, yPos, 0);
                 }
                 else if (dir == 0)
                 {
                     int xPos = dgvCrossword.SelectedCells[dgvCrossword.SelectedCells.Count - 1].RowIndex - 1;
                     int yPos = dgvCrossword.SelectedCells[dgvCrossword.SelectedCells.Count - 1].ColumnIndex - 1;
-                    _board.AddWord(s, xPos, yPos, 1);
+                    _board.AddWord(s, dict[s], xPos, yPos, 1);
                 }
                 else if (dir == 2)
                 {
                     int xPos = dgvCrossword.SelectedCells[0].RowIndex - 1;
                     int yPos = dgvCrossword.SelectedCells[0].ColumnIndex - 1;
-                    _board.AddWord(s, xPos, yPos, 1);
+                    _board.AddWord(s, dict[s], xPos, yPos, 1);
                 }
 
                 Actualize();
             }
-        }
-
-        private void очиститьToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            _board.Reset();
-
-            for (var i = 0; i < _board.N + 2; i++)
-            {
-                for (var j = 0; j < _board.M + 2; j++)
-                {
-                    dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.Black;
-                    dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
-                }
-            }
-
-            clearDGV(dgvCrossword);
         }
 
         private void создатьToolStripMenuItem_Click(object sender, EventArgs e)
