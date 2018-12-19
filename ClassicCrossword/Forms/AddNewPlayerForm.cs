@@ -67,7 +67,7 @@ namespace ClassicCrossword
                         }
                         catch (System.Data.SqlClient.SqlException)
                         {
-                            MessageBox.Show("Невозможно изменить тип товара!\nТип товара с таким именем уже существует.", "Ошибка изменения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Невозможно изменить игрока!\nИгрок с таким логином уже существует.", "Ошибка изменения", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         catch (Exception)
                         {
@@ -77,7 +77,7 @@ namespace ClassicCrossword
                 }
                 catch (SqlException)
                 {
-                    MessageBox.Show("Невозможно добавить нового сотрудника!\nСотрудник с такими данными уже существует.", "Ошибка изменения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Невозможно добавить нового игрока!\nИгрок с таким логином уже существует.", "Ошибка изменения", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception)
                 {
