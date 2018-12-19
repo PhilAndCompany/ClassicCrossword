@@ -159,7 +159,7 @@ namespace ClassicCrossword
             for (int i = 0; i < words.Length; i++)
             {
                 string word = words[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];
-                string question = words[i].Substring(words[i].IndexOf(' ') + 1); //TODO убрать костыль
+                string question = words[i].Substring(words[i].IndexOf(words[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[1])); //TODO убрать костыль
                 dict.Add(word, question);
             }
         }
@@ -187,6 +187,13 @@ namespace ClassicCrossword
                 catch (ArgumentException)
                 {
                     MessageBox.Show("В словаре имеются одинаковые понятия");
+                    textBoxVocabularyWordsCountOnC.Text = "0";
+                    textBoxVocabularyWordsCountOnV.Text = "0";
+                    return;
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    MessageBox.Show("В словаре отсутствует понятие | определение");
                     textBoxVocabularyWordsCountOnC.Text = "0";
                     textBoxVocabularyWordsCountOnV.Text = "0";
                     return;
