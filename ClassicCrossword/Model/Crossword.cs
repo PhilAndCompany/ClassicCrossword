@@ -45,6 +45,12 @@ namespace ClassicCrossword.Model
             set { temp = value; }
         }
 
+        public Dictionary<string, string> defHorDict = new Dictionary<string, string>();
+
+        public Dictionary<string, string> defVerDict = new Dictionary<string, string>();
+
+        public char[,] progressPlayer { get; set; }
+
         public Crossword() {}
 
         public Crossword(int xDimen, int yDimen)
@@ -153,7 +159,7 @@ namespace ClassicCrossword.Model
             if (IsValidPosition(xStar, yStar)) _board[xStar, yStar] = '*';
         }
 
-        public int AddWord(string word)
+        public int AddWord(string word, string def)
         {
             var wordToInsert = word;
             var info = BestPosition(wordToInsert);
@@ -165,12 +171,22 @@ namespace ClassicCrossword.Model
                     _vCount++;
                 var value = info.Item3 == 0 ? _hCount : _vCount;
                 PutWord(wordToInsert, info.Item1, info.Item2, info.Item3, value);
+
+                if (info.Item3 == 0)
+                {
+                    defHorDict.Add(word, def);
+                }
+                else if (info.Item3 == 1)
+                {
+                    defVerDict.Add(word, def);
+                }
+
                 return info.Item3;
             }
             return -1;
         }
 
-        public int AddWord(string word, int x, int y, int dir)
+        public int AddWord(string word, string def, int x, int y, int dir)
         {
             if (dir == 0)
                 _hCount++;
@@ -178,6 +194,16 @@ namespace ClassicCrossword.Model
                 _vCount++;
             var value = dir == 0 ? _hCount : _vCount;
             PutWord(word, x, y, dir, value);
+
+            if (dir == 0)
+            {
+                defHorDict.Add(word, def);
+            }
+            else if (dir == 1)
+            {
+                defVerDict.Add(word, def);
+            }
+
             return dir;
         }
 
@@ -237,6 +263,8 @@ namespace ClassicCrossword.Model
                     _hCount = _vCount = 0;
                 }
             }
+            defHorDict.Clear();
+            defVerDict.Clear();
         }
 
         public void AddWords(IList<string> words)

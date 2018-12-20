@@ -58,7 +58,6 @@
     <Compile Include="Model\Crossword.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\User.cs" />
-    <Compile Include="Model\Grid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Forms\AddNewPlayerForm.cs">
       <SubType>Form</SubType>
@@ -96,14 +95,14 @@
     <EmbeddedResource Include="Forms\AuthForm.resx">
       <DependentUpon>AuthForm.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Forms\UserWindowForm.cs">
+    <Compile Include="Forms\PlayerWindowForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\UserWindowForm.Designer.cs">
-      <DependentUpon>UserWindowForm.cs</DependentUpon>
+    <Compile Include="Forms\PlayerWindowForm.Designer.cs">
+      <DependentUpon>PlayerWindowForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Forms\UserWindowForm.resx">
-      <DependentUpon>UserWindowForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PlayerWindowForm.resx">
+      <DependentUpon>PlayerWindowForm.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -127,6 +126,7 @@
     <None Include="CrosswordDataSet.xss">
       <DependentUpon>CrosswordDataSet.xsd</DependentUpon>
     </None>
+    <None Include="Crosswords\Crossword.crs" />
     <None Include="Crosswords\def.crs" />
     <None Include="Dict\Glavny.dict" />
     <None Include="Properties\Settings.settings">
@@ -199,7 +199,9 @@
   <ItemGroup>
     <None Include="Resources\monitor-brightness-symbol.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Players\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

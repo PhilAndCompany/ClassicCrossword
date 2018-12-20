@@ -44,7 +44,7 @@ namespace ClassicCrossword.Forms
                 }
                 catch (SqlException)
                 {
-                    MessageBox.Show("Невозможно добавить нового сотрудника!\nСотрудник с такими данными уже существует.", "Ошибка изменения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Невозможно зарегистрировать нового игрока!\nИгрок с таким логином уже существует.", "Ошибка изменения", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception)
                 {
