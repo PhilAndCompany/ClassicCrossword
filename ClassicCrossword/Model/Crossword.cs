@@ -49,6 +49,8 @@ namespace ClassicCrossword.Model
 
         public Dictionary<string, string> defVerDict = new Dictionary<string, string>();
 
+        public char[,] progressPlayer { get; set; }
+
         public Crossword() {}
 
         public Crossword(int xDimen, int yDimen)

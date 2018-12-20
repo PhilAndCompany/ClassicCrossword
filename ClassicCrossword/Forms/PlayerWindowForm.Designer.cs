@@ -92,7 +92,6 @@
             // 
             // button1
             // 
-            this.button1.Enabled = false;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button1.Location = new System.Drawing.Point(682, 538);
             this.button1.Name = "button1";
@@ -100,6 +99,7 @@
             this.button1.TabIndex = 14;
             this.button1.Text = "ПРОВЕРИТЬ";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
@@ -229,6 +229,7 @@
             this.загрузитьСохраненныйToolStripMenuItem.Name = "загрузитьСохраненныйToolStripMenuItem";
             this.загрузитьСохраненныйToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.загрузитьСохраненныйToolStripMenuItem.Text = "Загрузить сохраненный";
+            this.загрузитьСохраненныйToolStripMenuItem.Click += new System.EventHandler(this.загрузитьСохраненныйToolStripMenuItem_Click);
             // 
             // сохранитьРешениеToolStripMenuItem
             // 
@@ -236,6 +237,7 @@
             this.сохранитьРешениеToolStripMenuItem.Name = "сохранитьРешениеToolStripMenuItem";
             this.сохранитьРешениеToolStripMenuItem.Size = new System.Drawing.Size(147, 20);
             this.сохранитьРешениеToolStripMenuItem.Text = "Сохранить прогресс";
+            this.сохранитьРешениеToolStripMenuItem.Click += new System.EventHandler(this.сохранитьРешениеToolStripMenuItem_Click);
             // 
             // взятьПодсказкуToolStripMenuItem
             // 
