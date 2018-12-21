@@ -29,9 +29,8 @@
         private void InitializeComponent()
         {
             this.button2 = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblHints = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,8 +44,6 @@
             this.загрузитьСохраненныйToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьРешениеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.взятьПодсказкуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.подсказатьСловToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.подсказатьБуквуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.статистикаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.печатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.печатьКроссвордаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,6 +57,7 @@
             this.dgvCrossword = new System.Windows.Forms.DataGridView();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.lblCntHint = new System.Windows.Forms.Label();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -80,16 +78,6 @@
             this.button2.Text = "ПАУЗА";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Enabled = false;
-            this.label2.Location = new System.Drawing.Point(22, 548);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(182, 13);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "Подсказок по словам осталось: X";
-            // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -101,15 +89,15 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // label1
+            // lblHints
             // 
-            this.label1.AutoSize = true;
-            this.label1.Enabled = false;
-            this.label1.Location = new System.Drawing.Point(22, 522);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(181, 13);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Подсказок по буквам осталось: X";
+            this.lblHints.AutoSize = true;
+            this.lblHints.Enabled = false;
+            this.lblHints.Location = new System.Drawing.Point(22, 548);
+            this.lblHints.Name = "lblHints";
+            this.lblHints.Size = new System.Drawing.Size(171, 13);
+            this.lblHints.TabIndex = 13;
+            this.lblHints.Text = "Подсказок по буквам осталось:";
             // 
             // groupBox3
             // 
@@ -241,27 +229,11 @@
             // 
             // взятьПодсказкуToolStripMenuItem
             // 
-            this.взятьПодсказкуToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.подсказатьСловToolStripMenuItem,
-            this.подсказатьБуквуToolStripMenuItem});
-            this.взятьПодсказкуToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.pair_of_glases;
+            this.взятьПодсказкуToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.text_alphabet_a;
             this.взятьПодсказкуToolStripMenuItem.Name = "взятьПодсказкуToolStripMenuItem";
-            this.взятьПодсказкуToolStripMenuItem.Size = new System.Drawing.Size(122, 20);
-            this.взятьПодсказкуToolStripMenuItem.Text = "Взять подсказку";
-            // 
-            // подсказатьСловToolStripMenuItem
-            // 
-            this.подсказатьСловToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.text_box_tool;
-            this.подсказатьСловToolStripMenuItem.Name = "подсказатьСловToolStripMenuItem";
-            this.подсказатьСловToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.подсказатьСловToolStripMenuItem.Text = "Подсказать слово";
-            // 
-            // подсказатьБуквуToolStripMenuItem
-            // 
-            this.подсказатьБуквуToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.text_alphabet_a;
-            this.подсказатьБуквуToolStripMenuItem.Name = "подсказатьБуквуToolStripMenuItem";
-            this.подсказатьБуквуToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.подсказатьБуквуToolStripMenuItem.Text = "Подсказать букву";
+            this.взятьПодсказкуToolStripMenuItem.Size = new System.Drawing.Size(131, 20);
+            this.взятьПодсказкуToolStripMenuItem.Text = "Подсказать букву";
+            this.взятьПодсказкуToolStripMenuItem.Click += new System.EventHandler(this.взятьПодсказкуToolStripMenuItem_Click);
             // 
             // статистикаToolStripMenuItem
             // 
@@ -364,16 +336,24 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // lblCntHint
+            // 
+            this.lblCntHint.AutoSize = true;
+            this.lblCntHint.Location = new System.Drawing.Point(202, 548);
+            this.lblCntHint.Name = "lblCntHint";
+            this.lblCntHint.Size = new System.Drawing.Size(0, 13);
+            this.lblCntHint.TabIndex = 38;
+            // 
             // PlayerWindowForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(890, 601);
+            this.Controls.Add(this.lblCntHint);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblHints);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label3);
@@ -398,9 +378,8 @@
         #endregion
 
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblHints;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
@@ -408,8 +387,6 @@
         private System.Windows.Forms.ToolStripMenuItem печатьРешенияToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem печатьКроссвордаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem печатьToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem подсказатьБуквуToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem подсказатьСловToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem взятьПодсказкуToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сохранитьРешениеToolStripMenuItem;
         private System.Windows.Forms.Label label3;
@@ -429,5 +406,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvtbcDef;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.Label lblCntHint;
     }
 }

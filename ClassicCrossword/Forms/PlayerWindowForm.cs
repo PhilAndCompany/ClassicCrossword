@@ -134,6 +134,7 @@ namespace ClassicCrossword.Forms
                     dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
                 }
             }
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -279,7 +280,7 @@ namespace ClassicCrossword.Forms
             saveFileDialog1.DefaultExt = ".crs";
             saveFileDialog1.InitialDirectory = path;
             saveFileDialog1.AddExtension = true;
-            saveFileDialog1.FileName = "";
+            saveFileDialog1.FileName = ".crs";
             saveFileDialog1.Filter = "Файл кроссворда (*.crs)|*.crs";
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -343,6 +344,8 @@ namespace ClassicCrossword.Forms
                     dataGridView2.Rows.Add(item.Value.ToString());
 
                 ActualizeForProgCrs();
+
+                lblCntHint.Text = _board.CntHint.ToString();
             }
         }
 
@@ -409,6 +412,25 @@ namespace ClassicCrossword.Forms
             if (Equals(_board.GetBoard, progressPlayer))
                 MessageBox.Show("Кроссворд решён верно");
             else MessageBox.Show("Кроссворд решён неверно");
+        }
+
+        private void взятьПодсказкуToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_board.CntHint > 0) {
+                if (dgvCrossword.SelectedCells.Count == 1) {
+                    if (dgvCrossword.SelectedCells[0].Style.BackColor == Color.White)
+                    {
+                        int rowind = dgvCrossword.SelectedCells[0].RowIndex;
+                        int colind = dgvCrossword.SelectedCells[0].ColumnIndex;
+                        dgvCrossword.Rows[rowind].Cells[colind].Value = _board[rowind - 1, colind - 1];
+                        _board.CntHint--;
+                        lblCntHint.Text = _board.CntHint.ToString();
+                    }
+                    else MessageBox.Show("Выбрана неверная ячейка");
+                }
+                else MessageBox.Show("Выберите одну ячейку");
+            }
+            else MessageBox.Show("Подсказок не осталось");
         }
     }
 }
