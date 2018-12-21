@@ -49,6 +49,10 @@ namespace ClassicCrossword.Model
 
         public Dictionary<string, string> defVerDict = new Dictionary<string, string>();
 
+        public char[,] progressPlayer { get; set; }
+
+        public int CntHint { get; set; }
+
         public Crossword() {}
 
         public Crossword(int xDimen, int yDimen)
@@ -59,6 +63,7 @@ namespace ClassicCrossword.Model
             N = xDimen;
             M = yDimen;
             _rand = new Random();
+            CntHint = 3;
 
             for (var i = 0; i < N; i++)
                 for (var j = 0; j < M; j++)

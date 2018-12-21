@@ -749,5 +749,39 @@ namespace ClassicCrossword
                 textBoxVocabularyWordsCountOnV.Text = number.ToString();
             }
         }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.DefaultExt = ".crs";
+            openFileDialog1.InitialDirectory = @"..\..\Crosswords\";
+            openFileDialog1.AddExtension = true;
+            openFileDialog1.FileName = "";
+            openFileDialog1.Filter = "Файл кроссворда (*.crs)|*.crs";
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                clearDGV(dgvCrossword);
+
+                BinaryFormatter formatter = new BinaryFormatter();
+
+                using (FileStream fs = new FileStream(openFileDialog1.FileName, FileMode.OpenOrCreate))
+                {
+                    _board = (Crossword)formatter.Deserialize(fs);
+                }
+
+                for (var i = 0; i < _board.N + 2; i++)
+                {
+                    for (var j = 0; j < _board.M + 2; j++)
+                    {
+                        dgvCrossword.Rows[i].Cells[j].Value = " ";
+                        dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
+                        dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.Black;
+                        dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
+                    }
+                }
+
+                Actualize();
+            }
+        }
     }
 }
