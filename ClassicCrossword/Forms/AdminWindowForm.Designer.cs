@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminWindowForm));
             this.labelSearchByMask = new System.Windows.Forms.Label();
             this.textBoxSearchByMask = new System.Windows.Forms.TextBox();
-            this.dataGridViewVocabularyOfC = new System.Windows.Forms.DataGridView();
+            this.dgvVocabularyOfC = new System.Windows.Forms.DataGridView();
             this.dgvtbcNot1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBoxVocabularyOfC = new System.Windows.Forms.GroupBox();
             this.textBoxVocabularyWordsCountOnC = new System.Windows.Forms.TextBox();
@@ -48,57 +48,58 @@
             this.buttonSortByAlphabet = new System.Windows.Forms.Button();
             this.buttonSortByLength = new System.Windows.Forms.Button();
             this.menuStripCrossword = new System.Windows.Forms.MenuStrip();
-            this.создатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.выбратьсловарьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.параметрыКроссвордаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.печатьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.печатьКроссвордаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.печатьОтветовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.справкаToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.руководствоПользователяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.обАвторахToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.выходToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.createCrosswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadCrosswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chooseVocabularyOfCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.crosswordPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveCrosswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printCrosswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printAnswersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpCrosswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manualCrosswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutCrosswordProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutAuthorsCrosswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitCrosswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPageVocabulary = new System.Windows.Forms.TabPage();
             this.groupBoxVocabularyOfV = new System.Windows.Forms.GroupBox();
             this.textBoxVocabularyWordsCountOnV = new System.Windows.Forms.TextBox();
             this.labelabelVocabularyWordsCountOnV = new System.Windows.Forms.Label();
-            this.dataGridViewVocabularyOfV = new System.Windows.Forms.DataGridView();
+            this.dgvVocabularyOfV = new System.Windows.Forms.DataGridView();
             this.dgvtbcNot2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvtbcDef = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStripVocabulary = new System.Windows.Forms.MenuStrip();
-            this.создатьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.сохранитьСловарьtoolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.удалитьСтрокуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.руководствоПользователяToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.оПрограммеToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.обАвторахToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createVocabularyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveVocabularyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteRowVocabularyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpVocabularyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manualVocabularyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutProgramVocabularyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutAuthorsVocabularyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitVocabularyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPageAccounts = new System.Windows.Forms.TabPage();
             this.groupBoxAccounts = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvAccount = new System.Windows.Forms.DataGridView();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.loginDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.passDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.crosswordBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.crosswordDataSet = new ClassicCrossword.CrosswordDataSet();
             this.menuStripAccount = new System.Windows.Forms.MenuStrip();
-            this.добавитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.редактироватьToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.просмотретьДанныеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.справкаToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.руководствоПользователяToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.оПрограммеToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.обАвторахToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.выходToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.createAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.watchAccountDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manualAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutProgramAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutAuthorsAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playerTableAdapter = new ClassicCrossword.CrosswordDataSetTableAdapters.PlayerTableAdapter();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVocabularyOfC)).BeginInit();
+            this.chooseVocabularyOfVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVocabularyOfC)).BeginInit();
             this.groupBoxVocabularyOfC.SuspendLayout();
             this.tabControlMenu.SuspendLayout();
             this.tabPageCrossword.SuspendLayout();
@@ -108,11 +109,11 @@
             this.menuStripCrossword.SuspendLayout();
             this.tabPageVocabulary.SuspendLayout();
             this.groupBoxVocabularyOfV.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVocabularyOfV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVocabularyOfV)).BeginInit();
             this.menuStripVocabulary.SuspendLayout();
             this.tabPageAccounts.SuspendLayout();
             this.groupBoxAccounts.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAccount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.crosswordBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.crosswordDataSet)).BeginInit();
             this.menuStripAccount.SuspendLayout();
@@ -135,22 +136,22 @@
             this.textBoxSearchByMask.Size = new System.Drawing.Size(108, 20);
             this.textBoxSearchByMask.TabIndex = 28;
             // 
-            // dataGridViewVocabularyOfC
+            // dgvVocabularyOfC
             // 
-            this.dataGridViewVocabularyOfC.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridViewVocabularyOfC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewVocabularyOfC.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvVocabularyOfC.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvVocabularyOfC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvVocabularyOfC.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvtbcNot1});
-            this.dataGridViewVocabularyOfC.EnableHeadersVisualStyles = false;
-            this.dataGridViewVocabularyOfC.Location = new System.Drawing.Point(6, 19);
-            this.dataGridViewVocabularyOfC.MultiSelect = false;
-            this.dataGridViewVocabularyOfC.Name = "dataGridViewVocabularyOfC";
-            this.dataGridViewVocabularyOfC.ReadOnly = true;
-            this.dataGridViewVocabularyOfC.RowHeadersVisible = false;
-            this.dataGridViewVocabularyOfC.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewVocabularyOfC.Size = new System.Drawing.Size(296, 382);
-            this.dataGridViewVocabularyOfC.TabIndex = 0;
-            this.dataGridViewVocabularyOfC.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewVocabularyOfC_CellContentClick);
+            this.dgvVocabularyOfC.EnableHeadersVisualStyles = false;
+            this.dgvVocabularyOfC.Location = new System.Drawing.Point(6, 19);
+            this.dgvVocabularyOfC.MultiSelect = false;
+            this.dgvVocabularyOfC.Name = "dgvVocabularyOfC";
+            this.dgvVocabularyOfC.ReadOnly = true;
+            this.dgvVocabularyOfC.RowHeadersVisible = false;
+            this.dgvVocabularyOfC.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dgvVocabularyOfC.Size = new System.Drawing.Size(296, 382);
+            this.dgvVocabularyOfC.TabIndex = 0;
+            this.dgvVocabularyOfC.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVocabularyOfC_CellContentClick);
             // 
             // dgvtbcNot1
             // 
@@ -161,7 +162,7 @@
             // groupBoxVocabularyOfC
             // 
             this.groupBoxVocabularyOfC.Controls.Add(this.textBoxVocabularyWordsCountOnC);
-            this.groupBoxVocabularyOfC.Controls.Add(this.dataGridViewVocabularyOfC);
+            this.groupBoxVocabularyOfC.Controls.Add(this.dgvVocabularyOfC);
             this.groupBoxVocabularyOfC.Controls.Add(this.labelVocabularyWordsCountOnC);
             this.groupBoxVocabularyOfC.Location = new System.Drawing.Point(540, 30);
             this.groupBoxVocabularyOfC.Name = "groupBoxVocabularyOfC";
@@ -250,7 +251,7 @@
             this.dgvCrossword.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvCrossword.Size = new System.Drawing.Size(521, 435);
             this.dgvCrossword.TabIndex = 0;
-            this.dgvCrossword.SelectionChanged += new System.EventHandler(this.dataGridView2_SelectionChanged);
+            this.dgvCrossword.SelectionChanged += new System.EventHandler(this.dgvCrossword_SelectionChanged);
             // 
             // buttonGenerate
             // 
@@ -312,121 +313,122 @@
             // menuStripCrossword
             // 
             this.menuStripCrossword.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.создатьToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.выбратьсловарьToolStripMenuItem,
-            this.параметрыКроссвордаToolStripMenuItem,
-            this.сохранитьToolStripMenuItem,
-            this.печатьToolStripMenuItem1,
-            this.справкаToolStripMenuItem1,
-            this.выходToolStripMenuItem1});
+            this.createCrosswordToolStripMenuItem,
+            this.loadCrosswordToolStripMenuItem,
+            this.chooseVocabularyOfCToolStripMenuItem,
+            this.crosswordPropertiesToolStripMenuItem,
+            this.saveCrosswordToolStripMenuItem,
+            this.printToolStripMenuItem,
+            this.helpCrosswordToolStripMenuItem,
+            this.exitCrosswordToolStripMenuItem});
             this.menuStripCrossword.Location = new System.Drawing.Point(3, 3);
             this.menuStripCrossword.Name = "menuStripCrossword";
             this.menuStripCrossword.Size = new System.Drawing.Size(848, 24);
             this.menuStripCrossword.TabIndex = 34;
             this.menuStripCrossword.Text = "menuStrip2";
             // 
-            // создатьToolStripMenuItem
+            // createCrosswordToolStripMenuItem
             // 
-            this.создатьToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.page_with_one_curled_corner;
-            this.создатьToolStripMenuItem.Name = "создатьToolStripMenuItem";
-            this.создатьToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
-            this.создатьToolStripMenuItem.Text = "Создать";
-            this.создатьToolStripMenuItem.Click += new System.EventHandler(this.создатьToolStripMenuItem_Click);
+            this.createCrosswordToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.page_with_one_curled_corner;
+            this.createCrosswordToolStripMenuItem.Name = "createCrosswordToolStripMenuItem";
+            this.createCrosswordToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
+            this.createCrosswordToolStripMenuItem.Text = "Создать";
+            this.createCrosswordToolStripMenuItem.Click += new System.EventHandler(this.createCrosswordToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem1
+            // loadCrosswordToolStripMenuItem
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(127, 20);
-            this.toolStripMenuItem1.Text = "Выбрать кроссворд";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            this.loadCrosswordToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.checkered;
+            this.loadCrosswordToolStripMenuItem.Name = "loadCrosswordToolStripMenuItem";
+            this.loadCrosswordToolStripMenuItem.Size = new System.Drawing.Size(143, 20);
+            this.loadCrosswordToolStripMenuItem.Text = "Выбрать кроссворд";
+            this.loadCrosswordToolStripMenuItem.Click += new System.EventHandler(this.loadCrosswordToolStripMenuItem_Click);
             // 
-            // выбратьсловарьToolStripMenuItem
+            // chooseVocabularyOfCToolStripMenuItem
             // 
-            this.выбратьсловарьToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.gross_pencil;
-            this.выбратьсловарьToolStripMenuItem.Name = "выбратьсловарьToolStripMenuItem";
-            this.выбратьсловарьToolStripMenuItem.Size = new System.Drawing.Size(130, 20);
-            this.выбратьсловарьToolStripMenuItem.Text = "Выбрать словарь";
-            this.выбратьсловарьToolStripMenuItem.Click += new System.EventHandler(this.выбратьсловарьToolStripMenuItem_Click);
+            this.chooseVocabularyOfCToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.gross_pencil;
+            this.chooseVocabularyOfCToolStripMenuItem.Name = "chooseVocabularyOfCToolStripMenuItem";
+            this.chooseVocabularyOfCToolStripMenuItem.Size = new System.Drawing.Size(130, 20);
+            this.chooseVocabularyOfCToolStripMenuItem.Text = "Выбрать словарь";
+            this.chooseVocabularyOfCToolStripMenuItem.Click += new System.EventHandler(this.chooseVocabularyOfCToolStripMenuItem_Click);
             // 
-            // параметрыКроссвордаToolStripMenuItem
+            // crosswordPropertiesToolStripMenuItem
             // 
-            this.параметрыКроссвордаToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.monitor_brightness_symbol;
-            this.параметрыКроссвордаToolStripMenuItem.Name = "параметрыКроссвордаToolStripMenuItem";
-            this.параметрыКроссвордаToolStripMenuItem.Size = new System.Drawing.Size(166, 20);
-            this.параметрыКроссвордаToolStripMenuItem.Text = "Параметры кроссворда";
+            this.crosswordPropertiesToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.monitor_brightness_symbol;
+            this.crosswordPropertiesToolStripMenuItem.Name = "crosswordPropertiesToolStripMenuItem";
+            this.crosswordPropertiesToolStripMenuItem.Size = new System.Drawing.Size(166, 20);
+            this.crosswordPropertiesToolStripMenuItem.Text = "Параметры кроссворда";
             // 
-            // сохранитьToolStripMenuItem
+            // saveCrosswordToolStripMenuItem
             // 
-            this.сохранитьToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.file_inbox;
-            this.сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
-            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
-            this.сохранитьToolStripMenuItem.Text = "Сохранить";
-            this.сохранитьToolStripMenuItem.Click += new System.EventHandler(this.сохранитьToolStripMenuItem_Click);
+            this.saveCrosswordToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.file_inbox;
+            this.saveCrosswordToolStripMenuItem.Name = "saveCrosswordToolStripMenuItem";
+            this.saveCrosswordToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
+            this.saveCrosswordToolStripMenuItem.Text = "Сохранить";
+            this.saveCrosswordToolStripMenuItem.Click += new System.EventHandler(this.saveCrosswordToolStripMenuItem_Click);
             // 
-            // печатьToolStripMenuItem1
+            // printToolStripMenuItem
             // 
-            this.печатьToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.печатьКроссвордаToolStripMenuItem,
-            this.печатьОтветовToolStripMenuItem});
-            this.печатьToolStripMenuItem1.Enabled = false;
-            this.печатьToolStripMenuItem1.Image = global::ClassicCrossword.Properties.Resources.printer;
-            this.печатьToolStripMenuItem1.Name = "печатьToolStripMenuItem1";
-            this.печатьToolStripMenuItem1.Size = new System.Drawing.Size(74, 20);
-            this.печатьToolStripMenuItem1.Text = "Печать";
+            this.printToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.printCrosswordToolStripMenuItem,
+            this.printAnswersToolStripMenuItem});
+            this.printToolStripMenuItem.Enabled = false;
+            this.printToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.printer;
+            this.printToolStripMenuItem.Name = "printToolStripMenuItem";
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(74, 20);
+            this.printToolStripMenuItem.Text = "Печать";
             // 
-            // печатьКроссвордаToolStripMenuItem
+            // printCrosswordToolStripMenuItem
             // 
-            this.печатьКроссвордаToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.checkered;
-            this.печатьКроссвордаToolStripMenuItem.Name = "печатьКроссвордаToolStripMenuItem";
-            this.печатьКроссвордаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.печатьКроссвордаToolStripMenuItem.Text = "Печать кроссворда";
+            this.printCrosswordToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.checkered;
+            this.printCrosswordToolStripMenuItem.Name = "printCrosswordToolStripMenuItem";
+            this.printCrosswordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.printCrosswordToolStripMenuItem.Text = "Печать кроссворда";
             // 
-            // печатьОтветовToolStripMenuItem
+            // printAnswersToolStripMenuItem
             // 
-            this.печатьОтветовToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.watch_dark_eye;
-            this.печатьОтветовToolStripMenuItem.Name = "печатьОтветовToolStripMenuItem";
-            this.печатьОтветовToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.печатьОтветовToolStripMenuItem.Text = "Печать ответов";
+            this.printAnswersToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.watch_dark_eye;
+            this.printAnswersToolStripMenuItem.Name = "printAnswersToolStripMenuItem";
+            this.printAnswersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.printAnswersToolStripMenuItem.Text = "Печать ответов";
             // 
-            // справкаToolStripMenuItem1
+            // helpCrosswordToolStripMenuItem
             // 
-            this.справкаToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.руководствоПользователяToolStripMenuItem,
-            this.оПрограммеToolStripMenuItem,
-            this.обАвторахToolStripMenuItem});
-            this.справкаToolStripMenuItem1.Image = global::ClassicCrossword.Properties.Resources.question_button;
-            this.справкаToolStripMenuItem1.Name = "справкаToolStripMenuItem1";
-            this.справкаToolStripMenuItem1.Size = new System.Drawing.Size(81, 20);
-            this.справкаToolStripMenuItem1.Text = "Справка";
+            this.helpCrosswordToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.manualCrosswordToolStripMenuItem,
+            this.aboutCrosswordProgramToolStripMenuItem,
+            this.aboutAuthorsCrosswordToolStripMenuItem});
+            this.helpCrosswordToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.question_button;
+            this.helpCrosswordToolStripMenuItem.Name = "helpCrosswordToolStripMenuItem";
+            this.helpCrosswordToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.helpCrosswordToolStripMenuItem.Text = "Справка";
             // 
-            // руководствоПользователяToolStripMenuItem
+            // manualCrosswordToolStripMenuItem
             // 
-            this.руководствоПользователяToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.create_list_button;
-            this.руководствоПользователяToolStripMenuItem.Name = "руководствоПользователяToolStripMenuItem";
-            this.руководствоПользователяToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.руководствоПользователяToolStripMenuItem.Text = "Руководство пользователя";
+            this.manualCrosswordToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.create_list_button;
+            this.manualCrosswordToolStripMenuItem.Name = "manualCrosswordToolStripMenuItem";
+            this.manualCrosswordToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.manualCrosswordToolStripMenuItem.Text = "Руководство пользователя";
             // 
-            // оПрограммеToolStripMenuItem
+            // aboutCrosswordProgramToolStripMenuItem
             // 
-            this.оПрограммеToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.information_button;
-            this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.оПрограммеToolStripMenuItem.Text = "О программе";
+            this.aboutCrosswordProgramToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.information_button;
+            this.aboutCrosswordProgramToolStripMenuItem.Name = "aboutCrosswordProgramToolStripMenuItem";
+            this.aboutCrosswordProgramToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.aboutCrosswordProgramToolStripMenuItem.Text = "О программе";
             // 
-            // обАвторахToolStripMenuItem
+            // aboutAuthorsCrosswordToolStripMenuItem
             // 
-            this.обАвторахToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.personal_avatar;
-            this.обАвторахToolStripMenuItem.Name = "обАвторахToolStripMenuItem";
-            this.обАвторахToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.обАвторахToolStripMenuItem.Text = "Об авторах";
+            this.aboutAuthorsCrosswordToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.personal_avatar;
+            this.aboutAuthorsCrosswordToolStripMenuItem.Name = "aboutAuthorsCrosswordToolStripMenuItem";
+            this.aboutAuthorsCrosswordToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.aboutAuthorsCrosswordToolStripMenuItem.Text = "Об авторах";
             // 
-            // выходToolStripMenuItem1
+            // exitCrosswordToolStripMenuItem
             // 
-            this.выходToolStripMenuItem1.Image = global::ClassicCrossword.Properties.Resources.button_on_off;
-            this.выходToolStripMenuItem1.Name = "выходToolStripMenuItem1";
-            this.выходToolStripMenuItem1.Size = new System.Drawing.Size(69, 20);
-            this.выходToolStripMenuItem1.Text = "Выход";
+            this.exitCrosswordToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.button_on_off;
+            this.exitCrosswordToolStripMenuItem.Name = "exitCrosswordToolStripMenuItem";
+            this.exitCrosswordToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
+            this.exitCrosswordToolStripMenuItem.Text = "Выход";
             // 
             // tabPageVocabulary
             // 
@@ -444,10 +446,10 @@
             // 
             this.groupBoxVocabularyOfV.Controls.Add(this.textBoxVocabularyWordsCountOnV);
             this.groupBoxVocabularyOfV.Controls.Add(this.labelabelVocabularyWordsCountOnV);
-            this.groupBoxVocabularyOfV.Controls.Add(this.dataGridViewVocabularyOfV);
+            this.groupBoxVocabularyOfV.Controls.Add(this.dgvVocabularyOfV);
             this.groupBoxVocabularyOfV.Location = new System.Drawing.Point(6, 30);
             this.groupBoxVocabularyOfV.Name = "groupBoxVocabularyOfV";
-            this.groupBoxVocabularyOfV.Size = new System.Drawing.Size(800, 524);
+            this.groupBoxVocabularyOfV.Size = new System.Drawing.Size(842, 524);
             this.groupBoxVocabularyOfV.TabIndex = 3;
             this.groupBoxVocabularyOfV.TabStop = false;
             this.groupBoxVocabularyOfV.Text = "%VOCABULARYNAME%";
@@ -470,24 +472,24 @@
             this.labelabelVocabularyWordsCountOnV.TabIndex = 34;
             this.labelabelVocabularyWordsCountOnV.Text = "Количество слов в словаре:";
             // 
-            // dataGridViewVocabularyOfV
+            // dgvVocabularyOfV
             // 
-            this.dataGridViewVocabularyOfV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridViewVocabularyOfV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridViewVocabularyOfV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewVocabularyOfV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvVocabularyOfV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvVocabularyOfV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvVocabularyOfV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvVocabularyOfV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvtbcNot2,
             this.dgvtbcDef});
-            this.dataGridViewVocabularyOfV.EnableHeadersVisualStyles = false;
-            this.dataGridViewVocabularyOfV.Location = new System.Drawing.Point(6, 19);
-            this.dataGridViewVocabularyOfV.Name = "dataGridViewVocabularyOfV";
-            this.dataGridViewVocabularyOfV.RowHeadersVisible = false;
-            this.dataGridViewVocabularyOfV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewVocabularyOfV.Size = new System.Drawing.Size(788, 463);
-            this.dataGridViewVocabularyOfV.TabIndex = 0;
-            this.dataGridViewVocabularyOfV.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewVocabularyOfV_CellEndEdit);
-            this.dataGridViewVocabularyOfV.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewVocabularyOfV_EditingControlShowing);
-            this.dataGridViewVocabularyOfV.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridViewVocabularyOfV_RowsAdded);
+            this.dgvVocabularyOfV.EnableHeadersVisualStyles = false;
+            this.dgvVocabularyOfV.Location = new System.Drawing.Point(6, 19);
+            this.dgvVocabularyOfV.Name = "dgvVocabularyOfV";
+            this.dgvVocabularyOfV.RowHeadersVisible = false;
+            this.dgvVocabularyOfV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dgvVocabularyOfV.Size = new System.Drawing.Size(830, 463);
+            this.dgvVocabularyOfV.TabIndex = 0;
+            this.dgvVocabularyOfV.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVocabularyOfV_CellEndEdit);
+            this.dgvVocabularyOfV.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvVocabularyOfV_EditingControlShowing);
+            this.dgvVocabularyOfV.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvVocabularyOfV_RowsAdded);
             // 
             // dgvtbcNot2
             // 
@@ -502,78 +504,80 @@
             // menuStripVocabulary
             // 
             this.menuStripVocabulary.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.создатьToolStripMenuItem1,
-            this.сохранитьСловарьtoolStripMenuItem1,
-            this.удалитьСтрокуToolStripMenuItem,
-            this.справкаToolStripMenuItem,
-            this.выходToolStripMenuItem});
+            this.createVocabularyToolStripMenuItem,
+            this.chooseVocabularyOfVToolStripMenuItem,
+            this.saveVocabularyToolStripMenuItem,
+            this.deleteRowVocabularyToolStripMenuItem,
+            this.helpVocabularyToolStripMenuItem,
+            this.exitVocabularyToolStripMenuItem});
             this.menuStripVocabulary.Location = new System.Drawing.Point(3, 3);
             this.menuStripVocabulary.Name = "menuStripVocabulary";
             this.menuStripVocabulary.Size = new System.Drawing.Size(848, 24);
             this.menuStripVocabulary.TabIndex = 4;
             this.menuStripVocabulary.Text = "menuStripVocabulary";
             // 
-            // создатьToolStripMenuItem1
+            // createVocabularyToolStripMenuItem
             // 
-            this.создатьToolStripMenuItem1.Image = global::ClassicCrossword.Properties.Resources.page_with_one_curled_corner;
-            this.создатьToolStripMenuItem1.Name = "создатьToolStripMenuItem1";
-            this.создатьToolStripMenuItem1.Size = new System.Drawing.Size(78, 20);
-            this.создатьToolStripMenuItem1.Text = "Создать";
-            this.создатьToolStripMenuItem1.Click += new System.EventHandler(this.создатьToolStripMenuItem1_Click);
+            this.createVocabularyToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.page_with_one_curled_corner;
+            this.createVocabularyToolStripMenuItem.Name = "createVocabularyToolStripMenuItem";
+            this.createVocabularyToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
+            this.createVocabularyToolStripMenuItem.Text = "Создать";
+            this.createVocabularyToolStripMenuItem.Click += new System.EventHandler(this.createVocabularyToolStripMenuItem_Click);
             // 
-            // сохранитьСловарьtoolStripMenuItem1
+            // saveVocabularyToolStripMenuItem
             // 
-            this.сохранитьСловарьtoolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("сохранитьСловарьtoolStripMenuItem1.Image")));
-            this.сохранитьСловарьtoolStripMenuItem1.Name = "сохранитьСловарьtoolStripMenuItem1";
-            this.сохранитьСловарьtoolStripMenuItem1.Size = new System.Drawing.Size(141, 20);
-            this.сохранитьСловарьtoolStripMenuItem1.Text = "Сохранить словарь";
-            this.сохранитьСловарьtoolStripMenuItem1.Click += new System.EventHandler(this.сохранитьСловарьtoolStripMenuItem1_Click);
+            this.saveVocabularyToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("saveVocabularyToolStripMenuItem.Image")));
+            this.saveVocabularyToolStripMenuItem.Name = "saveVocabularyToolStripMenuItem";
+            this.saveVocabularyToolStripMenuItem.Size = new System.Drawing.Size(141, 20);
+            this.saveVocabularyToolStripMenuItem.Text = "Сохранить словарь";
+            this.saveVocabularyToolStripMenuItem.Click += new System.EventHandler(this.saveVocabularyToolStripMenuItem_Click);
             // 
-            // удалитьСтрокуToolStripMenuItem
+            // deleteRowVocabularyToolStripMenuItem
             // 
-            this.удалитьСтрокуToolStripMenuItem.Name = "удалитьСтрокуToolStripMenuItem";
-            this.удалитьСтрокуToolStripMenuItem.Size = new System.Drawing.Size(103, 20);
-            this.удалитьСтрокуToolStripMenuItem.Text = "Удалить строку";
-            this.удалитьСтрокуToolStripMenuItem.Click += new System.EventHandler(this.удалитьСтрокуToolStripMenuItem_Click);
+            this.deleteRowVocabularyToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.big_trash_container_from_side_view;
+            this.deleteRowVocabularyToolStripMenuItem.Name = "deleteRowVocabularyToolStripMenuItem";
+            this.deleteRowVocabularyToolStripMenuItem.Size = new System.Drawing.Size(119, 20);
+            this.deleteRowVocabularyToolStripMenuItem.Text = "Удалить строку";
+            this.deleteRowVocabularyToolStripMenuItem.Click += new System.EventHandler(this.deleteRowVocabularyToolStripMenuItem_Click);
             // 
-            // справкаToolStripMenuItem
+            // helpVocabularyToolStripMenuItem
             // 
-            this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.руководствоПользователяToolStripMenuItem1,
-            this.оПрограммеToolStripMenuItem1,
-            this.обАвторахToolStripMenuItem1});
-            this.справкаToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("справкаToolStripMenuItem.Image")));
-            this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
-            this.справкаToolStripMenuItem.Text = "Справка";
+            this.helpVocabularyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.manualVocabularyToolStripMenuItem,
+            this.aboutProgramVocabularyToolStripMenuItem,
+            this.aboutAuthorsVocabularyToolStripMenuItem});
+            this.helpVocabularyToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("helpVocabularyToolStripMenuItem.Image")));
+            this.helpVocabularyToolStripMenuItem.Name = "helpVocabularyToolStripMenuItem";
+            this.helpVocabularyToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.helpVocabularyToolStripMenuItem.Text = "Справка";
             // 
-            // руководствоПользователяToolStripMenuItem1
+            // manualVocabularyToolStripMenuItem
             // 
-            this.руководствоПользователяToolStripMenuItem1.Image = global::ClassicCrossword.Properties.Resources.create_list_button;
-            this.руководствоПользователяToolStripMenuItem1.Name = "руководствоПользователяToolStripMenuItem1";
-            this.руководствоПользователяToolStripMenuItem1.Size = new System.Drawing.Size(221, 22);
-            this.руководствоПользователяToolStripMenuItem1.Text = "Руководство пользователя";
+            this.manualVocabularyToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.create_list_button;
+            this.manualVocabularyToolStripMenuItem.Name = "manualVocabularyToolStripMenuItem";
+            this.manualVocabularyToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.manualVocabularyToolStripMenuItem.Text = "Руководство пользователя";
             // 
-            // оПрограммеToolStripMenuItem1
+            // aboutProgramVocabularyToolStripMenuItem
             // 
-            this.оПрограммеToolStripMenuItem1.Image = global::ClassicCrossword.Properties.Resources.information_button;
-            this.оПрограммеToolStripMenuItem1.Name = "оПрограммеToolStripMenuItem1";
-            this.оПрограммеToolStripMenuItem1.Size = new System.Drawing.Size(221, 22);
-            this.оПрограммеToolStripMenuItem1.Text = "О программе";
+            this.aboutProgramVocabularyToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.information_button;
+            this.aboutProgramVocabularyToolStripMenuItem.Name = "aboutProgramVocabularyToolStripMenuItem";
+            this.aboutProgramVocabularyToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.aboutProgramVocabularyToolStripMenuItem.Text = "О программе";
             // 
-            // обАвторахToolStripMenuItem1
+            // aboutAuthorsVocabularyToolStripMenuItem
             // 
-            this.обАвторахToolStripMenuItem1.Image = global::ClassicCrossword.Properties.Resources.personal_avatar;
-            this.обАвторахToolStripMenuItem1.Name = "обАвторахToolStripMenuItem1";
-            this.обАвторахToolStripMenuItem1.Size = new System.Drawing.Size(221, 22);
-            this.обАвторахToolStripMenuItem1.Text = "Об авторах";
+            this.aboutAuthorsVocabularyToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.personal_avatar;
+            this.aboutAuthorsVocabularyToolStripMenuItem.Name = "aboutAuthorsVocabularyToolStripMenuItem";
+            this.aboutAuthorsVocabularyToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.aboutAuthorsVocabularyToolStripMenuItem.Text = "Об авторах";
             // 
-            // выходToolStripMenuItem
+            // exitVocabularyToolStripMenuItem
             // 
-            this.выходToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("выходToolStripMenuItem.Image")));
-            this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
-            this.выходToolStripMenuItem.Text = "Выход";
+            this.exitVocabularyToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitVocabularyToolStripMenuItem.Image")));
+            this.exitVocabularyToolStripMenuItem.Name = "exitVocabularyToolStripMenuItem";
+            this.exitVocabularyToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
+            this.exitVocabularyToolStripMenuItem.Text = "Выход";
             // 
             // tabPageAccounts
             // 
@@ -588,32 +592,32 @@
             // 
             // groupBoxAccounts
             // 
-            this.groupBoxAccounts.Controls.Add(this.dataGridView1);
+            this.groupBoxAccounts.Controls.Add(this.dgvAccount);
             this.groupBoxAccounts.Location = new System.Drawing.Point(3, 27);
             this.groupBoxAccounts.Name = "groupBoxAccounts";
-            this.groupBoxAccounts.Size = new System.Drawing.Size(794, 528);
+            this.groupBoxAccounts.Size = new System.Drawing.Size(848, 528);
             this.groupBoxAccounts.TabIndex = 1;
             this.groupBoxAccounts.TabStop = false;
             this.groupBoxAccounts.Text = "Учетные записи";
             // 
-            // dataGridView1
+            // dgvAccount
             // 
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvAccount.AutoGenerateColumns = false;
+            this.dgvAccount.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvAccount.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvAccount.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAccount.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idDataGridViewTextBoxColumn,
             this.loginDataGridViewTextBoxColumn,
             this.passDataGridViewTextBoxColumn});
-            this.dataGridView1.DataSource = this.crosswordBindingSource;
-            this.dataGridView1.EnableHeadersVisualStyles = false;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 19);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(788, 150);
-            this.dataGridView1.TabIndex = 0;
+            this.dgvAccount.DataSource = this.crosswordBindingSource;
+            this.dgvAccount.EnableHeadersVisualStyles = false;
+            this.dgvAccount.Location = new System.Drawing.Point(6, 19);
+            this.dgvAccount.Name = "dgvAccount";
+            this.dgvAccount.RowHeadersVisible = false;
+            this.dgvAccount.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvAccount.Size = new System.Drawing.Size(836, 150);
+            this.dgvAccount.TabIndex = 0;
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -650,89 +654,89 @@
             // menuStripAccount
             // 
             this.menuStripAccount.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.добавитьToolStripMenuItem,
-            this.редактироватьToolStripMenuItem2,
-            this.удалитьToolStripMenuItem,
-            this.просмотретьДанныеToolStripMenuItem,
-            this.справкаToolStripMenuItem2,
-            this.выходToolStripMenuItem2});
+            this.createAccountToolStripMenuItem,
+            this.editAccountToolStripMenuItem,
+            this.deleteAccountToolStripMenuItem,
+            this.watchAccountDetailsToolStripMenuItem,
+            this.helpAccountToolStripMenuItem,
+            this.exitAccountToolStripMenuItem});
             this.menuStripAccount.Location = new System.Drawing.Point(0, 0);
             this.menuStripAccount.Name = "menuStripAccount";
             this.menuStripAccount.Size = new System.Drawing.Size(854, 24);
             this.menuStripAccount.TabIndex = 0;
             this.menuStripAccount.Text = "menuStrip2";
             // 
-            // добавитьToolStripMenuItem
+            // createAccountToolStripMenuItem
             // 
-            this.добавитьToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.page_with_one_curled_corner;
-            this.добавитьToolStripMenuItem.Name = "добавитьToolStripMenuItem";
-            this.добавитьToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
-            this.добавитьToolStripMenuItem.Text = "Добавить";
-            this.добавитьToolStripMenuItem.Click += new System.EventHandler(this.добавитьToolStripMenuItem_Click);
+            this.createAccountToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.page_with_one_curled_corner;
+            this.createAccountToolStripMenuItem.Name = "createAccountToolStripMenuItem";
+            this.createAccountToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
+            this.createAccountToolStripMenuItem.Text = "Создать";
+            this.createAccountToolStripMenuItem.Click += new System.EventHandler(this.createAccountToolStripMenuItem_Click);
             // 
-            // редактироватьToolStripMenuItem2
+            // editAccountToolStripMenuItem
             // 
-            this.редактироватьToolStripMenuItem2.Image = global::ClassicCrossword.Properties.Resources.gross_pencil;
-            this.редактироватьToolStripMenuItem2.Name = "редактироватьToolStripMenuItem2";
-            this.редактироватьToolStripMenuItem2.Size = new System.Drawing.Size(115, 20);
-            this.редактироватьToolStripMenuItem2.Text = "Редактировать";
-            this.редактироватьToolStripMenuItem2.Click += new System.EventHandler(this.редактироватьToolStripMenuItem2_Click);
+            this.editAccountToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.gross_pencil;
+            this.editAccountToolStripMenuItem.Name = "editAccountToolStripMenuItem";
+            this.editAccountToolStripMenuItem.Size = new System.Drawing.Size(115, 20);
+            this.editAccountToolStripMenuItem.Text = "Редактировать";
+            this.editAccountToolStripMenuItem.Click += new System.EventHandler(this.editAccountToolStripMenuItem_Click);
             // 
-            // удалитьToolStripMenuItem
+            // deleteAccountToolStripMenuItem
             // 
-            this.удалитьToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.big_trash_container_from_side_view;
-            this.удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
-            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
-            this.удалитьToolStripMenuItem.Text = "Удалить";
-            this.удалитьToolStripMenuItem.Click += new System.EventHandler(this.удалитьToolStripMenuItem_Click);
+            this.deleteAccountToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.big_trash_container_from_side_view;
+            this.deleteAccountToolStripMenuItem.Name = "deleteAccountToolStripMenuItem";
+            this.deleteAccountToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.deleteAccountToolStripMenuItem.Text = "Удалить";
+            this.deleteAccountToolStripMenuItem.Click += new System.EventHandler(this.deleteAccountToolStripMenuItem_Click);
             // 
-            // просмотретьДанныеToolStripMenuItem
+            // watchAccountDetailsToolStripMenuItem
             // 
-            this.просмотретьДанныеToolStripMenuItem.Enabled = false;
-            this.просмотретьДанныеToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.watch_dark_eye;
-            this.просмотретьДанныеToolStripMenuItem.Name = "просмотретьДанныеToolStripMenuItem";
-            this.просмотретьДанныеToolStripMenuItem.Size = new System.Drawing.Size(153, 20);
-            this.просмотретьДанныеToolStripMenuItem.Text = "Просмотреть данные";
-            this.просмотретьДанныеToolStripMenuItem.Click += new System.EventHandler(this.просмотретьДанныеToolStripMenuItem_Click);
+            this.watchAccountDetailsToolStripMenuItem.Enabled = false;
+            this.watchAccountDetailsToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.watch_dark_eye;
+            this.watchAccountDetailsToolStripMenuItem.Name = "watchAccountDetailsToolStripMenuItem";
+            this.watchAccountDetailsToolStripMenuItem.Size = new System.Drawing.Size(153, 20);
+            this.watchAccountDetailsToolStripMenuItem.Text = "Просмотреть данные";
+            this.watchAccountDetailsToolStripMenuItem.Click += new System.EventHandler(this.watchAccountDetailsToolStripMenuItem_Click);
             // 
-            // справкаToolStripMenuItem2
+            // helpAccountToolStripMenuItem
             // 
-            this.справкаToolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.руководствоПользователяToolStripMenuItem2,
-            this.оПрограммеToolStripMenuItem2,
-            this.обАвторахToolStripMenuItem2});
-            this.справкаToolStripMenuItem2.Image = global::ClassicCrossword.Properties.Resources.question_button;
-            this.справкаToolStripMenuItem2.Name = "справкаToolStripMenuItem2";
-            this.справкаToolStripMenuItem2.Size = new System.Drawing.Size(81, 20);
-            this.справкаToolStripMenuItem2.Text = "Справка";
+            this.helpAccountToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.manualAccountToolStripMenuItem,
+            this.aboutProgramAccountToolStripMenuItem,
+            this.aboutAuthorsAccountToolStripMenuItem});
+            this.helpAccountToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.question_button;
+            this.helpAccountToolStripMenuItem.Name = "helpAccountToolStripMenuItem";
+            this.helpAccountToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.helpAccountToolStripMenuItem.Text = "Справка";
             // 
-            // руководствоПользователяToolStripMenuItem2
+            // manualAccountToolStripMenuItem
             // 
-            this.руководствоПользователяToolStripMenuItem2.Image = global::ClassicCrossword.Properties.Resources.create_list_button;
-            this.руководствоПользователяToolStripMenuItem2.Name = "руководствоПользователяToolStripMenuItem2";
-            this.руководствоПользователяToolStripMenuItem2.Size = new System.Drawing.Size(221, 22);
-            this.руководствоПользователяToolStripMenuItem2.Text = "Руководство пользователя";
+            this.manualAccountToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.create_list_button;
+            this.manualAccountToolStripMenuItem.Name = "manualAccountToolStripMenuItem";
+            this.manualAccountToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.manualAccountToolStripMenuItem.Text = "Руководство пользователя";
             // 
-            // оПрограммеToolStripMenuItem2
+            // aboutProgramAccountToolStripMenuItem
             // 
-            this.оПрограммеToolStripMenuItem2.Image = global::ClassicCrossword.Properties.Resources.information_button;
-            this.оПрограммеToolStripMenuItem2.Name = "оПрограммеToolStripMenuItem2";
-            this.оПрограммеToolStripMenuItem2.Size = new System.Drawing.Size(221, 22);
-            this.оПрограммеToolStripMenuItem2.Text = "О программе";
+            this.aboutProgramAccountToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.information_button;
+            this.aboutProgramAccountToolStripMenuItem.Name = "aboutProgramAccountToolStripMenuItem";
+            this.aboutProgramAccountToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.aboutProgramAccountToolStripMenuItem.Text = "О программе";
             // 
-            // обАвторахToolStripMenuItem2
+            // aboutAuthorsAccountToolStripMenuItem
             // 
-            this.обАвторахToolStripMenuItem2.Image = global::ClassicCrossword.Properties.Resources.personal_avatar;
-            this.обАвторахToolStripMenuItem2.Name = "обАвторахToolStripMenuItem2";
-            this.обАвторахToolStripMenuItem2.Size = new System.Drawing.Size(221, 22);
-            this.обАвторахToolStripMenuItem2.Text = "Об авторах";
+            this.aboutAuthorsAccountToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.personal_avatar;
+            this.aboutAuthorsAccountToolStripMenuItem.Name = "aboutAuthorsAccountToolStripMenuItem";
+            this.aboutAuthorsAccountToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.aboutAuthorsAccountToolStripMenuItem.Text = "Об авторах";
             // 
-            // выходToolStripMenuItem2
+            // exitAccountToolStripMenuItem
             // 
-            this.выходToolStripMenuItem2.Image = global::ClassicCrossword.Properties.Resources.button_on_off;
-            this.выходToolStripMenuItem2.Name = "выходToolStripMenuItem2";
-            this.выходToolStripMenuItem2.Size = new System.Drawing.Size(69, 20);
-            this.выходToolStripMenuItem2.Text = "Выход";
+            this.exitAccountToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.button_on_off;
+            this.exitAccountToolStripMenuItem.Name = "exitAccountToolStripMenuItem";
+            this.exitAccountToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
+            this.exitAccountToolStripMenuItem.Text = "Выход";
             // 
             // playerTableAdapter
             // 
@@ -741,6 +745,13 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // chooseVocabularyOfVToolStripMenuItem
+            // 
+            this.chooseVocabularyOfVToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.create_list_button;
+            this.chooseVocabularyOfVToolStripMenuItem.Name = "chooseVocabularyOfVToolStripMenuItem";
+            this.chooseVocabularyOfVToolStripMenuItem.Size = new System.Drawing.Size(130, 20);
+            this.chooseVocabularyOfVToolStripMenuItem.Text = "Выбрать словарь";
             // 
             // AdminWindowForm
             // 
@@ -753,7 +764,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EFM - ADMIN";
             this.Load += new System.EventHandler(this.AdminWindowForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVocabularyOfC)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVocabularyOfC)).EndInit();
             this.groupBoxVocabularyOfC.ResumeLayout(false);
             this.groupBoxVocabularyOfC.PerformLayout();
             this.tabControlMenu.ResumeLayout(false);
@@ -769,13 +780,13 @@
             this.tabPageVocabulary.PerformLayout();
             this.groupBoxVocabularyOfV.ResumeLayout(false);
             this.groupBoxVocabularyOfV.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVocabularyOfV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVocabularyOfV)).EndInit();
             this.menuStripVocabulary.ResumeLayout(false);
             this.menuStripVocabulary.PerformLayout();
             this.tabPageAccounts.ResumeLayout(false);
             this.tabPageAccounts.PerformLayout();
             this.groupBoxAccounts.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAccount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.crosswordBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.crosswordDataSet)).EndInit();
             this.menuStripAccount.ResumeLayout(false);
@@ -789,7 +800,7 @@
         private System.Windows.Forms.TextBox textBoxSearchByMask;
         private System.Windows.Forms.Button buttonSortByLength;
         private System.Windows.Forms.Button buttonSortByAlphabet;
-        private System.Windows.Forms.DataGridView dataGridViewVocabularyOfC;
+        private System.Windows.Forms.DataGridView dgvVocabularyOfC;
         private System.Windows.Forms.GroupBox groupBoxVocabularyOfC;
         private System.Windows.Forms.Button buttonCheck;
         private System.Windows.Forms.Label labelVocabularyWordsCountOnC;
@@ -800,46 +811,46 @@
         private System.Windows.Forms.Button buttonClearMask;
         private System.Windows.Forms.GroupBox groupBoxVocabularyInstruments;
         private System.Windows.Forms.MenuStrip menuStripCrossword;
-        private System.Windows.Forms.ToolStripMenuItem выбратьсловарьToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem параметрыКроссвордаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem сохранитьToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem печатьToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem печатьКроссвордаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem печатьОтветовToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem руководствоПользователяToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem обАвторахToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem chooseVocabularyOfCToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem crosswordPropertiesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveCrosswordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpCrosswordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitCrosswordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printCrosswordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printAnswersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manualCrosswordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutCrosswordProgramToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutAuthorsCrosswordToolStripMenuItem;
         private System.Windows.Forms.TextBox textBoxVocabularyWordsCountOnC;
         private System.Windows.Forms.GroupBox groupBoxVocabularyOfV;
-        private System.Windows.Forms.DataGridView dataGridViewVocabularyOfV;
+        private System.Windows.Forms.DataGridView dgvVocabularyOfV;
         private System.Windows.Forms.MenuStrip menuStripVocabulary;
-        private System.Windows.Forms.ToolStripMenuItem создатьToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem сохранитьСловарьtoolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem руководствоПользователяToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem обАвторахToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createVocabularyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveVocabularyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpVocabularyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manualVocabularyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutProgramVocabularyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutAuthorsVocabularyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitVocabularyToolStripMenuItem;
         private System.Windows.Forms.TextBox textBoxVocabularyWordsCountOnV;
         private System.Windows.Forms.Label labelabelVocabularyWordsCountOnV;
         private System.Windows.Forms.Button buttonGenerate;
         private System.Windows.Forms.GroupBox groupBoxAccounts;
         private System.Windows.Forms.MenuStrip menuStripAccount;
-        private System.Windows.Forms.ToolStripMenuItem добавитьToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem редактироватьToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem удалитьToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem просмотретьДанныеToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem руководствоПользователяToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem обАвторахToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem createAccountToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editAccountToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteAccountToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem watchAccountDetailsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpAccountToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manualAccountToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutProgramAccountToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutAuthorsAccountToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitAccountToolStripMenuItem;
         private System.Windows.Forms.BindingSource crosswordBindingSource;
         private CrosswordDataSet crosswordDataSet;
         private CrosswordDataSetTableAdapters.PlayerTableAdapter playerTableAdapter;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvAccount;
         private System.Windows.Forms.Panel mainPanel;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn loginDataGridViewTextBoxColumn;
@@ -850,8 +861,9 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.DataGridView dgvCrossword;
-        private System.Windows.Forms.ToolStripMenuItem создатьToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem удалитьСтрокуToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem createCrosswordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteRowVocabularyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadCrosswordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem chooseVocabularyOfVToolStripMenuItem;
     }
 }
