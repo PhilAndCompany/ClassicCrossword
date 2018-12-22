@@ -331,6 +331,7 @@
             this.dgvCrossword.TabIndex = 38;
             this.dgvCrossword.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCrossword_CellEndEdit);
             this.dgvCrossword.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvCrossword_EditingControlShowing);
+            this.dgvCrossword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dgvCrossword_KeyPress);
             // 
             // openFileDialog1
             // 
