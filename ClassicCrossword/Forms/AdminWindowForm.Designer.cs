@@ -49,6 +49,7 @@
             this.buttonSortByLength = new System.Windows.Forms.Button();
             this.menuStripCrossword = new System.Windows.Forms.MenuStrip();
             this.создатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.выбратьсловарьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.параметрыКроссвордаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,7 +98,6 @@
             this.playerTableAdapter = new ClassicCrossword.CrosswordDataSetTableAdapters.PlayerTableAdapter();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVocabularyOfC)).BeginInit();
             this.groupBoxVocabularyOfC.SuspendLayout();
             this.tabControlMenu.SuspendLayout();
@@ -334,6 +334,13 @@
             this.создатьToolStripMenuItem.Text = "Создать";
             this.создатьToolStripMenuItem.Click += new System.EventHandler(this.создатьToolStripMenuItem_Click);
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(127, 20);
+            this.toolStripMenuItem1.Text = "Выбрать кроссворд";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
             // выбратьсловарьToolStripMenuItem
             // 
             this.выбратьсловарьToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.gross_pencil;
@@ -428,7 +435,7 @@
             this.tabPageVocabulary.Location = new System.Drawing.Point(4, 22);
             this.tabPageVocabulary.Name = "tabPageVocabulary";
             this.tabPageVocabulary.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageVocabulary.Size = new System.Drawing.Size(816, 560);
+            this.tabPageVocabulary.Size = new System.Drawing.Size(854, 560);
             this.tabPageVocabulary.TabIndex = 1;
             this.tabPageVocabulary.Text = "Словари";
             this.tabPageVocabulary.UseVisualStyleBackColor = true;
@@ -502,7 +509,7 @@
             this.выходToolStripMenuItem});
             this.menuStripVocabulary.Location = new System.Drawing.Point(3, 3);
             this.menuStripVocabulary.Name = "menuStripVocabulary";
-            this.menuStripVocabulary.Size = new System.Drawing.Size(810, 24);
+            this.menuStripVocabulary.Size = new System.Drawing.Size(848, 24);
             this.menuStripVocabulary.TabIndex = 4;
             this.menuStripVocabulary.Text = "menuStripVocabulary";
             // 
@@ -574,7 +581,7 @@
             this.tabPageAccounts.Controls.Add(this.menuStripAccount);
             this.tabPageAccounts.Location = new System.Drawing.Point(4, 22);
             this.tabPageAccounts.Name = "tabPageAccounts";
-            this.tabPageAccounts.Size = new System.Drawing.Size(816, 560);
+            this.tabPageAccounts.Size = new System.Drawing.Size(854, 560);
             this.tabPageAccounts.TabIndex = 2;
             this.tabPageAccounts.Text = "Учетные записи";
             this.tabPageAccounts.UseVisualStyleBackColor = true;
@@ -651,7 +658,7 @@
             this.выходToolStripMenuItem2});
             this.menuStripAccount.Location = new System.Drawing.Point(0, 0);
             this.menuStripAccount.Name = "menuStripAccount";
-            this.menuStripAccount.Size = new System.Drawing.Size(816, 24);
+            this.menuStripAccount.Size = new System.Drawing.Size(854, 24);
             this.menuStripAccount.TabIndex = 0;
             this.menuStripAccount.Text = "menuStrip2";
             // 
@@ -734,13 +741,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(127, 20);
-            this.toolStripMenuItem1.Text = "Выбрать кроссворд";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // AdminWindowForm
             // 

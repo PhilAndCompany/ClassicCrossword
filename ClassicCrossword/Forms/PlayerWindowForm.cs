@@ -261,7 +261,7 @@ namespace ClassicCrossword.Forms
             {
                 e.Handled = true;
             }
-            else if (!(e.KeyChar >= 1040 && e.KeyChar <= 1103)) // 1040...1071 А ~ Я 1072...1103 а...я
+            else if (!(e.KeyChar >= 1040 && e.KeyChar <= 1103)) // 1040...1071 А ~ Я 1072...1103 а ~ я
             {
                 String myCurrentLanguage = InputLanguage.CurrentInputLanguage.LayoutName;
                 //MessageBox.Show("Ваша раскладка клавиатуры " + myCurrentLanguage + " изменена на Русскую"); todo после первой обработки event'а он начинает выдавать более чем одно сообщение

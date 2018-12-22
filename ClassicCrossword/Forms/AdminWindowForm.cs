@@ -700,19 +700,7 @@ namespace ClassicCrossword
         private void dataGridViewVocabularyOfV_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             TextBox tb = (TextBox)e.Control;
-            if (dataGridViewVocabularyOfV.SelectedCells[0].ColumnIndex == 0)
-                tb.KeyPress += new KeyPressEventHandler(tb_KeyPress0);
-            else tb.KeyPress += new KeyPressEventHandler(tb_KeyPress1);
-        }
-
-        void tb_KeyPress0(object sender, KeyPressEventArgs e)
-        {
-            if (!Char.IsLetter(e.KeyChar))
-                e.Handled = true;
-        }
-        void tb_KeyPress1(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = false;
+            tb.KeyPress += new KeyPressEventHandler(tb_KeyPress);
         }
 
         private void dataGridViewVocabularyOfV_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -781,6 +769,27 @@ namespace ClassicCrossword
                 }
 
                 Actualize();
+            }
+        }
+
+        private void ChangeKeyboardLayout(System.Globalization.CultureInfo CultureInfo)
+        {
+            InputLanguage c = InputLanguage.FromCulture(CultureInfo);
+            InputLanguage.CurrentInputLanguage = c;
+        }
+
+        void tb_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (!(e.KeyChar >= 1040 && e.KeyChar <= 1103)) // 1040...1071 А ~ Я 1072...1103 а ~ я
+            {
+                String myCurrentLanguage = InputLanguage.CurrentInputLanguage.LayoutName;
+                //MessageBox.Show("Ваша раскладка клавиатуры " + myCurrentLanguage + " изменена на Русскую"); todo после первой обработки event'а он начинает выдавать более чем одно сообщение
+                ChangeKeyboardLayout(System.Globalization.CultureInfo.GetCultureInfo("ru-RU"));
+                e.Handled = true;
             }
         }
     }
