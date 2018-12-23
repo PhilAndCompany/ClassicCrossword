@@ -28,6 +28,12 @@ namespace ClassicCrossword.Forms
             this.player = player;
         }
 
+        private void ChangeKeyboardLayout(System.Globalization.CultureInfo CultureInfo)
+        {
+            InputLanguage c = InputLanguage.FromCulture(CultureInfo);
+            InputLanguage.CurrentInputLanguage = c;
+        }
+
         private void новыйКроссвордToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.DefaultExt = ".crs";
@@ -241,10 +247,27 @@ namespace ClassicCrossword.Forms
             tb.KeyPress += new KeyPressEventHandler(tb_KeyPress);
         }
 
+        private void dgvCrossword_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                MessageBox.Show("Нажат Enter");
+            }
+        }
+
         void tb_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!Char.IsLetter(e.KeyChar) || !Char.IsControl(e.KeyChar))
-                e.Handled = false;
+            if (!Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (!(e.KeyChar >= 1040 && e.KeyChar <= 1103)) // 1040...1071 А ~ Я 1072...1103 а ~ я
+            {
+                String myCurrentLanguage = InputLanguage.CurrentInputLanguage.LayoutName;
+                //MessageBox.Show("Ваша раскладка клавиатуры " + myCurrentLanguage + " изменена на Русскую"); todo после первой обработки event'а он начинает выдавать более чем одно сообщение
+                ChangeKeyboardLayout(System.Globalization.CultureInfo.GetCultureInfo("ru-RU"));
+                e.Handled = true;
+            }
         }
 
         private void dgvCrossword_CellEndEdit(object sender, DataGridViewCellEventArgs e)
