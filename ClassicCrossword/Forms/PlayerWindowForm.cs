@@ -487,6 +487,7 @@ namespace ClassicCrossword.Forms
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             Graphics g = e.Graphics;
+            Rectangle rect;
             int pbWidth = e.MarginBounds.Width;
             int pbHeight = e.MarginBounds.Height;
            
