@@ -123,16 +123,6 @@ namespace ClassicCrossword.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap gm {
-            get {
-                object obj = ResourceManager.GetObject("gm", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap gramophone_record {
             get {
                 object obj = ResourceManager.GetObject("gramophone-record", resourceCulture);
