@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Reflection;
 
 namespace ClassicCrossword.Forms
 {
@@ -489,9 +490,19 @@ namespace ClassicCrossword.Forms
             Application.Exit();
         }
 
-        private void перезапускToolStripMenuItem_Click(object sender, EventArgs e)
+        private void обАвторахToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Restart();
+            Other.AboutAuthors();
+        }
+
+        private void руководствоПользователяToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Other.UserManual();
+        }
+
+        private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)

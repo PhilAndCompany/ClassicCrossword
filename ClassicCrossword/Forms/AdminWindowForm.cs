@@ -799,9 +799,14 @@ namespace ClassicCrossword
             Application.Exit();
         }
 
-        private void перезапуститьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void aboutAuthorsCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Restart();
+            Other.AboutAuthors();
+        }
+
+        private void manualCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Other.UserManual();
         }
     }
 }
