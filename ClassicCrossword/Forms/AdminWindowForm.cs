@@ -793,5 +793,15 @@ namespace ClassicCrossword
                 e.Handled = true;
             }
         }
+
+        private void exitCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void перезапуститьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
+        }
     }
 }

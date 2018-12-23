@@ -40,6 +40,15 @@
             this.dgvtbcDef = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label3 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.mainPanel = new System.Windows.Forms.Panel();
+            this.dgvCrossword = new System.Windows.Forms.DataGridView();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.lblCntHint = new System.Windows.Forms.Label();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.printDocument2 = new System.Drawing.Printing.PrintDocument();
+            this.printPreviewDialog2 = new System.Windows.Forms.PrintPreviewDialog();
             this.решатьКроссвордToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.новыйКроссвордToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.загрузитьСохраненныйToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,15 +63,7 @@
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.обАвторахToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mainPanel = new System.Windows.Forms.Panel();
-            this.dgvCrossword = new System.Windows.Forms.DataGridView();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.lblCntHint = new System.Windows.Forms.Label();
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.printDocument2 = new System.Drawing.Printing.PrintDocument();
-            this.printPreviewDialog2 = new System.Windows.Forms.PrintPreviewDialog();
+            this.перезапускToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -143,7 +144,7 @@
             this.groupBox2.Controls.Add(this.dataGridView1);
             this.groupBox2.Location = new System.Drawing.Point(545, 27);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(325, 210);
+            this.groupBox2.Size = new System.Drawing.Size(325, 228);
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "По горизонтали:";
@@ -197,6 +198,75 @@
             this.menuStrip1.Size = new System.Drawing.Size(890, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // mainPanel
+            // 
+            this.mainPanel.Controls.Add(this.dgvCrossword);
+            this.mainPanel.Location = new System.Drawing.Point(12, 27);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(527, 441);
+            this.mainPanel.TabIndex = 37;
+            // 
+            // dgvCrossword
+            // 
+            this.dgvCrossword.AllowUserToAddRows = false;
+            this.dgvCrossword.AllowUserToDeleteRows = false;
+            this.dgvCrossword.AllowUserToResizeColumns = false;
+            this.dgvCrossword.AllowUserToResizeRows = false;
+            this.dgvCrossword.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCrossword.ColumnHeadersVisible = false;
+            this.dgvCrossword.EnableHeadersVisualStyles = false;
+            this.dgvCrossword.Location = new System.Drawing.Point(3, 3);
+            this.dgvCrossword.Name = "dgvCrossword";
+            this.dgvCrossword.RowHeadersVisible = false;
+            this.dgvCrossword.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dgvCrossword.Size = new System.Drawing.Size(521, 435);
+            this.dgvCrossword.TabIndex = 38;
+            this.dgvCrossword.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCrossword_CellEndEdit);
+            this.dgvCrossword.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvCrossword_EditingControlShowing);
+            this.dgvCrossword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dgvCrossword_KeyPress);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // lblCntHint
+            // 
+            this.lblCntHint.AutoSize = true;
+            this.lblCntHint.Location = new System.Drawing.Point(202, 548);
+            this.lblCntHint.Name = "lblCntHint";
+            this.lblCntHint.Size = new System.Drawing.Size(0, 13);
+            this.lblCntHint.TabIndex = 38;
+            // 
+            // printDocument1
+            // 
+            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
+            // 
+            // printPreviewDialog1
+            // 
+            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewDialog1.Document = this.printDocument1;
+            this.printPreviewDialog1.Enabled = true;
+            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
+            this.printPreviewDialog1.Name = "printPreviewDialog1";
+            this.printPreviewDialog1.Visible = false;
+            // 
+            // printDocument2
+            // 
+            this.printDocument2.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument2_PrintPage);
+            // 
+            // printPreviewDialog2
+            // 
+            this.printPreviewDialog2.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog2.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog2.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewDialog2.Document = this.printDocument2;
+            this.printPreviewDialog2.Enabled = true;
+            this.printPreviewDialog2.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog2.Icon")));
+            this.printPreviewDialog2.Name = "printPreviewDialog2";
+            this.printPreviewDialog2.Visible = false;
             // 
             // решатьКроссвордToolStripMenuItem
             // 
@@ -308,79 +378,21 @@
             // 
             // выходToolStripMenuItem
             // 
+            this.выходToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.перезапускToolStripMenuItem});
             this.выходToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.button_on_off;
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
             this.выходToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.выходToolStripMenuItem.Text = "Выход";
+            this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItem_Click);
             // 
-            // mainPanel
+            // перезапускToolStripMenuItem
             // 
-            this.mainPanel.Controls.Add(this.dgvCrossword);
-            this.mainPanel.Location = new System.Drawing.Point(12, 27);
-            this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(527, 441);
-            this.mainPanel.TabIndex = 37;
-            // 
-            // dgvCrossword
-            // 
-            this.dgvCrossword.AllowUserToAddRows = false;
-            this.dgvCrossword.AllowUserToDeleteRows = false;
-            this.dgvCrossword.AllowUserToResizeColumns = false;
-            this.dgvCrossword.AllowUserToResizeRows = false;
-            this.dgvCrossword.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCrossword.ColumnHeadersVisible = false;
-            this.dgvCrossword.EnableHeadersVisualStyles = false;
-            this.dgvCrossword.Location = new System.Drawing.Point(3, 3);
-            this.dgvCrossword.Name = "dgvCrossword";
-            this.dgvCrossword.RowHeadersVisible = false;
-            this.dgvCrossword.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvCrossword.Size = new System.Drawing.Size(521, 435);
-            this.dgvCrossword.TabIndex = 38;
-            this.dgvCrossword.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCrossword_CellEndEdit);
-            this.dgvCrossword.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvCrossword_EditingControlShowing);
-            this.dgvCrossword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dgvCrossword_KeyPress);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // lblCntHint
-            // 
-            this.lblCntHint.AutoSize = true;
-            this.lblCntHint.Location = new System.Drawing.Point(202, 548);
-            this.lblCntHint.Name = "lblCntHint";
-            this.lblCntHint.Size = new System.Drawing.Size(0, 13);
-            this.lblCntHint.TabIndex = 38;
-            // 
-            // printDocument1
-            // 
-            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
-            // 
-            // printPreviewDialog1
-            // 
-            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
-            this.printPreviewDialog1.Document = this.printDocument1;
-            this.printPreviewDialog1.Enabled = true;
-            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
-            this.printPreviewDialog1.Name = "printPreviewDialog1";
-            this.printPreviewDialog1.Visible = false;
-            // 
-            // printDocument2
-            // 
-            this.printDocument2.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument2_PrintPage);
-            // 
-            // printPreviewDialog2
-            // 
-            this.printPreviewDialog2.AutoScrollMargin = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog2.AutoScrollMinSize = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog2.ClientSize = new System.Drawing.Size(400, 300);
-            this.printPreviewDialog2.Document = this.printDocument2;
-            this.printPreviewDialog2.Enabled = true;
-            this.printPreviewDialog2.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog2.Icon")));
-            this.printPreviewDialog2.Name = "printPreviewDialog2";
-            this.printPreviewDialog2.Visible = false;
+            this.перезапускToolStripMenuItem.Image = global::ClassicCrossword.Properties.Resources.refresh;
+            this.перезапускToolStripMenuItem.Name = "перезапускToolStripMenuItem";
+            this.перезапускToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.перезапускToolStripMenuItem.Text = "Перезапуск";
+            this.перезапускToolStripMenuItem.Click += new System.EventHandler(this.перезапускToolStripMenuItem_Click);
             // 
             // PlayerWindowForm
             // 
@@ -449,5 +461,6 @@
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Drawing.Printing.PrintDocument printDocument2;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog2;
+        private System.Windows.Forms.ToolStripMenuItem перезапускToolStripMenuItem;
     }
 }
