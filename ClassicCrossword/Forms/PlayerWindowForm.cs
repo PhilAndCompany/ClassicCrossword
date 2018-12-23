@@ -19,13 +19,25 @@ namespace ClassicCrossword.Forms
 
         public static int n = 20; // максимальное число строк в сетке
         public static int m = 20; // максимальное число столбцов в сетке
-
+        Bitmap kr, g2, g3;
         Crossword _board = new Crossword(n, m);
 
         public PlayerWindowForm(Player player)
         {
             InitializeComponent();
             this.player = player;
+
+            //задание параметров отображения кроссворда
+            dgvCrossword.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dgvCrossword.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.ColumnHeader);
+            dgvCrossword.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvCrossword.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders);
+            dgvCrossword.AutoSize = true;
+
+            //получение данных о сетке и вопросов, для будущей печати
+            kr = new Bitmap(dgvCrossword.ClientRectangle.Width, dgvCrossword.ClientRectangle.Height);
+            g2 = new Bitmap(groupBox2.ClientRectangle.Width, groupBox2.ClientRectangle.Height);
+            g3 = new Bitmap(groupBox3.ClientRectangle.Width, groupBox3.ClientRectangle.Height);
         }
 
         private void ChangeKeyboardLayout(System.Globalization.CultureInfo CultureInfo)
@@ -454,6 +466,67 @@ namespace ClassicCrossword.Forms
                 else MessageBox.Show("Выберите одну ячейку");
             }
             else MessageBox.Show("Подсказок не осталось");
+        }
+
+        private void печатьКроссвордаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dgvCrossword.DrawToBitmap(kr, dgvCrossword.ClientRectangle);
+            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                printDocument1.Print();
+        }
+
+        private void печатьРешенияToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            groupBox2.DrawToBitmap(g2, groupBox2.ClientRectangle);
+            groupBox3.DrawToBitmap(g3, groupBox3.ClientRectangle);
+            if (printPreviewDialog2.ShowDialog() == DialogResult.OK)
+                printDocument2.Print();
+       
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            int pbWidth = e.MarginBounds.Width;
+            int pbHeight = e.MarginBounds.Height;
+           
+            int ImageWidth1 = kr.Width; int ImageHeight1 = kr.Height;
+
+            SizeF sizef = new SizeF(ImageWidth1 / kr.HorizontalResolution, ImageHeight1 / kr.VerticalResolution);
+            float fSeale = Math.Min(pbWidth / sizef.Width, pbHeight / sizef.Height);
+            sizef.Width *= fSeale;
+            sizef.Height *= fSeale;
+            Size size = Size.Ceiling(sizef);
+            rect = new Rectangle(e.MarginBounds.Location.X, e.MarginBounds.Location.Y, size.Width, size.Height);
+            g.DrawImage(kr, rect);
+        }
+        private void printDocument2_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            Rectangle rect2, rect3;
+            int pcWidth = e.MarginBounds.Width;
+            int pcHeight = e.MarginBounds.Height;
+            int pdWidth = e.MarginBounds.Width;
+            int pdHeight = e.MarginBounds.Height;
+
+            int ImageWidth2 = g2.Width; int ImageHeight2 = g2.Height;
+            int ImageWidth3 = g3.Width; int ImageHeight3 = g3.Height;
+
+            SizeF sizef2 = new SizeF(ImageWidth2 / g2.HorizontalResolution, ImageHeight2 / g2.VerticalResolution);
+            float fSeale2 = Math.Min(pdWidth / sizef2.Width, pdHeight / sizef2.Height);
+            sizef2.Width *= fSeale2;
+            sizef2.Height *= fSeale2;
+            Size size2 = Size.Ceiling(sizef2);
+            rect2 = new Rectangle(e.MarginBounds.Location.X, e.MarginBounds.Location.Y , size2.Width, size2.Height);
+            g.DrawImage(g2, rect2);
+
+            SizeF sizef3 = new SizeF(ImageWidth3 / g3.HorizontalResolution, ImageHeight3 / g3.VerticalResolution);
+            float fSeale3 = Math.Min(pcWidth / sizef3.Width, pcHeight / sizef3.Height);
+            sizef3.Width *= fSeale3;
+            sizef3.Height *= fSeale3;
+            Size size3 = Size.Ceiling(sizef3);
+            rect3 = new Rectangle(e.MarginBounds.Location.X, e.MarginBounds.Location.Y + 550 , size3.Width, size3.Height);
+            g.DrawImage(g3, rect3);
         }
     }
 }
