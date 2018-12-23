@@ -43,21 +43,22 @@ namespace ClassicCrossword
             InitializeComponent();
         }
 
-        private void редактироватьToolStripMenuItem2_Click(object sender, EventArgs e)
+  
+        private void editAccountToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells[0].Value);
-            string login = (string)dataGridView1.CurrentRow.Cells[1].Value;
-            string pass = (string)dataGridView1.CurrentRow.Cells[2].Value;
+            int id = Convert.ToInt32(dgvAccount.CurrentRow.Cells[0].Value);
+            string login = (string)dgvAccount.CurrentRow.Cells[1].Value;
+            string pass = (string)dgvAccount.CurrentRow.Cells[2].Value;
             var editPlayerForm = new AddNewPlayerForm(id, login, pass);
             editPlayerForm.Closing += AddNewPlayerForm_Closing;
             editPlayerForm.ShowDialog();
         }
 
-        private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void deleteAccountToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Вы действительно хотите удалить выбранного игрока?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells[0].Value);
+                int id = Convert.ToInt32(dgvAccount.CurrentRow.Cells[0].Value);
                 try
                 {
                     new UserController().DeleteById(id);
@@ -74,12 +75,12 @@ namespace ClassicCrossword
             }
         }
 
-        private void просмотретьДанныеToolStripMenuItem_Click(object sender, EventArgs e)
+        private void watchAccountDetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void добавитьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void createAccountToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var addTypeOfDevicesForm = new AddNewPlayerForm();
             addTypeOfDevicesForm.Closing += AddNewPlayerForm_Closing;
@@ -145,8 +146,8 @@ namespace ClassicCrossword
 
             foreach (var item in list)
             {
-                dataGridViewVocabularyOfC.Rows.Add(item.Key);
-                dataGridViewVocabularyOfV.Rows.Add(item.Key, item.Value);
+                dgvVocabularyOfC.Rows.Add(item.Key);
+                dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
             }
 
             textBoxVocabularyWordsCountOnC.Text = dict.Count.ToString();
@@ -164,7 +165,7 @@ namespace ClassicCrossword
             }
         }
 
-        private void выбратьсловарьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void chooseVocabularyOfCToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.DefaultExt = ".dict";
             openFileDialog1.InitialDirectory = @"..\..\Dict\";
@@ -178,8 +179,8 @@ namespace ClassicCrossword
                 list.Clear();
                 listNot.Clear();
                 listDef.Clear();
-                dataGridViewVocabularyOfC.Rows.Clear();
-                dataGridViewVocabularyOfV.Rows.Clear();
+                dgvVocabularyOfC.Rows.Clear();
+                dgvVocabularyOfV.Rows.Clear();
                 try
                 {
                     parseDict(openFileDialog1.FileName);
@@ -209,8 +210,8 @@ namespace ClassicCrossword
 
                 foreach (var item in list)
                 {
-                    dataGridViewVocabularyOfC.Rows.Add(item.Key);
-                    dataGridViewVocabularyOfV.Rows.Add(item.Key, item.Value);
+                    dgvVocabularyOfC.Rows.Add(item.Key);
+                    dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
                 }
 
                 textBoxVocabularyWordsCountOnC.Text = dict.Count.ToString();
@@ -324,15 +325,15 @@ namespace ClassicCrossword
             }
         }
 
-        private void сохранитьСловарьtoolStripMenuItem1_Click(object sender, EventArgs e)
+        private void saveVocabularyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dict.Clear();
 
             try
             {
-                for (int i = 0; i < dataGridViewVocabularyOfV.RowCount - 1; i++)
+                for (int i = 0; i < dgvVocabularyOfV.RowCount - 1; i++)
                 {
-                    dict.Add(dataGridViewVocabularyOfV.Rows[i].Cells[0].Value.ToString(), dataGridViewVocabularyOfV.Rows[i].Cells[1].Value.ToString());
+                    dict.Add(dgvVocabularyOfV.Rows[i].Cells[0].Value.ToString(), dgvVocabularyOfV.Rows[i].Cells[1].Value.ToString());
                 }
             }
             catch (ArgumentException)
@@ -382,13 +383,13 @@ namespace ClassicCrossword
             return string.Join(" ", s);
         }
 
-        private void создатьToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void createVocabularyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             groupBoxVocabularyOfC.Text = "";
             groupBoxVocabularyOfV.Text = "";
 
-            dataGridViewVocabularyOfC.Rows.Clear();
-            dataGridViewVocabularyOfV.Rows.Clear();
+            dgvVocabularyOfC.Rows.Clear();
+            dgvVocabularyOfV.Rows.Clear();
 
             dict.Clear();
             list.Clear();
@@ -399,7 +400,7 @@ namespace ClassicCrossword
             textBoxVocabularyWordsCountOnV.Text = "0";
         }
 
-        private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void saveCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveFileDialog1.DefaultExt = ".crs";
             saveFileDialog1.InitialDirectory = @"..\..\Crosswords\";
@@ -426,7 +427,7 @@ namespace ClassicCrossword
             }
         }
 
-        private void dataGridView2_SelectionChanged(object sender, EventArgs e)
+        private void dgvCrossword_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvCrossword.SelectedCells.Count == 2)
             {
@@ -541,7 +542,7 @@ namespace ClassicCrossword
                             mask = mask.Remove(mask.Length - 1);
                             mask += dgvCrossword.SelectedCells[0].Value.ToString() + '$';
                         }
-                        updateDGV(dataGridViewVocabularyOfC, mask);
+                        updateDGV(dgvVocabularyOfC, mask);
                     }
 
                 }
@@ -567,7 +568,7 @@ namespace ClassicCrossword
                             mask = mask.Remove(0, 1);
                             mask = mask.Insert(0, '^' + dgvCrossword.SelectedCells[0].Value.ToString());
                         }
-                        updateDGV(dataGridViewVocabularyOfC, mask);
+                        updateDGV(dgvVocabularyOfC, mask);
                     }
                 }
                 else if (dir == 0)
@@ -592,7 +593,7 @@ namespace ClassicCrossword
                             mask = mask.Remove(mask.Length - 1);
                             mask += dgvCrossword.SelectedCells[0].Value.ToString() + '$';
                         }
-                        updateDGV(dataGridViewVocabularyOfC, mask);
+                        updateDGV(dgvVocabularyOfC, mask);
                     }
                 }
                 else
@@ -617,7 +618,7 @@ namespace ClassicCrossword
                             mask = mask.Remove(0, 1);
                             mask = mask.Insert(0, '^' + dgvCrossword.SelectedCells[0].Value.ToString());
                         }
-                        updateDGV(dataGridViewVocabularyOfC, mask);
+                        updateDGV(dgvVocabularyOfC, mask);
                     }
                 }
             }
@@ -627,7 +628,7 @@ namespace ClassicCrossword
         {
 
             listNot = dict.Keys.ToList();
-            dataGridViewVocabularyOfC.Rows.Clear();
+            dgvVocabularyOfC.Rows.Clear();
             foreach (var item in listNot)
             {
                 if (Regex.IsMatch(item, pat, RegexOptions.IgnoreCase))
@@ -640,19 +641,19 @@ namespace ClassicCrossword
 
         private void buttonClearMask_Click(object sender, EventArgs e)
         {
-            dataGridViewVocabularyOfC.Rows.Clear();
+            dgvVocabularyOfC.Rows.Clear();
             foreach (var item in list)
-                dataGridViewVocabularyOfC.Rows.Add(item.Key);
+                dgvVocabularyOfC.Rows.Add(item.Key);
         }
 
-        private void dataGridViewVocabularyOfC_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvVocabularyOfC_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dgvCrossword.SelectedCells.Count > 2)
             {
 
                 clearDGV(dgvCrossword);
 
-                string s = dataGridViewVocabularyOfC.SelectedCells[0].Value.ToString();
+                string s = dgvVocabularyOfC.SelectedCells[0].Value.ToString();
 
                 if (dir == 3)
                 {
@@ -683,7 +684,7 @@ namespace ClassicCrossword
             }
         }
 
-        private void создатьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void createCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             for (var i = 0; i < _board.N + 2; i++)
             {
@@ -697,40 +698,28 @@ namespace ClassicCrossword
             clearDGV(dgvCrossword);
         }
 
-        private void dataGridViewVocabularyOfV_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        private void dgvVocabularyOfV_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             TextBox tb = (TextBox)e.Control;
-            if (dataGridViewVocabularyOfV.SelectedCells[0].ColumnIndex == 0)
-                tb.KeyPress += new KeyPressEventHandler(tb_KeyPress0);
-            else tb.KeyPress += new KeyPressEventHandler(tb_KeyPress1);
+            tb.KeyPress += new KeyPressEventHandler(tb_KeyPress);
         }
 
-        void tb_KeyPress0(object sender, KeyPressEventArgs e)
+        private void dgvVocabularyOfV_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            if (!Char.IsLetter(e.KeyChar))
-                e.Handled = true;
-        }
-        void tb_KeyPress1(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = false;
-        }
-
-        private void dataGridViewVocabularyOfV_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            if (dataGridViewVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+            if (dgvVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
                 string s = "";
                 if (e.ColumnIndex == 0)
-                    dataGridViewVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = dataGridViewVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().ToUpper();
+                    dgvVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = dgvVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().ToUpper();
                 else
                 {
-                    s = FirstUpper(dataGridViewVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
-                    dataGridViewVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = s;
+                    s = FirstUpper(dgvVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                    dgvVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = s;
                 }
             }
         }
 
-        private void dataGridViewVocabularyOfV_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        private void dgvVocabularyOfV_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             int number;
             Int32.TryParse(textBoxVocabularyWordsCountOnV.Text, out number);
@@ -738,11 +727,11 @@ namespace ClassicCrossword
             textBoxVocabularyWordsCountOnV.Text = number.ToString();
         }
 
-        private void удалитьСтрокуToolStripMenuItem_Click(object sender, EventArgs e)
+        private void deleteRowVocabularyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (dataGridViewVocabularyOfV.SelectedCells.Count == 1)
+            if (dgvVocabularyOfV.SelectedCells.Count == 1)
             {
-                dataGridViewVocabularyOfV.Rows.RemoveAt(dataGridViewVocabularyOfV.SelectedCells[0].RowIndex);
+                dgvVocabularyOfV.Rows.RemoveAt(dgvVocabularyOfV.SelectedCells[0].RowIndex);
                 int number;
                 Int32.TryParse(textBoxVocabularyWordsCountOnV.Text, out number);
                 number--;
@@ -750,7 +739,7 @@ namespace ClassicCrossword
             }
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        private void loadCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.DefaultExt = ".crs";
             openFileDialog1.InitialDirectory = @"..\..\Crosswords\";
@@ -781,6 +770,27 @@ namespace ClassicCrossword
                 }
 
                 Actualize();
+            }
+        }
+
+        private void ChangeKeyboardLayout(System.Globalization.CultureInfo CultureInfo)
+        {
+            InputLanguage c = InputLanguage.FromCulture(CultureInfo);
+            InputLanguage.CurrentInputLanguage = c;
+        }
+
+        void tb_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!Char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+            else if (!(e.KeyChar >= 1040 && e.KeyChar <= 1103)) // 1040...1071 А ~ Я 1072...1103 а ~ я
+            {
+                String myCurrentLanguage = InputLanguage.CurrentInputLanguage.LayoutName;
+                //MessageBox.Show("Ваша раскладка клавиатуры " + myCurrentLanguage + " изменена на Русскую"); todo после первой обработки event'а он начинает выдавать более чем одно сообщение
+                ChangeKeyboardLayout(System.Globalization.CultureInfo.GetCultureInfo("ru-RU"));
+                e.Handled = true;
             }
         }
     }
