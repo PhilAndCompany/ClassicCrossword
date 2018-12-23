@@ -683,6 +683,67 @@ namespace ClassicCrossword
                 Actualize();
             }
         }
+        private void buttonSortByLength_Click(object sender, EventArgs e)
+        {
+         //для исходного массива
+            //listNot = dict.Keys.ToList();
+            //dgvVocabularyOfC.Rows.Clear();
+            //listNot.Sort();
+            //foreach (var item in listNot)
+            //{
+            //    dgvVocabularyOfC.Rows.Add(item);
+            //}
+
+        //для datagridview
+            dgvVocabularyOfC.AllowUserToAddRows = false;
+           // dgvVocabularyOfC.Rows.RemoveAt(dgvVocabularyOfC.Rows.Count - 1 );
+
+            string[,] tempLists = new string[dgvVocabularyOfC.Rows.Count ,  dgvVocabularyOfC.Columns.Count ];
+            listNot = dict.Keys.ToList();
+            List <string> tempList = new List <string> { };
+            foreach (DataGridViewRow Row in dgvVocabularyOfC.Rows)
+            {
+                foreach (DataGridViewColumn Column in dgvVocabularyOfC.Columns)
+                {
+                   tempLists[Row.Index, Column.Index] = dgvVocabularyOfC.Rows[Row.Index].Cells[Column.Index].Value.ToString();
+                }
+            }
+            dgvVocabularyOfC.Rows.Clear();
+
+            var arr = tempLists.Cast<string>().OrderBy(a => a).ToArray();
+
+            foreach (var item in arr)
+            {
+                dgvVocabularyOfC.Rows.Add(item);
+            }
+        }
+
+        private void buttonSortByAlphabet_Click(object sender, EventArgs e)
+        {
+            if (textBoxSearchByMask.Text != null)
+            {
+                updateDGVbyMask(dgvVocabularyOfC, textBoxSearchByMask.Text);
+            }
+        }
+
+        void updateDGVbyMask(DataGridView dgv, string pat)
+        {
+            listNot = dict.Keys.ToList();
+            dgvVocabularyOfC.Rows.Clear();
+
+            foreach (var item in listNot)
+            {
+                Regex mask = new Regex(pat
+                    .Replace("*", ".*") //*: предыдущий символ повторяется 0 и более раз
+                    .Replace("?", ".?") //?: предыдущий символ повторяется 0 или 1 раз
+                    .Replace("+", ".+"));//+: предыдущий символ повторяется 1 и более раз
+                                         //.: знак точки определяет любой одиночный символ (например, выражение "м.р" соответствует слову "мир" или "мор") 
+                if (mask.IsMatch(item))
+               {
+                  dgv.Rows.Add(item);
+               }
+            }
+        }
 
         private void createCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
         {

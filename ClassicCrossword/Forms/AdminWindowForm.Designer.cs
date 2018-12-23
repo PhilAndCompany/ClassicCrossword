@@ -296,6 +296,7 @@
             this.buttonSortByAlphabet.Size = new System.Drawing.Size(32, 32);
             this.buttonSortByAlphabet.TabIndex = 26;
             this.buttonSortByAlphabet.UseVisualStyleBackColor = true;
+            this.buttonSortByAlphabet.Click += new System.EventHandler(this.buttonSortByAlphabet_Click);
             // 
             // buttonSortByLength
             // 
@@ -306,6 +307,7 @@
             this.buttonSortByLength.Size = new System.Drawing.Size(32, 32);
             this.buttonSortByLength.TabIndex = 27;
             this.buttonSortByLength.UseVisualStyleBackColor = true;
+            this.buttonSortByLength.Click += new System.EventHandler(this.buttonSortByLength_Click);
             // 
             // menuStripCrossword
             // 
