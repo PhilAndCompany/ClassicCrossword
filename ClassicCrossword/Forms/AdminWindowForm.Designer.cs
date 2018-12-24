@@ -507,6 +507,7 @@
             this.chooseVocabularyOfVToolStripMenuItem.Name = "chooseVocabularyOfVToolStripMenuItem";
             this.chooseVocabularyOfVToolStripMenuItem.Size = new System.Drawing.Size(130, 20);
             this.chooseVocabularyOfVToolStripMenuItem.Text = "Выбрать словарь";
+            this.chooseVocabularyOfVToolStripMenuItem.Click += new System.EventHandler(this.chooseVocabularyOfVToolStripMenuItem_Click);
             // 
             // saveVocabularyToolStripMenuItem
             // 

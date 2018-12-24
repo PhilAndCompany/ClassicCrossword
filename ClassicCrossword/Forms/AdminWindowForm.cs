@@ -169,7 +169,8 @@ namespace ClassicCrossword
         private void chooseVocabularyOfCToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.DefaultExt = ".dict";
-            openFileDialog1.InitialDirectory = @"..\..\Dict\";
+            string initPath = @"..\..\Dict\";
+            openFileDialog1.InitialDirectory = Path.GetFullPath(initPath);
             openFileDialog1.AddExtension = true;
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = "Файл словаря (*.dict)|*.dict";
@@ -430,8 +431,13 @@ namespace ClassicCrossword
 
         private void dgvCrossword_SelectionChanged(object sender, EventArgs e)
         {
+            if (dgvCrossword.SelectedCells.Count == 1)
+            {
+                dgvVocabularyOfC.Rows.Clear();
+            }
             if (dgvCrossword.SelectedCells.Count == 2)
             {
+                dgvVocabularyOfC.Rows.Clear();
                 mask = "";
                 if (dgvCrossword.SelectedCells[0].RowIndex == dgvCrossword.SelectedCells[1].RowIndex &&
                     dgvCrossword.SelectedCells[0].ColumnIndex == dgvCrossword.SelectedCells[1].ColumnIndex + 1)
@@ -545,7 +551,6 @@ namespace ClassicCrossword
                         }
                         updateDGV(dgvVocabularyOfC, mask);
                     }
-
                 }
                 else if (dir == 1)
                 {
@@ -886,7 +891,8 @@ namespace ClassicCrossword
         private void loadCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.DefaultExt = ".crs";
-            openFileDialog1.InitialDirectory = @"..\..\Crosswords\";
+            string initPath = @"..\..\Crosswords\";
+            openFileDialog1.InitialDirectory = Path.GetFullPath(initPath);
             openFileDialog1.AddExtension = true;
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = "Файл кроссворда (*.crs)|*.crs";
@@ -951,6 +957,62 @@ namespace ClassicCrossword
         private void manualCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Other.UserManual();
+        }
+
+        //todo при открытии словаря во вкладке "словарь", datagrid словаря во вкладке "кроссворд" становится равным ему, и активный словарь также
+        private void chooseVocabularyOfVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.DefaultExt = ".dict";
+            string initPath = @"..\..\Dict\";
+            openFileDialog1.InitialDirectory = Path.GetFullPath(initPath);
+            openFileDialog1.AddExtension = true;
+            openFileDialog1.FileName = "";
+            openFileDialog1.Filter = "Файл словаря (*.dict)|*.dict";
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                dict.Clear();
+                list.Clear();
+                listNot.Clear();
+                listDef.Clear();
+                dgvVocabularyOfC.Rows.Clear();
+                dgvVocabularyOfV.Rows.Clear();
+                try
+                {
+                    parseDict(openFileDialog1.FileName);
+                }
+                catch (ArgumentException)
+                {
+                    MessageBox.Show("В словаре имеются одинаковые понятия");
+                    textBoxVocabularyWordsCountOnC.Text = "0";
+                    textBoxVocabularyWordsCountOnV.Text = "0";
+                    return;
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    MessageBox.Show("В словаре отсутствует понятие | определение");
+                    textBoxVocabularyWordsCountOnC.Text = "0";
+                    textBoxVocabularyWordsCountOnV.Text = "0";
+                    return;
+                }
+
+                groupBoxVocabularyOfC.Text = openFileDialog1.SafeFileName;
+                groupBoxVocabularyOfV.Text = openFileDialog1.SafeFileName;
+
+                list.AddRange(dict);
+
+                listNot = dict.Keys.ToList();
+                listDef = dict.Values.ToList();
+
+                foreach (var item in list)
+                {
+                    dgvVocabularyOfC.Rows.Add(item.Key);
+                    dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
+                }
+
+                textBoxVocabularyWordsCountOnC.Text = dict.Count.ToString();
+                textBoxVocabularyWordsCountOnV.Text = dict.Count.ToString();
+            }
         }
     }
 }
