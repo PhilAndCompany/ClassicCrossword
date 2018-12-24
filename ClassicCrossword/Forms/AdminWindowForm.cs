@@ -33,6 +33,7 @@ namespace ClassicCrossword
         private int dir;
         private int colInd;
         private int rowInd;
+        bool toggle = false;
 
         private string mask = "";
 
@@ -683,9 +684,84 @@ namespace ClassicCrossword
                 Actualize();
             }
         }
+
+        class ComparerForLengthAsc : IComparer<string>
+        {
+            public int Compare(string not1, string not2)
+            {
+                if (not1.Length >= not2.Length)
+                    return 1;
+                else if (not1.Length < not2.Length)
+                    return -1;
+                else return 0;
+            }
+        }
+
+        class ComparerForLengthDesc : IComparer<string>
+        {
+            public int Compare(string not1, string not2)
+            {
+                if (not1.Length >= not2.Length)
+                    return -1;
+                else if (not1.Length < not2.Length)
+                    return 1;
+                else return 0;
+            }
+        }
+
+        class ComparerForAlphabetAsc : IComparer<string>
+        {
+            public int Compare(string not1, string not2)
+            {
+                if (not1.CompareTo(not2) == 1)
+                    return 1;
+                else if (not1.CompareTo(not2) == -1)
+                    return -1;
+                else return 0;
+            }
+        }
+
+        class ComparerForAlphabetDesc : IComparer<string>
+        {
+            public int Compare(string not1, string not2)
+            {
+                if (not1.CompareTo(not2) != 1)
+                    return 1;
+                else if (not1.CompareTo(not2) != -1)
+                    return -1;
+                else return 0;
+            }
+        }
+
         private void buttonSortByLength_Click(object sender, EventArgs e)
         {
-         //для исходного массива
+            toggle = !toggle;
+            //для datagridview
+            dgvVocabularyOfC.AllowUserToAddRows = false;
+
+            listNot = dict.Keys.ToList();
+            List<string> tempList = new List<string>();
+
+            for (int i = 0; i < dgvVocabularyOfC.Rows.Count; i++)
+            {
+                tempList.Add(dgvVocabularyOfC.Rows[i].Cells[0].Value.ToString());
+            }
+            dgvVocabularyOfC.Rows.Clear();
+
+            switch (toggle) {
+                case true: tempList.Sort(new ComparerForLengthAsc()); break;
+                case false: tempList.Sort(new ComparerForLengthDesc()); break;
+            }
+
+            foreach (var item in tempList)
+            {
+                dgvVocabularyOfC.Rows.Add(item);
+            }
+        }
+
+        private void buttonSortByAlphabet_Click(object sender, EventArgs e)
+        {
+            //для исходного массива
             //listNot = dict.Keys.ToList();
             //dgvVocabularyOfC.Rows.Clear();
             //listNot.Sort();
@@ -694,43 +770,49 @@ namespace ClassicCrossword
             //    dgvVocabularyOfC.Rows.Add(item);
             //}
 
-        //для datagridview
-            dgvVocabularyOfC.AllowUserToAddRows = false;
-           // dgvVocabularyOfC.Rows.RemoveAt(dgvVocabularyOfC.Rows.Count - 1 );
+            //для datagridview
 
-            string[,] tempLists = new string[dgvVocabularyOfC.Rows.Count ,  dgvVocabularyOfC.Columns.Count ];
+            // dgvVocabularyOfC.Rows.RemoveAt(dgvVocabularyOfC.Rows.Count - 1 );
+
+            //string[,] tempLists = new string[dgvVocabularyOfC.Rows.Count, dgvVocabularyOfC.Columns.Count];
+
+            //foreach (DataGridViewRow Row in dgvVocabularyOfC.Rows)
+            //{
+            //    foreach (DataGridViewColumn Column in dgvVocabularyOfC.Columns)
+            //    {
+            //        tempLists[Row.Index, Column.Index] = dgvVocabularyOfC.Rows[Row.Index].Cells[Column.Index].Value.ToString();
+            //    }
+            //}
+
+            toggle = !toggle;
+            dgvVocabularyOfC.AllowUserToAddRows = false;
             listNot = dict.Keys.ToList();
-            List <string> tempList = new List <string> { };
-            foreach (DataGridViewRow Row in dgvVocabularyOfC.Rows)
+            List<string> tempList = new List<string>();
+
+            for (int i = 0; i < dgvVocabularyOfC.Rows.Count; i++)
             {
-                foreach (DataGridViewColumn Column in dgvVocabularyOfC.Columns)
-                {
-                   tempLists[Row.Index, Column.Index] = dgvVocabularyOfC.Rows[Row.Index].Cells[Column.Index].Value.ToString();
-                }
+                tempList.Add(dgvVocabularyOfC.Rows[i].Cells[0].Value.ToString());
             }
             dgvVocabularyOfC.Rows.Clear();
 
-            var arr = tempLists.Cast<string>().OrderBy(a => a).ToArray();
+            switch(toggle){
+              case true:   tempList.Sort(new ComparerForAlphabetAsc()) ; break;
+               case false:  tempList.Sort(new ComparerForAlphabetDesc()); break;
+            }
 
-            foreach (var item in arr)
+            foreach (var item in tempList)
             {
                 dgvVocabularyOfC.Rows.Add(item);
             }
         }
 
-        private void buttonSortByAlphabet_Click(object sender, EventArgs e)
+        private void textBoxSearchByMask_TextChanged(object sender, EventArgs e)
         {
-            if (textBoxSearchByMask.Text != null)
-            {
-                updateDGVbyMask(dgvVocabularyOfC, textBoxSearchByMask.Text);
-            }
-        }
-
-        void updateDGVbyMask(DataGridView dgv, string pat)
-        {
+            textBoxSearchByMask.Text = textBoxSearchByMask.Text.ToUpper();
+            string pat = textBoxSearchByMask.Text;
             listNot = dict.Keys.ToList();
             dgvVocabularyOfC.Rows.Clear();
-
+            
             foreach (var item in listNot)
             {
                 Regex mask = new Regex(pat
@@ -739,10 +821,11 @@ namespace ClassicCrossword
                     .Replace("+", ".+"));//+: предыдущий символ повторяется 1 и более раз
                                          //.: знак точки определяет любой одиночный символ (например, выражение "м.р" соответствует слову "мир" или "мор") 
                 if (mask.IsMatch(item))
-               {
-                  dgv.Rows.Add(item);
-               }
+                {
+                    dgvVocabularyOfC.Rows.Add(item);
+                }
             }
+            textBoxSearchByMask.SelectionStart = textBoxSearchByMask.Text.Length;
         }
 
         private void createCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
@@ -871,3 +954,4 @@ namespace ClassicCrossword
         }
     }
 }
+ 

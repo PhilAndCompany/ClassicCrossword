@@ -132,6 +132,7 @@
             this.textBoxSearchByMask.Name = "textBoxSearchByMask";
             this.textBoxSearchByMask.Size = new System.Drawing.Size(108, 20);
             this.textBoxSearchByMask.TabIndex = 28;
+            this.textBoxSearchByMask.TextChanged += new System.EventHandler(this.textBoxSearchByMask_TextChanged);
             // 
             // dgvVocabularyOfC
             // 
