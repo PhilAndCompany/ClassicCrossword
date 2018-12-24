@@ -865,6 +865,8 @@ namespace ClassicCrossword
                     s = FirstUpper(dgvVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
                     dgvVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = s;
                 }
+                deleteRowVocabularyToolStripMenuItem.Enabled = true;
+
             }
         }
 
@@ -885,6 +887,8 @@ namespace ClassicCrossword
                 Int32.TryParse(textBoxVocabularyWordsCountOnV.Text, out number);
                 number--;
                 textBoxVocabularyWordsCountOnV.Text = number.ToString();
+             //   if (dgvVocabularyOfV.Rows.Count == 1) deleteRowVocabularyToolStripMenuItem.Enabled = false;
+
             }
         }
 
@@ -1012,6 +1016,19 @@ namespace ClassicCrossword
 
                 textBoxVocabularyWordsCountOnC.Text = dict.Count.ToString();
                 textBoxVocabularyWordsCountOnV.Text = dict.Count.ToString();
+            }
+        }
+
+        private void dgvVocabularyOfV_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvVocabularyOfV.SelectedCells.Count == 1)
+            {
+                int rowInd = dgvVocabularyOfV.SelectedCells[0].RowIndex;
+                if (dgvVocabularyOfV.Rows[rowInd].Cells[0].Value == null && dgvVocabularyOfV.Rows[rowInd].Cells[1].Value == null)
+                {
+                    deleteRowVocabularyToolStripMenuItem.Enabled = false;
+                }
+                else { deleteRowVocabularyToolStripMenuItem.Enabled = true; }
             }
         }
     }

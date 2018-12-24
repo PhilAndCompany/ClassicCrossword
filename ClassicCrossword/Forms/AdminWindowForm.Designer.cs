@@ -467,6 +467,7 @@
             this.dgvVocabularyOfV.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVocabularyOfV_CellEndEdit);
             this.dgvVocabularyOfV.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvVocabularyOfV_EditingControlShowing);
             this.dgvVocabularyOfV.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvVocabularyOfV_RowsAdded);
+            this.dgvVocabularyOfV.SelectionChanged += new System.EventHandler(this.dgvVocabularyOfV_SelectionChanged);
             // 
             // dgvtbcNot2
             // 
