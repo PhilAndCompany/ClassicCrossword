@@ -96,7 +96,6 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.playerTableAdapter = new ClassicCrossword.CrosswordDataSetTableAdapters.PlayerTableAdapter();
-            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVocabularyOfC)).BeginInit();
             this.groupBoxVocabularyOfC.SuspendLayout();
             this.tabControlMenu.SuspendLayout();
@@ -731,10 +730,6 @@
             // 
             this.playerTableAdapter.ClearBeforeFill = true;
             // 
-            // openFileDialog2
-            // 
-            this.openFileDialog2.FileName = "openFileDialog2";
-            // 
             // AdminWindowForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -844,6 +839,5 @@
         private System.Windows.Forms.ToolStripMenuItem deleteRowVocabularyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadCrosswordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem chooseVocabularyOfVToolStripMenuItem;
-        private System.Windows.Forms.OpenFileDialog openFileDialog2;
     }
 }

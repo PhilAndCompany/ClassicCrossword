@@ -168,7 +168,8 @@ namespace ClassicCrossword
         private void chooseVocabularyOfCToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.DefaultExt = ".dict";
-            openFileDialog1.InitialDirectory = @"..\..\Dict\";
+            string initPath = @"..\..\Dict\";
+            openFileDialog1.InitialDirectory = Path.GetFullPath(initPath);
             openFileDialog1.AddExtension = true;
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = "Файл словаря (*.dict)|*.dict";
@@ -807,7 +808,8 @@ namespace ClassicCrossword
         private void loadCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.DefaultExt = ".crs";
-            openFileDialog1.InitialDirectory = @"..\..\Crosswords\";
+            string initPath = @"..\..\Crosswords\";
+            openFileDialog1.InitialDirectory = Path.GetFullPath(initPath);
             openFileDialog1.AddExtension = true;
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = "Файл кроссворда (*.crs)|*.crs";
@@ -877,13 +879,14 @@ namespace ClassicCrossword
         //todo при открытии словаря во вкладке "словарь", datagrid словаря во вкладке "кроссворд" становится равным ему, и активный словарь также
         private void chooseVocabularyOfVToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFileDialog2.DefaultExt = ".dict";
-            openFileDialog2.InitialDirectory = @"..\..\Dict\";
-            openFileDialog2.AddExtension = true;
-            openFileDialog2.FileName = "";
-            openFileDialog2.Filter = "Файл словаря (*.dict)|*.dict";
+            openFileDialog1.DefaultExt = ".dict";
+            string initPath = @"..\..\Dict\";
+            openFileDialog1.InitialDirectory = Path.GetFullPath(initPath);
+            openFileDialog1.AddExtension = true;
+            openFileDialog1.FileName = "";
+            openFileDialog1.Filter = "Файл словаря (*.dict)|*.dict";
 
-            if (openFileDialog2.ShowDialog() == DialogResult.OK)
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 dict.Clear();
                 list.Clear();
@@ -893,7 +896,7 @@ namespace ClassicCrossword
                 dgvVocabularyOfV.Rows.Clear();
                 try
                 {
-                    parseDict(openFileDialog2.FileName);
+                    parseDict(openFileDialog1.FileName);
                 }
                 catch (ArgumentException)
                 {
@@ -910,8 +913,8 @@ namespace ClassicCrossword
                     return;
                 }
 
-                groupBoxVocabularyOfC.Text = openFileDialog2.SafeFileName;
-                groupBoxVocabularyOfV.Text = openFileDialog2.SafeFileName;
+                groupBoxVocabularyOfC.Text = openFileDialog1.SafeFileName;
+                groupBoxVocabularyOfV.Text = openFileDialog1.SafeFileName;
 
                 list.AddRange(dict);
 
