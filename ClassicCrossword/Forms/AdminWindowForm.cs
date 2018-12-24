@@ -429,8 +429,13 @@ namespace ClassicCrossword
 
         private void dgvCrossword_SelectionChanged(object sender, EventArgs e)
         {
+            if (dgvCrossword.SelectedCells.Count == 1)
+            {
+                dgvVocabularyOfC.Rows.Clear();
+            }
             if (dgvCrossword.SelectedCells.Count == 2)
             {
+                dgvVocabularyOfC.Rows.Clear();
                 mask = "";
                 if (dgvCrossword.SelectedCells[0].RowIndex == dgvCrossword.SelectedCells[1].RowIndex &&
                     dgvCrossword.SelectedCells[0].ColumnIndex == dgvCrossword.SelectedCells[1].ColumnIndex + 1)
@@ -544,7 +549,6 @@ namespace ClassicCrossword
                         }
                         updateDGV(dgvVocabularyOfC, mask);
                     }
-
                 }
                 else if (dir == 1)
                 {
@@ -868,6 +872,61 @@ namespace ClassicCrossword
         private void manualCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Other.UserManual();
+        }
+
+        //todo при открытии словаря во вкладке "словарь", datagrid словаря во вкладке "кроссворд" становится равным ему, и активный словарь также
+        private void chooseVocabularyOfVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog2.DefaultExt = ".dict";
+            openFileDialog2.InitialDirectory = @"..\..\Dict\";
+            openFileDialog2.AddExtension = true;
+            openFileDialog2.FileName = "";
+            openFileDialog2.Filter = "Файл словаря (*.dict)|*.dict";
+
+            if (openFileDialog2.ShowDialog() == DialogResult.OK)
+            {
+                dict.Clear();
+                list.Clear();
+                listNot.Clear();
+                listDef.Clear();
+                dgvVocabularyOfC.Rows.Clear();
+                dgvVocabularyOfV.Rows.Clear();
+                try
+                {
+                    parseDict(openFileDialog2.FileName);
+                }
+                catch (ArgumentException)
+                {
+                    MessageBox.Show("В словаре имеются одинаковые понятия");
+                    textBoxVocabularyWordsCountOnC.Text = "0";
+                    textBoxVocabularyWordsCountOnV.Text = "0";
+                    return;
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    MessageBox.Show("В словаре отсутствует понятие | определение");
+                    textBoxVocabularyWordsCountOnC.Text = "0";
+                    textBoxVocabularyWordsCountOnV.Text = "0";
+                    return;
+                }
+
+                groupBoxVocabularyOfC.Text = openFileDialog2.SafeFileName;
+                groupBoxVocabularyOfV.Text = openFileDialog2.SafeFileName;
+
+                list.AddRange(dict);
+
+                listNot = dict.Keys.ToList();
+                listDef = dict.Values.ToList();
+
+                foreach (var item in list)
+                {
+                    dgvVocabularyOfC.Rows.Add(item.Key);
+                    dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
+                }
+
+                textBoxVocabularyWordsCountOnC.Text = dict.Count.ToString();
+                textBoxVocabularyWordsCountOnV.Text = dict.Count.ToString();
+            }
         }
     }
 }

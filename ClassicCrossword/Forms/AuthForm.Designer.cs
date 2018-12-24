@@ -54,7 +54,7 @@
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.linkLabel1.Location = new System.Drawing.Point(76, 311);
+            this.linkLabel1.Location = new System.Drawing.Point(76, 328);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(337, 20);
             this.linkLabel1.TabIndex = 14;
@@ -66,7 +66,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(161, 161);
+            this.label3.Location = new System.Drawing.Point(173, 161);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(116, 31);
             this.label3.TabIndex = 13;
@@ -87,7 +87,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(233, 260);
+            this.button1.Location = new System.Drawing.Point(154, 239);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(180, 39);
             this.button1.TabIndex = 11;
@@ -99,12 +99,14 @@
             // 
             this.tbPassword.Location = new System.Drawing.Point(295, 172);
             this.tbPassword.Name = "tbPassword";
+            this.tbPassword.PasswordChar = '*';
             this.tbPassword.Size = new System.Drawing.Size(162, 20);
             this.tbPassword.TabIndex = 10;
+            this.tbPassword.UseSystemPasswordChar = true;
             // 
             // tbLogin
             // 
-            this.tbLogin.Location = new System.Drawing.Point(295, 111);
+            this.tbLogin.Location = new System.Drawing.Point(295, 122);
             this.tbLogin.Name = "tbLogin";
             this.tbLogin.Size = new System.Drawing.Size(162, 20);
             this.tbLogin.TabIndex = 9;
