@@ -271,7 +271,7 @@
             this.groupBoxVocabularyInstruments.Controls.Add(this.labelSearchByMask);
             this.groupBoxVocabularyInstruments.Location = new System.Drawing.Point(540, 469);
             this.groupBoxVocabularyInstruments.Name = "groupBoxVocabularyInstruments";
-            this.groupBoxVocabularyInstruments.Size = new System.Drawing.Size(266, 85);
+            this.groupBoxVocabularyInstruments.Size = new System.Drawing.Size(311, 85);
             this.groupBoxVocabularyInstruments.TabIndex = 33;
             this.groupBoxVocabularyInstruments.TabStop = false;
             this.groupBoxVocabularyInstruments.Text = "%VOCABULARYNAME% INSTRUMENTS";
