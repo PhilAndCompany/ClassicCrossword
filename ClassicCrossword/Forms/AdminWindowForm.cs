@@ -17,7 +17,6 @@ namespace ClassicCrossword
 {
     public partial class AdminWindowForm : Form
     {
-
         public static int n = 20; // максимальное число строк в сетке
         public static int m = 20; // максимальное число столбцов в сетке
         
@@ -31,8 +30,15 @@ namespace ClassicCrossword
         private SortedDictionary<string, string> tmpDict;
 
         private int dir;
+        private enum direction {right, left, up, down};
+        private int lastDirection;
+        private Point lastCell;
+        private int lastSelectionLength;
+        private bool decFlag;
+
         private int colInd;
         private int rowInd;
+        bool toggle = false;
 
         private string mask = "";
 
@@ -42,10 +48,9 @@ namespace ClassicCrossword
         {
             InitializeComponent();
         }
-
   
         private void editAccountToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        {           
             int id = Convert.ToInt32(dgvAccount.CurrentRow.Cells[0].Value);
             string login = (string)dgvAccount.CurrentRow.Cells[1].Value;
             string pass = (string)dgvAccount.CurrentRow.Cells[2].Value;
@@ -101,21 +106,21 @@ namespace ClassicCrossword
             dgvCrossword.Font = font;
 
             int k;
-            for (int i = 0; i < m + 2; i++)
+            for (int i = 0; i < m; i++)
             {
                 k = dgvCrossword.Columns.Add(i.ToString(), i.ToString());
                 dgvCrossword.Columns[k].Width = 25;
             }
 
-            for (int i = 0; i < n + 2; i++)
+            for (int i = 0; i < n; i++)
             {
                 k = dgvCrossword.Rows.Add();
                 dgvCrossword.Rows[k].Height = 25;
             }
 
-            for (var i = 0; i < _board.N + 2; i++)
+            for (var i = 0; i < _board.N; i++)
             {
-                for (var j = 0; j < _board.M + 2; j++)
+                for (var j = 0; j < _board.M; j++)
                 {
                     dgvCrossword.Rows[i].Cells[j].Value = " ";
                     dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
@@ -168,7 +173,8 @@ namespace ClassicCrossword
         private void chooseVocabularyOfCToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.DefaultExt = ".dict";
-            openFileDialog1.InitialDirectory = @"..\..\Dict\";
+            string initPath = @"..\..\Dict\";
+            openFileDialog1.InitialDirectory = Path.GetFullPath(initPath);
             openFileDialog1.AddExtension = true;
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = "Файл словаря (*.dict)|*.dict";
@@ -221,9 +227,9 @@ namespace ClassicCrossword
 
         private void buttonGenerate_Click(object sender, EventArgs e)
         {
-            for (var i = 0; i < _board.N + 2; i++)
+            for (var i = 0; i < _board.N; i++)
             {
-                for (var j = 0; j < _board.M + 2; j++)
+                for (var j = 0; j < _board.M; j++)
                 {
                     dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.Black;
                     dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
@@ -306,8 +312,8 @@ namespace ClassicCrossword
                     if (letter != ' ') count--;
                     if (letter != ' ')
                     {
-                        dgvCrossword.Rows[i + 1].Cells[j + 1].Value = letter.ToString();
-                        dgvCrossword.Rows[i + 1].Cells[j + 1].Style.BackColor = Color.White;
+                        dgvCrossword.Rows[i].Cells[j].Value = letter.ToString();
+                        dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.White;
                     }
                     p++;
                 }
@@ -429,14 +435,29 @@ namespace ClassicCrossword
 
         private void dgvCrossword_SelectionChanged(object sender, EventArgs e)
         {
-            if (dgvCrossword.SelectedCells.Count == 2)
+            decFlag = false;
+            int selectedCellsCount = dgvCrossword.SelectedCells.Count;
+
+            if (selectedCellsCount == 1)
             {
+                lastCell = new Point(dgvCrossword.SelectedCells[0].RowIndex, dgvCrossword.SelectedCells[0].ColumnIndex);
+                lastDirection = (int)direction.right;
+                dgvVocabularyOfC.Rows.Clear();
                 mask = "";
+            }
+            if (selectedCellsCount == 2)
+            {
+                dgvVocabularyOfC.Rows.Clear(); //?
+                mask = ""; //?
                 if (dgvCrossword.SelectedCells[0].RowIndex == dgvCrossword.SelectedCells[1].RowIndex &&
                     dgvCrossword.SelectedCells[0].ColumnIndex == dgvCrossword.SelectedCells[1].ColumnIndex + 1)
-                {//вправо
+                {
+                    lastCell = new Point(dgvCrossword.SelectedCells[0].ColumnIndex, dgvCrossword.SelectedCells[0].RowIndex + 1);
+                    lastDirection = (int)direction.right;
+
+                    //вправо
                     dir = 3;
-                    rowInd = dgvCrossword.SelectedCells[1].RowIndex;
+                    rowInd = dgvCrossword.SelectedCells[0].RowIndex;
 
                     if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" ") && dgvCrossword.SelectedCells[1].Value.ToString().Equals(" "))
                         mask = "^\\w\\w$";
@@ -448,6 +469,15 @@ namespace ClassicCrossword
 
                     int i = dgvCrossword.SelectedCells[0].RowIndex;
                     int j = dgvCrossword.SelectedCells[0].ColumnIndex;
+                    
+                    //выделение по границе
+                    //if (i == 0 || j == 0 || j == dgvCrossword.)
+                    //левая граница
+                    //правая граница
+                    //нижняя граница
+                    //верхняя граница
+
+                    //общий случай
                     if (!Char.IsLetter(dgvCrossword.Rows[i].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) ||
                         !Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) ||
                         !Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]))
@@ -457,9 +487,14 @@ namespace ClassicCrossword
                 }
                 else if (dgvCrossword.SelectedCells[0].RowIndex == dgvCrossword.SelectedCells[1].RowIndex &&
                     dgvCrossword.SelectedCells[0].ColumnIndex == dgvCrossword.SelectedCells[1].ColumnIndex - 1)
-                {//влево
+                {
+                    lastCell = new Point(dgvCrossword.SelectedCells[0].ColumnIndex, dgvCrossword.SelectedCells[0].RowIndex - 1);
+                    lastDirection = (int)direction.left;
+
+                    //влево
                     dir = 1;
-                    rowInd = dgvCrossword.SelectedCells[1].RowIndex;
+                    rowInd = dgvCrossword.SelectedCells[0].RowIndex;
+
                     if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" ") && dgvCrossword.SelectedCells[1].Value.ToString().Equals(" "))
                         mask = "^\\w\\w$";
                     else if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" "))
@@ -477,9 +512,14 @@ namespace ClassicCrossword
                 }
                 else if (dgvCrossword.SelectedCells[0].RowIndex == dgvCrossword.SelectedCells[1].RowIndex + 1 &&
                     dgvCrossword.SelectedCells[0].ColumnIndex == dgvCrossword.SelectedCells[1].ColumnIndex)
-                {//вниз
+                {
+                    lastCell = new Point(dgvCrossword.SelectedCells[0].ColumnIndex + 1, dgvCrossword.SelectedCells[0].RowIndex);
+                    lastDirection = (int)direction.down;
+
+                    //вниз
                     dir = 0;
-                    colInd = dgvCrossword.SelectedCells[1].ColumnIndex;
+                    colInd = dgvCrossword.SelectedCells[0].ColumnIndex;
+
                     if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" ") && dgvCrossword.SelectedCells[1].Value.ToString().Equals(" "))
                         mask = "^\\w\\w$";
                     else if (dgvCrossword.SelectedCells[1].Value.ToString().Equals(" "))
@@ -497,9 +537,13 @@ namespace ClassicCrossword
                 }
                 else if (dgvCrossword.SelectedCells[0].RowIndex == dgvCrossword.SelectedCells[1].RowIndex - 1 &&
                     dgvCrossword.SelectedCells[0].ColumnIndex == dgvCrossword.SelectedCells[1].ColumnIndex)
-                {//вверх
+                {
+                    lastCell = new Point(dgvCrossword.SelectedCells[0].ColumnIndex - 1, dgvCrossword.SelectedCells[0].RowIndex);
+                    lastDirection = (int)direction.up;
+
+                    //вверх
                     dir = 2;
-                    colInd = dgvCrossword.SelectedCells[1].ColumnIndex;
+                    colInd = dgvCrossword.SelectedCells[0].ColumnIndex;
                     if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" ") && dgvCrossword.SelectedCells[1].Value.ToString().Equals(" "))
                         mask = "^\\w\\w$";
                     else if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" "))
@@ -517,116 +561,239 @@ namespace ClassicCrossword
                 }
                 else
                     MessageBox.Show("Неверная область");
+
+                lastSelectionLength = selectedCellsCount;
             }
-            if (dgvCrossword.SelectedCells.Count > 2)
+            if (selectedCellsCount > 2)
             {
+                //todo по последнему движению определить направление dir
+
+                //если накапливание
+                if (selectedCellsCount > lastSelectionLength)
+                {
+                    //если прежде двигались вправо, накопление идет вправо и сейчас идём вправо
+                    if (lastDirection == (int)direction.right && dgvCrossword.SelectedCells[1].ColumnIndex + 1 == dgvCrossword.SelectedCells[0].ColumnIndex)
+                        dir = 3;
+                    //если прежде двигались вправо, накопление идет влево и сейчас идём влево
+                    else if (lastDirection == (int)direction.right && dgvCrossword.SelectedCells[1].ColumnIndex - 1 == dgvCrossword.SelectedCells[0].ColumnIndex)//??
+                        dir = 1;
+                    //если прежде двигались влево, накопление идет вправо и сейчас идём вправо
+                    else if (lastDirection == (int)direction.left && dgvCrossword.SelectedCells[1].ColumnIndex + 1 == dgvCrossword.SelectedCells[0].ColumnIndex)
+                        dir = 3;
+                    //если прежде двигались влево , накопление идет влево и сейчас идём влево
+                    else if (lastDirection == (int)direction.left && dgvCrossword.SelectedCells[1].ColumnIndex - 1 == dgvCrossword.SelectedCells[0].ColumnIndex)
+                        dir = 1;
+
+                    //если прежде двигались вниз, накопление идет вниз и сейчас идём вниз
+                    else if (lastDirection == (int)direction.down && dgvCrossword.SelectedCells[1].RowIndex + 1 == dgvCrossword.SelectedCells[0].RowIndex)
+                        dir = 0;
+                    //если прежде двигались вниз, накопление идет вверх и сейчас идём вверх
+                    else if (lastDirection == (int)direction.down && dgvCrossword.SelectedCells[1].RowIndex - 1 == dgvCrossword.SelectedCells[0].RowIndex)
+                        dir = 2;
+                    //если прежде двигались вверх, накопление идет вниз и сейчас идём вниз
+                    else if (lastDirection == (int)direction.up && dgvCrossword.SelectedCells[1].RowIndex + 1 == dgvCrossword.SelectedCells[0].RowIndex)
+                        dir = 0;
+                    //если прежде двигались вверх, накопление идет вверх и сейчас идём вверх
+                    else if (lastDirection == (int)direction.up && dgvCrossword.SelectedCells[1].RowIndex - 1 == dgvCrossword.SelectedCells[0].RowIndex)
+                        dir = 2;
+                }
+                //если декремент выделения
+                else
+                {
+                    decFlag = true;
+                    //если прежде двигались вправо, декремент идет влево и сейчас идём влево
+                    if (lastDirection == (int)direction.right && dgvCrossword.SelectedCells[0].ColumnIndex == lastCell.X - 1)
+                        dir = 1;
+                    //если прежде двигались влево, декремент идет влево и сейчас идём влево
+                    else if (lastDirection == (int)direction.left && dgvCrossword.SelectedCells[0].ColumnIndex == lastCell.X - 1)
+                        dir = 1;
+                    //если прежде двигались влево, декремент идет вправо и сейчас идем вправо
+                    else if (lastDirection == (int)direction.left && dgvCrossword.SelectedCells[0].ColumnIndex == lastCell.X + 1)
+                        dir = 3;
+                    //если прежде двигались вправо, декремент идет вправо и сейчас идем вправо
+                    else if (lastDirection == (int)direction.right && dgvCrossword.SelectedCells[0].ColumnIndex == lastCell.X + 1)
+                        dir = 3;
+                    //если прежде двигались вниз, декремент вверх и сейчас идём вверх
+                    else if (lastDirection == (int)direction.down && dgvCrossword.SelectedCells[0].RowIndex == lastCell.Y - 1)
+                        dir = 2;
+                    //если прежде двигались вниз, декремент вниз и сейчас идём вниз
+                    else if (lastDirection == (int)direction.down && dgvCrossword.SelectedCells[0].RowIndex == lastCell.Y + 1)
+                        dir = 0;
+                    //если прежде двигались вверх, декремент идет вниз и сейчас идём вниз
+                    else if (lastDirection == (int)direction.up && dgvCrossword.SelectedCells[0].RowIndex == lastCell.Y + 1)
+                        dir = 0;
+                    //если прежде двигались вверх, декремент вверх и сейчас идём вверх
+                    else if (lastDirection == (int)direction.up && dgvCrossword.SelectedCells[0].RowIndex == lastCell.Y - 1)
+                        dir = 2;
+                }
+                //вправо
                 if (dir == 3)
                 {
                     int i = dgvCrossword.SelectedCells[0].RowIndex;
                     int j = dgvCrossword.SelectedCells[0].ColumnIndex;
-                    if (!(dgvCrossword.SelectedCells[0].ColumnIndex == dgvCrossword.SelectedCells[1].ColumnIndex + 1) ||
+                    if (!(dgvCrossword.SelectedCells[0].ColumnIndex == lastCell.X + 1) ||
                         rowInd != dgvCrossword.SelectedCells[0].RowIndex ||
                         !Char.IsLetter(dgvCrossword.Rows[i].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) ||
                         !Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) ||
                         !Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]))
-                        MessageBox.Show("Неверная область");
+                    {
+                        dgvCrossword.ClearSelection();
+                        dgvVocabularyOfC.Rows.Clear();
+                    }
                     else
                     {
-                        if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" "))
+                        if (!decFlag && (lastDirection == (int)direction.right || lastDirection == (int)direction.left))
                         {
-                            mask = mask.Remove(mask.Length - 1);
-                            mask += "\\w$";
+                            if (!dgvCrossword.SelectedCells[0].Value.ToString().Equals(" "))
+                            {
+                                mask = mask.Remove(mask.Length - 1);
+                                mask += dgvCrossword.SelectedCells[0].Value.ToString() + '$';
+                            }
+                            else
+                            {
+                                mask = mask.Remove(mask.Length - 1);
+                                mask += "\\w$";
+                            }
                         }
-                        else
+                        else if (decFlag)
                         {
-                            mask = mask.Remove(mask.Length - 1);
-                            mask += dgvCrossword.SelectedCells[0].Value.ToString() + '$';
+                            mask = mask.Remove(mask.Length - 3);
+                            mask += '$';
                         }
+
+                        lastDirection = (int)direction.right;
+                        lastCell = new Point(dgvCrossword.SelectedCells[0].ColumnIndex, dgvCrossword.SelectedCells[0].RowIndex + 1);
                         updateDGV(dgvVocabularyOfC, mask);
                     }
-
                 }
+                //влево
                 else if (dir == 1)
                 {
                     int i = dgvCrossword.SelectedCells[0].RowIndex;
                     int j = dgvCrossword.SelectedCells[0].ColumnIndex;
-                    if (!(dgvCrossword.SelectedCells[0].ColumnIndex == dgvCrossword.SelectedCells[1].ColumnIndex - 1) ||
+
+                    if (!(dgvCrossword.SelectedCells[0].ColumnIndex == lastCell.X - 1) ||
                         rowInd != dgvCrossword.SelectedCells[0].RowIndex ||
                         !dgvCrossword.Rows[i].Cells[j - 1].Value.ToString().Equals(" ") ||
                         !Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) ||
                         !Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]))
-                        MessageBox.Show("Неверная область");
+                    {
+                        dgvCrossword.ClearSelection();
+                        dgvVocabularyOfC.Rows.Clear();
+                    }
                     else
                     {
-                        if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" "))
+                        if (!decFlag && (lastDirection == (int)direction.left || lastDirection == (int)direction.right))
                         {
-                            mask = mask.Remove(0, 1);
-                            mask = mask.Insert(0, "^\\w");
+                            if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" "))
+                            {
+                                mask = mask.Remove(0, 1);
+                                mask = mask.Insert(0, "^\\w");
+                            }
+                            else if (!dgvCrossword.SelectedCells[0].Value.ToString().Equals(" "))
+                            {
+                                mask = mask.Remove(0, 1);
+                                mask = mask.Insert(0, '^' + dgvCrossword.SelectedCells[0].Value.ToString());
+                            }
                         }
-                        else
+                        
+                        else if (decFlag)
                         {
-                            mask = mask.Remove(0, 1);
-                            mask = mask.Insert(0, '^' + dgvCrossword.SelectedCells[0].Value.ToString());
+                            mask = mask.Remove(mask.Length - 3);
+                            mask += '$';
                         }
+
+                        lastDirection = (int)direction.left;
+                        lastCell = new Point(lastCell.X - 1, lastCell.Y);
                         updateDGV(dgvVocabularyOfC, mask);
                     }
                 }
+                //вниз
                 else if (dir == 0)
                 {
                     int i = dgvCrossword.SelectedCells[0].RowIndex;
                     int j = dgvCrossword.SelectedCells[0].ColumnIndex;
-                    if (!(dgvCrossword.SelectedCells[0].RowIndex == dgvCrossword.SelectedCells[1].RowIndex + 1) ||
+                    if (!(dgvCrossword.SelectedCells[0].RowIndex == lastCell.Y + 1) ||
                         colInd != dgvCrossword.SelectedCells[0].ColumnIndex ||
                         !dgvCrossword.Rows[i + 1].Cells[j].Value.ToString().Equals(" ") ||
                         !Char.IsLetter(dgvCrossword.Rows[i].Cells[j + 1].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i].Cells[j - 1].Value.ToString()[0]) ||
                         !Char.IsLetter(dgvCrossword.Rows[i].Cells[j - 1].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i].Cells[j + 1].Value.ToString()[0]))
-                        MessageBox.Show("Неверная область");
+                    {
+                        dgvCrossword.ClearSelection();
+                        dgvVocabularyOfC.Rows.Clear();
+                    }
                     else
                     {
-                        if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" "))
+                        if (!decFlag && (lastDirection == (int)direction.down || lastDirection == (int)direction.up))
                         {
-                            mask = mask.Remove(mask.Length - 1);
-                            mask += "\\w$";
+                            if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" "))
+                            {
+                                mask = mask.Remove(0, 1);
+                                mask = mask.Insert(0, "^\\w");
+                            }
+                            else
+                            {
+                                mask = mask.Remove(0, 1);
+                                mask = mask.Insert(0, '^' + dgvCrossword.SelectedCells[0].Value.ToString());
+                            }
                         }
-                        else
+                        else if (decFlag)
                         {
-                            mask = mask.Remove(mask.Length - 1);
-                            mask += dgvCrossword.SelectedCells[0].Value.ToString() + '$';
+                            mask = mask.Remove(mask.Length - 3);
+                            mask += '$';
                         }
+
+                        lastDirection = (int)direction.down;
+                        lastCell = new Point(dgvCrossword.SelectedCells[0].ColumnIndex + 1, dgvCrossword.SelectedCells[0].RowIndex);
                         updateDGV(dgvVocabularyOfC, mask);
                     }
                 }
+                //вверх
                 else
                 {
                     int i = dgvCrossword.SelectedCells[0].RowIndex;
                     int j = dgvCrossword.SelectedCells[0].ColumnIndex;
-                    if (!(dgvCrossword.SelectedCells[0].RowIndex == dgvCrossword.SelectedCells[1].RowIndex - 1) ||
+                    if (!(dgvCrossword.SelectedCells[0].RowIndex == lastCell.Y - 1) ||
                         colInd != dgvCrossword.SelectedCells[0].ColumnIndex ||
                         !dgvCrossword.Rows[i - 1].Cells[j].Value.ToString().Equals(" ") ||
                         !Char.IsLetter(dgvCrossword.Rows[i].Cells[j + 1].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i].Cells[j - 1].Value.ToString()[0]) ||
                         !Char.IsLetter(dgvCrossword.Rows[i].Cells[j - 1].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i].Cells[j + 1].Value.ToString()[0]))
-                        MessageBox.Show("Неверная область");
+                    {
+                        dgvCrossword.ClearSelection();
+                        dgvVocabularyOfC.Rows.Clear();
+                    }
                     else
                     {
-                        if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" "))
+                        if (!decFlag && (lastDirection == (int)direction.up || lastDirection == (int)direction.down))
                         {
-                            mask = mask.Remove(0, 1);
-                            mask = mask.Insert(0, "^\\w");
+                            if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" "))
+                            {
+                                mask = mask.Remove(0, 1);
+                                mask = mask.Insert(0, "^\\w");
+                            }
+                            else
+                            {
+                                mask = mask.Remove(0, 1);
+                                mask = mask.Insert(0, '^' + dgvCrossword.SelectedCells[0].Value.ToString());
+                            }
                         }
-                        else
+                        else if (decFlag)
                         {
-                            mask = mask.Remove(0, 1);
-                            mask = mask.Insert(0, '^' + dgvCrossword.SelectedCells[0].Value.ToString());
+                            mask = mask.Remove(mask.Length - 3);
+                            mask += '$';
                         }
+
+                        lastDirection = (int)direction.up;
+                        lastCell = new Point(dgvCrossword.SelectedCells[0].ColumnIndex - 1, dgvCrossword.SelectedCells[0].RowIndex);
                         updateDGV(dgvVocabularyOfC, mask);
                     }
                 }
+                lastSelectionLength = selectedCellsCount;
             }
         }
 
         void updateDGV(DataGridView dgv, string pat)
         {
-
             listNot = dict.Keys.ToList();
             dgvVocabularyOfC.Rows.Clear();
             foreach (var item in listNot)
@@ -636,7 +803,6 @@ namespace ClassicCrossword
                     dgv.Rows.Add(item);
                 }
             }
-
         }
 
         private void buttonClearMask_Click(object sender, EventArgs e)
@@ -650,45 +816,186 @@ namespace ClassicCrossword
         {
             if (dgvCrossword.SelectedCells.Count > 2)
             {
-
                 clearDGV(dgvCrossword);
 
                 string s = dgvVocabularyOfC.SelectedCells[0].Value.ToString();
 
                 if (dir == 3)
                 {
-                    int xPos = dgvCrossword.SelectedCells[dgvCrossword.SelectedCells.Count - 1].RowIndex - 1;
-                    int yPos = dgvCrossword.SelectedCells[dgvCrossword.SelectedCells.Count - 1].ColumnIndex - 1;
+                    int xPos = dgvCrossword.SelectedCells[dgvCrossword.SelectedCells.Count - 1].RowIndex;
+                    int yPos = dgvCrossword.SelectedCells[dgvCrossword.SelectedCells.Count - 1].ColumnIndex;
                     _board.AddWord(s, dict[s], xPos, yPos, 0);
                 }
                 else if (dir == 1)
                 {
-                    int xPos = dgvCrossword.SelectedCells[0].RowIndex - 1;
-                    int yPos = dgvCrossword.SelectedCells[0].ColumnIndex - 1;
+                    int xPos = dgvCrossword.SelectedCells[0].RowIndex;
+                    int yPos = dgvCrossword.SelectedCells[0].ColumnIndex;
                     _board.AddWord(s, dict[s], xPos, yPos, 0);
                 }
                 else if (dir == 0)
                 {
-                    int xPos = dgvCrossword.SelectedCells[dgvCrossword.SelectedCells.Count - 1].RowIndex - 1;
-                    int yPos = dgvCrossword.SelectedCells[dgvCrossword.SelectedCells.Count - 1].ColumnIndex - 1;
+                    int xPos = dgvCrossword.SelectedCells[dgvCrossword.SelectedCells.Count - 1].RowIndex;
+                    int yPos = dgvCrossword.SelectedCells[dgvCrossword.SelectedCells.Count - 1].ColumnIndex;
                     _board.AddWord(s, dict[s], xPos, yPos, 1);
                 }
                 else if (dir == 2)
                 {
-                    int xPos = dgvCrossword.SelectedCells[0].RowIndex - 1;
-                    int yPos = dgvCrossword.SelectedCells[0].ColumnIndex - 1;
+                    int xPos = dgvCrossword.SelectedCells[0].RowIndex;
+                    int yPos = dgvCrossword.SelectedCells[0].ColumnIndex;
                     _board.AddWord(s, dict[s], xPos, yPos, 1);
                 }
-
                 Actualize();
             }
         }
 
+        class ComparerForLengthAsc : IComparer<string>
+        {
+            public int Compare(string not1, string not2)
+            {
+                if (not1.Length >= not2.Length)
+                    return 1;
+                else if (not1.Length < not2.Length)
+                    return -1;
+                else return 0;
+            }
+        }
+
+        class ComparerForLengthDesc : IComparer<string>
+        {
+            public int Compare(string not1, string not2)
+            {
+                if (not1.Length >= not2.Length)
+                    return -1;
+                else if (not1.Length < not2.Length)
+                    return 1;
+                else return 0;
+            }
+        }
+
+        class ComparerForAlphabetAsc : IComparer<string>
+        {
+            public int Compare(string not1, string not2)
+            {
+                if (not1.CompareTo(not2) == 1)
+                    return 1;
+                else if (not1.CompareTo(not2) == -1)
+                    return -1;
+                else return 0;
+            }
+        }
+
+        class ComparerForAlphabetDesc : IComparer<string>
+        {
+            public int Compare(string not1, string not2)
+            {
+                if (not1.CompareTo(not2) != 1)
+                    return 1;
+                else if (not1.CompareTo(not2) != -1)
+                    return -1;
+                else return 0;
+            }
+        }
+
+        private void buttonSortByLength_Click(object sender, EventArgs e)
+        {
+            toggle = !toggle;
+            //для datagridview
+            dgvVocabularyOfC.AllowUserToAddRows = false;
+
+            listNot = dict.Keys.ToList();
+            List<string> tempList = new List<string>();
+
+            for (int i = 0; i < dgvVocabularyOfC.Rows.Count; i++)
+            {
+                tempList.Add(dgvVocabularyOfC.Rows[i].Cells[0].Value.ToString());
+            }
+            dgvVocabularyOfC.Rows.Clear();
+
+            switch (toggle) {
+                case true: tempList.Sort(new ComparerForLengthAsc()); break;
+                case false: tempList.Sort(new ComparerForLengthDesc()); break;
+            }
+
+            foreach (var item in tempList)
+            {
+                dgvVocabularyOfC.Rows.Add(item);
+            }
+        }
+
+        private void buttonSortByAlphabet_Click(object sender, EventArgs e)
+        {
+            //для исходного массива
+            //listNot = dict.Keys.ToList();
+            //dgvVocabularyOfC.Rows.Clear();
+            //listNot.Sort();
+            //foreach (var item in listNot)
+            //{
+            //    dgvVocabularyOfC.Rows.Add(item);
+            //}
+
+            //для datagridview
+
+            // dgvVocabularyOfC.Rows.RemoveAt(dgvVocabularyOfC.Rows.Count - 1 );
+
+            //string[,] tempLists = new string[dgvVocabularyOfC.Rows.Count, dgvVocabularyOfC.Columns.Count];
+
+            //foreach (DataGridViewRow Row in dgvVocabularyOfC.Rows)
+            //{
+            //    foreach (DataGridViewColumn Column in dgvVocabularyOfC.Columns)
+            //    {
+            //        tempLists[Row.Index, Column.Index] = dgvVocabularyOfC.Rows[Row.Index].Cells[Column.Index].Value.ToString();
+            //    }
+            //}
+
+            toggle = !toggle;
+            dgvVocabularyOfC.AllowUserToAddRows = false;
+            listNot = dict.Keys.ToList();
+            List<string> tempList = new List<string>();
+
+            for (int i = 0; i < dgvVocabularyOfC.Rows.Count; i++)
+            {
+                tempList.Add(dgvVocabularyOfC.Rows[i].Cells[0].Value.ToString());
+            }
+            dgvVocabularyOfC.Rows.Clear();
+
+            switch(toggle){
+              case true:   tempList.Sort(new ComparerForAlphabetAsc()) ; break;
+               case false:  tempList.Sort(new ComparerForAlphabetDesc()); break;
+            }
+
+            foreach (var item in tempList)
+            {
+                dgvVocabularyOfC.Rows.Add(item);
+            }
+        }
+
+        private void textBoxSearchByMask_TextChanged(object sender, EventArgs e)
+        {
+            textBoxSearchByMask.Text = textBoxSearchByMask.Text.ToUpper();
+            string pat = textBoxSearchByMask.Text;
+            listNot = dict.Keys.ToList();
+            dgvVocabularyOfC.Rows.Clear();
+            
+            foreach (var item in listNot)
+            {
+                Regex mask = new Regex(pat
+                    .Replace("*", ".*") //*: предыдущий символ повторяется 0 и более раз
+                    .Replace("?", ".?") //?: предыдущий символ повторяется 0 или 1 раз
+                    .Replace("+", ".+"));//+: предыдущий символ повторяется 1 и более раз
+                                         //.: знак точки определяет любой одиночный символ (например, выражение "м.р" соответствует слову "мир" или "мор") 
+                if (mask.IsMatch(item))
+                {
+                    dgvVocabularyOfC.Rows.Add(item);
+                }
+            }
+            textBoxSearchByMask.SelectionStart = textBoxSearchByMask.Text.Length;
+        }
+
         private void createCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            for (var i = 0; i < _board.N + 2; i++)
+            for (var i = 0; i < _board.N; i++)
             {
-                for (var j = 0; j < _board.M + 2; j++)
+                for (var j = 0; j < _board.M; j++)
                 {
                     dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.Black;
                     dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
@@ -716,6 +1023,8 @@ namespace ClassicCrossword
                     s = FirstUpper(dgvVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
                     dgvVocabularyOfV.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = s;
                 }
+                deleteRowVocabularyToolStripMenuItem.Enabled = true;
+
             }
         }
 
@@ -736,13 +1045,16 @@ namespace ClassicCrossword
                 Int32.TryParse(textBoxVocabularyWordsCountOnV.Text, out number);
                 number--;
                 textBoxVocabularyWordsCountOnV.Text = number.ToString();
+             //   if (dgvVocabularyOfV.Rows.Count == 1) deleteRowVocabularyToolStripMenuItem.Enabled = false;
+
             }
         }
 
         private void loadCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.DefaultExt = ".crs";
-            openFileDialog1.InitialDirectory = @"..\..\Crosswords\";
+            string initPath = @"..\..\Crosswords\";
+            openFileDialog1.InitialDirectory = Path.GetFullPath(initPath);
             openFileDialog1.AddExtension = true;
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = "Файл кроссворда (*.crs)|*.crs";
@@ -758,9 +1070,9 @@ namespace ClassicCrossword
                     _board = (Crossword)formatter.Deserialize(fs);
                 }
 
-                for (var i = 0; i < _board.N + 2; i++)
+                for (var i = 0; i < _board.N; i++)
                 {
-                    for (var j = 0; j < _board.M + 2; j++)
+                    for (var j = 0; j < _board.M; j++)
                     {
                         dgvCrossword.Rows[i].Cells[j].Value = " ";
                         dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
@@ -793,5 +1105,90 @@ namespace ClassicCrossword
                 e.Handled = true;
             }
         }
+
+        private void exitCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void aboutAuthorsCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Other.AboutAuthors();
+        }
+
+        private void manualCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Other.UserManual();
+        }
+
+        //todo при открытии словаря во вкладке "словарь", datagrid словаря во вкладке "кроссворд" становится равным ему, и активный словарь также
+        private void chooseVocabularyOfVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.DefaultExt = ".dict";
+            string initPath = @"..\..\Dict\";
+            openFileDialog1.InitialDirectory = Path.GetFullPath(initPath);
+            openFileDialog1.AddExtension = true;
+            openFileDialog1.FileName = "";
+            openFileDialog1.Filter = "Файл словаря (*.dict)|*.dict";
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                dict.Clear();
+                list.Clear();
+                listNot.Clear();
+                listDef.Clear();
+                dgvVocabularyOfC.Rows.Clear();
+                dgvVocabularyOfV.Rows.Clear();
+                try
+                {
+                    parseDict(openFileDialog1.FileName);
+                }
+                catch (ArgumentException)
+                {
+                    MessageBox.Show("В словаре имеются одинаковые понятия");
+                    textBoxVocabularyWordsCountOnC.Text = "0";
+                    textBoxVocabularyWordsCountOnV.Text = "0";
+                    return;
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    MessageBox.Show("В словаре отсутствует понятие | определение");
+                    textBoxVocabularyWordsCountOnC.Text = "0";
+                    textBoxVocabularyWordsCountOnV.Text = "0";
+                    return;
+                }
+
+                groupBoxVocabularyOfC.Text = openFileDialog1.SafeFileName;
+                groupBoxVocabularyOfV.Text = openFileDialog1.SafeFileName;
+
+                list.AddRange(dict);
+
+                listNot = dict.Keys.ToList();
+                listDef = dict.Values.ToList();
+
+                foreach (var item in list)
+                {
+                    dgvVocabularyOfC.Rows.Add(item.Key);
+                    dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
+                }
+
+                textBoxVocabularyWordsCountOnC.Text = dict.Count.ToString();
+                textBoxVocabularyWordsCountOnV.Text = dict.Count.ToString();
+            }
+        }
+
+        private void dgvVocabularyOfV_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvVocabularyOfV.SelectedCells.Count == 1)
+            {
+                int rowInd = dgvVocabularyOfV.SelectedCells[0].RowIndex;
+                if (dgvVocabularyOfV.Rows[rowInd].Cells[0].Value == null && dgvVocabularyOfV.Rows[rowInd].Cells[1].Value == null)
+                {
+                    deleteRowVocabularyToolStripMenuItem.Enabled = false;
+                }
+                else { deleteRowVocabularyToolStripMenuItem.Enabled = true; }
+            }
+        }
     }
 }
+ 

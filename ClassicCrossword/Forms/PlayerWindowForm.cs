@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Reflection;
 
 namespace ClassicCrossword.Forms
 {
@@ -19,13 +20,27 @@ namespace ClassicCrossword.Forms
 
         public static int n = 20; // максимальное число строк в сетке
         public static int m = 20; // максимальное число столбцов в сетке
-
+        Bitmap kr, g2, g3;
         Crossword _board = new Crossword(n, m);
 
         public PlayerWindowForm(Player player)
         {
             InitializeComponent();
             this.player = player;
+
+            //задание параметров отображения кроссворда
+            dgvCrossword.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dgvCrossword.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.ColumnHeader);
+            dgvCrossword.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvCrossword.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders);
+            dgvCrossword.AutoSize = true;
+
+            //получение данных о сетке и вопросов, для будущей печати
+            kr = new Bitmap(dgvCrossword.ClientRectangle.Width, dgvCrossword.ClientRectangle.Height);
+            g2 = new Bitmap(groupBox2.ClientRectangle.Width, groupBox2.ClientRectangle.Height);
+            g3 = new Bitmap(groupBox3.ClientRectangle.Width, groupBox3.ClientRectangle.Height);
+            groupBox2.AutoSize = true;
+            groupBox3.AutoSize = true;
         }
 
         private void ChangeKeyboardLayout(System.Globalization.CultureInfo CultureInfo)
@@ -53,9 +68,9 @@ namespace ClassicCrossword.Forms
                     _board = (Crossword)formatter.Deserialize(fs);
                 }
 
-                for (var i = 0; i < _board.N + 2; i++)
+                for (var i = 0; i < _board.N; i++)
                 {
-                    for (var j = 0; j < _board.M + 2; j++)
+                    for (var j = 0; j < _board.M; j++)
                     {
                         dgvCrossword.Rows[i].Cells[j].Value = " ";
                         dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
@@ -91,8 +106,8 @@ namespace ClassicCrossword.Forms
                     if (letter != ' ') count--;
                     if (letter != ' ')
                     {
-                        dgvCrossword.Rows[i + 1].Cells[j + 1].Value = " ";
-                        dgvCrossword.Rows[i + 1].Cells[j + 1].Style.BackColor = Color.White;
+                        dgvCrossword.Rows[i].Cells[j].Value = " ";
+                        dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.White;
                     }
                     p++;
                 }
@@ -118,21 +133,21 @@ namespace ClassicCrossword.Forms
             dgvCrossword.Font = font;
 
             int k;
-            for (int i = 0; i < m + 2; i++)
+            for (int i = 0; i < m; i++)
             {
                 k = dgvCrossword.Columns.Add(i.ToString(), i.ToString());
                 dgvCrossword.Columns[k].Width = 25;
             }
 
-            for (int i = 0; i < n + 2; i++)
+            for (int i = 0; i < n; i++)
             {
                 k = dgvCrossword.Rows.Add();
                 dgvCrossword.Rows[k].Height = 25;
             }
 
-            for (var i = 0; i < n + 2; i++)
+            for (var i = 0; i < n; i++)
             {
-                for (var j = 0; j < m + 2; j++)
+                for (var j = 0; j < m; j++)
                 {
                     dgvCrossword.Rows[i].Cells[j].Value = " ";
                     dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
@@ -145,9 +160,9 @@ namespace ClassicCrossword.Forms
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            for (var i = 0; i < _board.N + 2; i++)
+            for (var i = 0; i < _board.N; i++)
             {
-                for (var j = 0; j < _board.M + 2; j++)
+                for (var j = 0; j < _board.M; j++)
                 {
                     dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
                     if (dgvCrossword.Rows[i].Cells[j].Style.BackColor == Color.Orange)
@@ -176,8 +191,8 @@ namespace ClassicCrossword.Forms
             }
             for (int j = y; j < y + not.Length; j++)
             {
-                dgvCrossword.Rows[x + 1].Cells[j + 1].ReadOnly = false;
-                dgvCrossword.Rows[x + 1].Cells[j + 1].Style.BackColor = Color.Orange;
+                dgvCrossword.Rows[x].Cells[j].ReadOnly = false;
+                dgvCrossword.Rows[x].Cells[j].Style.BackColor = Color.Orange;
             }
 
 
@@ -185,9 +200,9 @@ namespace ClassicCrossword.Forms
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            for (var i = 0; i < _board.N + 2; i++)
+            for (var i = 0; i < _board.N; i++)
             {
-                for (var j = 0; j < _board.M + 2; j++)
+                for (var j = 0; j < _board.M; j++)
                 {
                     dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
                     if (dgvCrossword.Rows[i].Cells[j].Style.BackColor == Color.Orange)
@@ -216,8 +231,8 @@ namespace ClassicCrossword.Forms
             }
             for (int i = x; i < x + not.Length; i++)
             {
-                dgvCrossword.Rows[i + 1].Cells[y + 1].ReadOnly = false;
-                dgvCrossword.Rows[i + 1].Cells[y + 1].Style.BackColor = Color.Orange;
+                dgvCrossword.Rows[i].Cells[y].ReadOnly = false;
+                dgvCrossword.Rows[i].Cells[y].Style.BackColor = Color.Orange;
             }
         }
 
@@ -279,14 +294,14 @@ namespace ClassicCrossword.Forms
         {
             char[,] progressPlayer = new char[_board.N, _board.M];
             
-            for (var i = 1; i < _board.N + 1; i++)
+            for (var i = 0; i < _board.N; i++)
             {
-                for (var j = 1; j < _board.M + 1; j++)
+                for (var j = 0; j < _board.M; j++)
                 {
-                    if(_board[i-1,j-1].Equals('*'))
-                        progressPlayer[i - 1, j - 1] = '*';
+                    if(_board[i, j].Equals('*'))
+                        progressPlayer[i, j] = '*';
                     else
-                    progressPlayer[i - 1, j - 1] = dgvCrossword.Rows[i].Cells[j].Value.ToString()[0];
+                    progressPlayer[i, j] = dgvCrossword.Rows[i].Cells[j].Value.ToString()[0];
                 }
             }
             
@@ -347,9 +362,9 @@ namespace ClassicCrossword.Forms
                     _board = (Crossword)formatter.Deserialize(fs);
                 }
 
-                for (var i = 0; i < _board.N + 2; i++)
+                for (var i = 0; i < _board.N; i++)
                 {
-                    for (var j = 0; j < _board.M + 2; j++)
+                    for (var j = 0; j < _board.M; j++)
                     {
                         dgvCrossword.Rows[i].Cells[j].Value = " ";
                         dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
@@ -386,8 +401,8 @@ namespace ClassicCrossword.Forms
                     if (letter != ' ') count--;
                     if (letter != ' ')
                     {
-                        dgvCrossword.Rows[i + 1].Cells[j + 1].Value = " ";
-                        dgvCrossword.Rows[i + 1].Cells[j + 1].Style.BackColor = Color.White;
+                        dgvCrossword.Rows[i].Cells[j].Value = " ";
+                        dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.White;
                     }
                     p++;
                 }
@@ -401,7 +416,7 @@ namespace ClassicCrossword.Forms
                     if (letter != ' ') count--;
                     if (letter != ' ')
                     {
-                        dgvCrossword.Rows[i + 1].Cells[j + 1].Value = letter.ToString();
+                        dgvCrossword.Rows[i].Cells[j].Value = letter.ToString();
                     }
                     p++;
                 }
@@ -421,9 +436,9 @@ namespace ClassicCrossword.Forms
         {
             char[,] progressPlayer = new char[_board.N, _board.M];
 
-            for (var i = 1; i < _board.N + 1; i++)
+            for (var i = 1; i < _board.N; i++)
             {
-                for (var j = 1; j < _board.M + 1; j++)
+                for (var j = 1; j < _board.M; j++)
                 {
                     if (_board[i - 1, j - 1].Equals('*'))
                         progressPlayer[i - 1, j - 1] = '*';
@@ -454,6 +469,88 @@ namespace ClassicCrossword.Forms
                 else MessageBox.Show("Выберите одну ячейку");
             }
             else MessageBox.Show("Подсказок не осталось");
+        }
+
+        private void печатьКроссвордаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dgvCrossword.DrawToBitmap(kr, dgvCrossword.ClientRectangle);
+            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                printDocument1.Print();
+        }
+
+        private void печатьРешенияToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            groupBox2.DrawToBitmap(g2, groupBox2.ClientRectangle);
+            groupBox3.DrawToBitmap(g3, groupBox3.ClientRectangle);
+            if (printPreviewDialog2.ShowDialog() == DialogResult.OK)
+                printDocument2.Print();
+       
+        }
+
+        private void выходToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void обАвторахToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Other.AboutAuthors();
+        }
+
+        private void руководствоПользователяToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Other.UserManual();
+        }
+
+        private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            Rectangle rect;
+            int pbWidth = e.MarginBounds.Width;
+            int pbHeight = e.MarginBounds.Height;
+           
+            int ImageWidth1 = kr.Width; int ImageHeight1 = kr.Height;
+
+            SizeF sizef = new SizeF(ImageWidth1 / kr.HorizontalResolution, ImageHeight1 / kr.VerticalResolution);
+            float fSeale = Math.Min(pbWidth / sizef.Width, pbHeight / sizef.Height);
+            sizef.Width *= fSeale;
+            sizef.Height *= fSeale;
+            Size size = Size.Ceiling(sizef);
+            rect = new Rectangle(e.MarginBounds.Location.X, e.MarginBounds.Location.Y, size.Width, size.Height);
+            g.DrawImage(kr, rect);
+        }
+        private void printDocument2_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            Rectangle rect2, rect3;
+            int pcWidth = e.MarginBounds.Width;
+            int pcHeight = e.MarginBounds.Height;
+            int pdWidth = e.MarginBounds.Width;
+            int pdHeight = e.MarginBounds.Height;
+
+            int ImageWidth2 = g2.Width; int ImageHeight2 = g2.Height;
+            int ImageWidth3 = g3.Width; int ImageHeight3 = g3.Height;
+
+            SizeF sizef2 = new SizeF(ImageWidth2 / g2.HorizontalResolution, ImageHeight2 / g2.VerticalResolution);
+            float fSeale2 = Math.Min(pdWidth / sizef2.Width, pdHeight / sizef2.Height);
+            sizef2.Width *= fSeale2;
+            sizef2.Height *= fSeale2;
+            Size size2 = Size.Ceiling(sizef2);
+            rect2 = new Rectangle(e.MarginBounds.Location.X, e.MarginBounds.Location.Y-100 , size2.Width, size2.Height);
+            g.DrawImage(g2, rect2);
+          
+            SizeF sizef3 = new SizeF(ImageWidth3 / g3.HorizontalResolution, ImageHeight3 / g3.VerticalResolution);
+            float fSeale3 = Math.Min(pcWidth / sizef3.Width, pcHeight / sizef3.Height);
+            sizef3.Width *= fSeale3;
+            sizef3.Height *= fSeale3;
+            Size size3 = Size.Ceiling(sizef3);
+            rect3 = new Rectangle(e.MarginBounds.Location.X, e.MarginBounds.Location.Y + 550 , size3.Width, size3.Height);
+            g.DrawImage(g3, rect3);
         }
     }
 }
