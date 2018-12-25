@@ -68,9 +68,9 @@ namespace ClassicCrossword.Forms
                     _board = (Crossword)formatter.Deserialize(fs);
                 }
 
-                for (var i = 0; i < _board.N + 2; i++)
+                for (var i = 0; i < _board.N; i++)
                 {
-                    for (var j = 0; j < _board.M + 2; j++)
+                    for (var j = 0; j < _board.M; j++)
                     {
                         dgvCrossword.Rows[i].Cells[j].Value = " ";
                         dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
@@ -106,8 +106,8 @@ namespace ClassicCrossword.Forms
                     if (letter != ' ') count--;
                     if (letter != ' ')
                     {
-                        dgvCrossword.Rows[i + 1].Cells[j + 1].Value = " ";
-                        dgvCrossword.Rows[i + 1].Cells[j + 1].Style.BackColor = Color.White;
+                        dgvCrossword.Rows[i].Cells[j].Value = " ";
+                        dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.White;
                     }
                     p++;
                 }
@@ -133,21 +133,21 @@ namespace ClassicCrossword.Forms
             dgvCrossword.Font = font;
 
             int k;
-            for (int i = 0; i < m + 2; i++)
+            for (int i = 0; i < m; i++)
             {
                 k = dgvCrossword.Columns.Add(i.ToString(), i.ToString());
                 dgvCrossword.Columns[k].Width = 25;
             }
 
-            for (int i = 0; i < n + 2; i++)
+            for (int i = 0; i < n; i++)
             {
                 k = dgvCrossword.Rows.Add();
                 dgvCrossword.Rows[k].Height = 25;
             }
 
-            for (var i = 0; i < n + 2; i++)
+            for (var i = 0; i < n; i++)
             {
-                for (var j = 0; j < m + 2; j++)
+                for (var j = 0; j < m; j++)
                 {
                     dgvCrossword.Rows[i].Cells[j].Value = " ";
                     dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
@@ -159,9 +159,9 @@ namespace ClassicCrossword.Forms
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            for (var i = 0; i < _board.N + 2; i++)
+            for (var i = 0; i < _board.N; i++)
             {
-                for (var j = 0; j < _board.M + 2; j++)
+                for (var j = 0; j < _board.M; j++)
                 {
                     dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
                     if (dgvCrossword.Rows[i].Cells[j].Style.BackColor == Color.Orange)
@@ -190,16 +190,16 @@ namespace ClassicCrossword.Forms
             }
             for (int j = y; j < y + not.Length; j++)
             {
-                dgvCrossword.Rows[x + 1].Cells[j + 1].ReadOnly = false;
-                dgvCrossword.Rows[x + 1].Cells[j + 1].Style.BackColor = Color.Orange;
+                dgvCrossword.Rows[x].Cells[j].ReadOnly = false;
+                dgvCrossword.Rows[x].Cells[j].Style.BackColor = Color.Orange;
             }
         }
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            for (var i = 0; i < _board.N + 2; i++)
+            for (var i = 0; i < _board.N; i++)
             {
-                for (var j = 0; j < _board.M + 2; j++)
+                for (var j = 0; j < _board.M; j++)
                 {
                     dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
                     if (dgvCrossword.Rows[i].Cells[j].Style.BackColor == Color.Orange)
@@ -228,8 +228,8 @@ namespace ClassicCrossword.Forms
             }
             for (int i = x; i < x + not.Length; i++)
             {
-                dgvCrossword.Rows[i + 1].Cells[y + 1].ReadOnly = false;
-                dgvCrossword.Rows[i + 1].Cells[y + 1].Style.BackColor = Color.Orange;
+                dgvCrossword.Rows[i].Cells[y].ReadOnly = false;
+                dgvCrossword.Rows[i].Cells[y].Style.BackColor = Color.Orange;
             }
         }
 
@@ -291,14 +291,14 @@ namespace ClassicCrossword.Forms
         {
             char[,] progressPlayer = new char[_board.N, _board.M];
             
-            for (var i = 1; i < _board.N + 1; i++)
+            for (var i = 0; i < _board.N; i++)
             {
-                for (var j = 1; j < _board.M + 1; j++)
+                for (var j = 0; j < _board.M; j++)
                 {
-                    if(_board[i-1,j-1].Equals('*'))
-                        progressPlayer[i - 1, j - 1] = '*';
+                    if(_board[i, j].Equals('*'))
+                        progressPlayer[i, j] = '*';
                     else
-                    progressPlayer[i - 1, j - 1] = dgvCrossword.Rows[i].Cells[j].Value.ToString()[0];
+                    progressPlayer[i, j] = dgvCrossword.Rows[i].Cells[j].Value.ToString()[0];
                 }
             }
             
@@ -359,9 +359,9 @@ namespace ClassicCrossword.Forms
                     _board = (Crossword)formatter.Deserialize(fs);
                 }
 
-                for (var i = 0; i < _board.N + 2; i++)
+                for (var i = 0; i < _board.N; i++)
                 {
-                    for (var j = 0; j < _board.M + 2; j++)
+                    for (var j = 0; j < _board.M; j++)
                     {
                         dgvCrossword.Rows[i].Cells[j].Value = " ";
                         dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
@@ -398,8 +398,8 @@ namespace ClassicCrossword.Forms
                     if (letter != ' ') count--;
                     if (letter != ' ')
                     {
-                        dgvCrossword.Rows[i + 1].Cells[j + 1].Value = " ";
-                        dgvCrossword.Rows[i + 1].Cells[j + 1].Style.BackColor = Color.White;
+                        dgvCrossword.Rows[i].Cells[j].Value = " ";
+                        dgvCrossword.Rows[i].Cells[j].Style.BackColor = Color.White;
                     }
                     p++;
                 }
@@ -413,7 +413,7 @@ namespace ClassicCrossword.Forms
                     if (letter != ' ') count--;
                     if (letter != ' ')
                     {
-                        dgvCrossword.Rows[i + 1].Cells[j + 1].Value = letter.ToString();
+                        dgvCrossword.Rows[i].Cells[j].Value = letter.ToString();
                     }
                     p++;
                 }
@@ -433,9 +433,9 @@ namespace ClassicCrossword.Forms
         {
             char[,] progressPlayer = new char[_board.N, _board.M];
 
-            for (var i = 1; i < _board.N + 1; i++)
+            for (var i = 1; i < _board.N; i++)
             {
-                for (var j = 1; j < _board.M + 1; j++)
+                for (var j = 1; j < _board.M; j++)
                 {
                     if (_board[i - 1, j - 1].Equals('*'))
                         progressPlayer[i - 1, j - 1] = '*';
