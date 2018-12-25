@@ -39,6 +39,8 @@ namespace ClassicCrossword.Forms
             kr = new Bitmap(dgvCrossword.ClientRectangle.Width, dgvCrossword.ClientRectangle.Height);
             g2 = new Bitmap(groupBox2.ClientRectangle.Width, groupBox2.ClientRectangle.Height);
             g3 = new Bitmap(groupBox3.ClientRectangle.Width, groupBox3.ClientRectangle.Height);
+            groupBox2.AutoSize = true;
+            groupBox3.AutoSize = true;
         }
 
         private void ChangeKeyboardLayout(System.Globalization.CultureInfo CultureInfo)
@@ -539,9 +541,9 @@ namespace ClassicCrossword.Forms
             sizef2.Width *= fSeale2;
             sizef2.Height *= fSeale2;
             Size size2 = Size.Ceiling(sizef2);
-            rect2 = new Rectangle(e.MarginBounds.Location.X, e.MarginBounds.Location.Y , size2.Width, size2.Height);
+            rect2 = new Rectangle(e.MarginBounds.Location.X, e.MarginBounds.Location.Y-100 , size2.Width, size2.Height);
             g.DrawImage(g2, rect2);
-
+          
             SizeF sizef3 = new SizeF(ImageWidth3 / g3.HorizontalResolution, ImageHeight3 / g3.VerticalResolution);
             float fSeale3 = Math.Min(pcWidth / sizef3.Width, pcHeight / sizef3.Height);
             sizef3.Width *= fSeale3;
