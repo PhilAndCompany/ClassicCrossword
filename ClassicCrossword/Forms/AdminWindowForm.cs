@@ -1,5 +1,6 @@
 ﻿using ClassicCrossword.Controller;
 using ClassicCrossword.Model;
+using ClassicCrossword.Forms;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,10 +18,27 @@ namespace ClassicCrossword
 {
     public partial class AdminWindowForm : Form
     {
+        private static int n = 20; // максимальное число строк в сетке
 
-        public static int n = 20; // максимальное число строк в сетке
-        public static int m = 20; // максимальное число столбцов в сетке
-        
+        private static int m = 20; // максимальное число столбцов в сетке
+
+        public DataGridView DGV
+        {
+            get { return this.dgvCrossword; }
+            set { this.dgvCrossword = value; }
+        }
+
+        public static int N
+        {
+            get { return n; }
+            set { n = value; }
+        }
+        public static int M
+        {
+            get {return m; }
+            set { m = value; }
+        }
+
         private Dictionary<string, string> dict = new Dictionary<string, string>();
         private List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
 
@@ -39,6 +57,7 @@ namespace ClassicCrossword
 
         Crossword _board = new Crossword(n, m);
 
+
         public AdminWindowForm()
         {
             InitializeComponent();
@@ -53,6 +72,11 @@ namespace ClassicCrossword
             var editPlayerForm = new AddNewPlayerForm(id, login, pass);
             editPlayerForm.Closing += AddNewPlayerForm_Closing;
             editPlayerForm.ShowDialog();
+        }
+
+        internal static void clearDGV(object dataGridView)
+        {
+            throw new NotImplementedException();
         }
 
         private void deleteAccountToolStripMenuItem_Click(object sender, EventArgs e)
@@ -316,7 +340,7 @@ namespace ClassicCrossword
             }
         }
 
-        void clearDGV(DataGridView dgv)
+        public void clearDGV(DataGridView dgv)
         {
             for (int i = 0; i < dgv.RowCount; i++)
             {
@@ -802,7 +826,7 @@ namespace ClassicCrossword
 
             switch(toggle){
               case true:   tempList.Sort(new ComparerForAlphabetAsc()) ; break;
-               case false:  tempList.Sort(new ComparerForAlphabetDesc()); break;
+              case false:  tempList.Sort(new ComparerForAlphabetDesc()); break;
             }
 
             foreach (var item in tempList)
@@ -844,7 +868,7 @@ namespace ClassicCrossword
                 }
             }
             _board.Reset();
-            clearDGV(dgvCrossword);
+            clearDGV(dgvCrossword);    
         }
 
         private void dgvVocabularyOfV_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -922,8 +946,7 @@ namespace ClassicCrossword
                         dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
                     }
                 }
-
-                Actualize();
+                  Actualize();
             }
         }
 
@@ -1030,6 +1053,11 @@ namespace ClassicCrossword
                 }
                 else { deleteRowVocabularyToolStripMenuItem.Enabled = true; }
             }
+        }
+
+        private void crosswordPropertiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new CrosswordSettings().Show();
         }
     }
 }

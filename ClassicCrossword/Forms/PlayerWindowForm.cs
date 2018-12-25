@@ -155,7 +155,6 @@ namespace ClassicCrossword.Forms
                     dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
                 }
             }
-
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -194,8 +193,6 @@ namespace ClassicCrossword.Forms
                 dgvCrossword.Rows[x + 1].Cells[j + 1].ReadOnly = false;
                 dgvCrossword.Rows[x + 1].Cells[j + 1].Style.BackColor = Color.Orange;
             }
-
-
         }
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)

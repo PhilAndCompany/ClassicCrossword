@@ -356,6 +356,7 @@
             this.crosswordPropertiesToolStripMenuItem.Name = "crosswordPropertiesToolStripMenuItem";
             this.crosswordPropertiesToolStripMenuItem.Size = new System.Drawing.Size(166, 20);
             this.crosswordPropertiesToolStripMenuItem.Text = "Параметры кроссворда";
+            this.crosswordPropertiesToolStripMenuItem.Click += new System.EventHandler(this.crosswordPropertiesToolStripMenuItem_Click);
             // 
             // saveCrosswordToolStripMenuItem
             // 
