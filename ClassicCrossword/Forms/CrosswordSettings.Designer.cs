@@ -69,7 +69,7 @@
             this.gridSizeVertical.Size = new System.Drawing.Size(120, 23);
             this.gridSizeVertical.TabIndex = 7;
             this.gridSizeVertical.Value = new decimal(new int[] {
-            10,
+            20,
             0,
             0,
             0});
@@ -81,7 +81,7 @@
             this.gridSizeHorizontal.Size = new System.Drawing.Size(120, 23);
             this.gridSizeHorizontal.TabIndex = 6;
             this.gridSizeHorizontal.Value = new decimal(new int[] {
-            10,
+            20,
             0,
             0,
             0});

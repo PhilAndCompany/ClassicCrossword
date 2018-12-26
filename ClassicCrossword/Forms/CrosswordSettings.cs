@@ -53,49 +53,11 @@ namespace ClassicCrossword.Forms
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = "Файл словаря (*.dict)|*.dict";
             if (openFileDialog1.ShowDialog() == DialogResult.OK) //это открытие диалогового окна и сигнал того что словарь выбран и нажат окич
-            {/* todo сом щит хир плиз
-                dict.Clear();
-                list.Clear();
-                listNot.Clear();
-                listDef.Clear();
-                dgvVocabularyOfC.Rows.Clear();
-                dgvVocabularyOfV.Rows.Clear();
-                try
-                {
-                    parseDict(openFileDialog1.FileName);
-                }
-                catch (ArgumentException)
-                {
-                    MessageBox.Show("В словаре имеются одинаковые понятия");
-                    textBoxVocabularyWordsCountOnC.Text = "0";
-                    textBoxVocabularyWordsCountOnV.Text = "0";
-                    return;
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    MessageBox.Show("В словаре отсутствует понятие | определение");
-                    textBoxVocabularyWordsCountOnC.Text = "0";
-                    textBoxVocabularyWordsCountOnV.Text = "0";
-                    return;
-                }
+            {
+                textBox1.Text = openFileDialog1.FileName;
+                Program.adminForm.chooseVocabulary(openFileDialog1);
 
-                groupBoxVocabularyOfC.Text = openFileDialog1.SafeFileName;
-                groupBoxVocabularyOfV.Text = openFileDialog1.SafeFileName;
-
-                list.AddRange(dict);
-
-                listNot = dict.Keys.ToList();
-                listDef = dict.Values.ToList();
-
-                foreach (var item in list)
-                {
-                    dgvVocabularyOfC.Rows.Add(item.Key);
-                    dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
-                }
-
-                textBoxVocabularyWordsCountOnC.Text = dict.Count.ToString();
-                textBoxVocabularyWordsCountOnV.Text = dict.Count.ToString();
-            */}
+            }
         }
     
 
@@ -105,13 +67,18 @@ namespace ClassicCrossword.Forms
             AdminWindowForm.N = GridSizeVertical;
             //я конкретно поменял у себя Adminку поэтому сейчас смержим
             //TODO кстати просто чекни как работает кнопка СОЗДАТЬ в меню кроссворда, можно оттуда код взять и сюда всунуть
-            //____________________________ то что снизу мб и не понадобится
+            //____________________________ то что снизу мб и не понадобится дальше сам
             //todo закрасить клетки черным
             //todo убрать старый словарь и поставить новый
             //todo новый борд с заданными размерами, возможно даже не придется использовать строчки 60-61
             //и передавать это гавно в форму админа
             //todo изменить размеры грида в соответствии с M N
-            Program.adminForm.clearDGV(Program.adminForm.DGV); //очистка слов с кроссворда
+            //Program.adminForm.clearDGV(Program.adminForm.DGV); //очистка слов с кроссворда
+            Program.adminForm.deleteGrid();
+            Program.adminForm.fillGrid(AdminWindowForm.M, AdminWindowForm.N);
+            if (manualRadioButton.Checked != true) { Program.adminForm.GenerateCrossword(); }
+            else { }
+            Program.adminForm.dictShow();
             //инициализация параши(кроссворда с новыми параметрами)
             this.Close();
             this.Dispose();

@@ -22,6 +22,8 @@ namespace ClassicCrossword
 
         private static int m = 20; // максимальное число столбцов в сетке
 
+        int counter = 0;
+
         public DataGridView DGV
         {
             get { return this.dgvCrossword; }
@@ -124,6 +126,24 @@ namespace ClassicCrossword
 
         private void AdminWindowForm_Load(object sender, EventArgs e)
         {
+            fillGrid(n, m);
+            fillDict();
+        }
+
+        public void deleteGrid()
+        {
+            while (dgvCrossword.Rows.Count > 1)
+            {
+                dgvCrossword.Rows.RemoveAt(0);
+            }
+            while (dgvCrossword.Columns.Count > 0)
+            {
+                dgvCrossword.Columns.RemoveAt(0);
+            }
+        }
+
+        public void fillGrid(int n , int m)
+        {
             playerTableAdapter.Fill(crosswordDataSet.Player);
             idDataGridViewTextBoxColumn.Visible = false;
 
@@ -143,9 +163,9 @@ namespace ClassicCrossword
                 dgvCrossword.Rows[k].Height = 25;
             }
 
-            for (var i = 0; i < _board.N; i++)
+            for (var i = 0; i < n; i++)
             {
-                for (var j = 0; j < _board.M; j++)
+                for (var j = 0; j < m; j++)
                 {
                     dgvCrossword.Rows[i].Cells[j].Value = " ";
                     dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
@@ -153,7 +173,10 @@ namespace ClassicCrossword
                     dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
                 }
             }
+        }
 
+        public void fillDict()
+        {
             try
             {
                 parseDict(@"..\..\Dict\Glavny.dict");
@@ -165,26 +188,33 @@ namespace ClassicCrossword
                 textBoxVocabularyWordsCountOnV.Text = "0";
                 return;
             }
+            dictShow();
+        }
 
+        public void dictShow()
+        {
             groupBoxVocabularyOfC.Text = "Glavny.dict";
             groupBoxVocabularyOfV.Text = "Glavny.dict";
+                if (list.Count > 0 )  list.Clear();
+                list.AddRange(dict);
+                listNot = dict.Keys.ToList();
+                listDef = dict.Values.ToList();
 
-            list.AddRange(dict);
-
-            listNot = dict.Keys.ToList();
-            listDef = dict.Values.ToList();
+            List<string> tmplist = new List<string>();
 
             foreach (var item in list)
             {
-                dgvVocabularyOfC.Rows.Add(item.Key);
-                dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
+                if (!tmplist.Equals(item.Key)) {
+                    dgvVocabularyOfC.Rows.Add(item.Key);
+                    dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
+                }
+                else{ }
             }
-
             textBoxVocabularyWordsCountOnC.Text = dict.Count.ToString();
             textBoxVocabularyWordsCountOnV.Text = dict.Count.ToString();
         }
 
-        private void parseDict(string filename) 
+        public void parseDict(string filename) 
         {
             string[] words = File.ReadAllLines(filename, Encoding.GetEncoding("utf-8")).Take(500).ToArray();
             for (int i = 0; i < words.Length; i++)
@@ -206,48 +236,55 @@ namespace ClassicCrossword
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                dict.Clear();
-                list.Clear();
-                listNot.Clear();
-                listDef.Clear();
-                dgvVocabularyOfC.Rows.Clear();
-                dgvVocabularyOfV.Rows.Clear();
-                try
-                {
-                    parseDict(openFileDialog1.FileName);
-                }
-                catch (ArgumentException)
-                {
-                    MessageBox.Show("В словаре имеются одинаковые понятия");
-                    textBoxVocabularyWordsCountOnC.Text = "0";
-                    textBoxVocabularyWordsCountOnV.Text = "0";
-                    return;
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    MessageBox.Show("В словаре отсутствует понятие | определение");
-                    textBoxVocabularyWordsCountOnC.Text = "0";
-                    textBoxVocabularyWordsCountOnV.Text = "0";
-                    return;
-                }
-
-                groupBoxVocabularyOfC.Text = openFileDialog1.SafeFileName;
-                groupBoxVocabularyOfV.Text = openFileDialog1.SafeFileName;
-
-                list.AddRange(dict);
-
-                listNot = dict.Keys.ToList();
-                listDef = dict.Values.ToList();
-
-                foreach (var item in list)
-                {
-                    dgvVocabularyOfC.Rows.Add(item.Key);
-                    dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
-                }
-
-                textBoxVocabularyWordsCountOnC.Text = dict.Count.ToString();
-                textBoxVocabularyWordsCountOnV.Text = dict.Count.ToString();
+                chooseVocabulary(openFileDialog1);
             }
+        }
+
+        public void chooseVocabulary(OpenFileDialog openFileDialog1)
+        {
+            dict.Clear();
+            list.Clear();
+            listNot.Clear();
+            listDef.Clear();
+            dgvVocabularyOfC.Rows.Clear();
+            dgvVocabularyOfV.Rows.Clear();
+
+
+            try
+            {
+                parseDict(openFileDialog1.FileName);
+            }
+            catch (ArgumentException)
+            {
+                MessageBox.Show("В словаре имеются одинаковые понятия");
+                textBoxVocabularyWordsCountOnC.Text = "0";
+                textBoxVocabularyWordsCountOnV.Text = "0";
+                return;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                MessageBox.Show("В словаре отсутствует понятие | определение");
+                textBoxVocabularyWordsCountOnC.Text = "0";
+                textBoxVocabularyWordsCountOnV.Text = "0";
+                return;
+            }
+
+            groupBoxVocabularyOfC.Text = openFileDialog1.SafeFileName;
+            groupBoxVocabularyOfV.Text = openFileDialog1.SafeFileName;
+
+            list.AddRange(dict);
+
+            listNot = dict.Keys.ToList();
+            listDef = dict.Values.ToList();
+
+            foreach (var item in list)
+            {
+                dgvVocabularyOfC.Rows.Add(item.Key);
+                dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
+            }
+
+            textBoxVocabularyWordsCountOnC.Text = dict.Count.ToString();
+            textBoxVocabularyWordsCountOnV.Text = dict.Count.ToString();
         }
 
         private void buttonGenerate_Click(object sender, EventArgs e)
@@ -277,7 +314,7 @@ namespace ClassicCrossword
             }
         }
 
-        void GenerateCrossword()
+        public void GenerateCrossword()
         {
             notUsedDict = new SortedDictionary<string, string>();
             tmpDict = new SortedDictionary<string, string>();
