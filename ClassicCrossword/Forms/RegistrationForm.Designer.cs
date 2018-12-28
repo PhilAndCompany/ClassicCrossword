@@ -144,6 +144,7 @@
             this.Controls.Add(this.tbPassword1);
             this.Controls.Add(this.tbLogin);
             this.Controls.Add(this.label1);
+            this.MaximizeBox = false;
             this.Name = "RegistrationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RegistrationWindow";

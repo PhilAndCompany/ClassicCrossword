@@ -400,6 +400,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.menuStrip1);
+            this.MaximizeBox = false;
             this.Name = "PlayerWindowForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EFM - %USERNAME%";

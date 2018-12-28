@@ -28,13 +28,16 @@ namespace ClassicCrossword
 
         private SortedDictionary<string, string> notUsedDict;
         private SortedDictionary<string, string> tmpDict;
-
-        private int dir;
+        
+        private int currentDirection;
         private enum direction {right, left, up, down};
         private int lastDirection;
+        private int startDirection;
         private Point lastCell;
         private int lastSelectionLength;
         private bool decFlag;
+        private int crossingCount = 0;
+      
 
         private int colInd;
         private int rowInd;
@@ -165,7 +168,7 @@ namespace ClassicCrossword
             for (int i = 0; i < words.Length; i++)
             {
                 string word = words[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];
-                string question = words[i].Substring(words[i].IndexOf(words[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[1])); //TODO убрать костыль
+                string question = words[i].Substring(words[i].IndexOf(words[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[1]));
                 dict.Add(word, question);
             }
         }
@@ -433,6 +436,1458 @@ namespace ClassicCrossword
             }
         }
 
+        private bool checkRight(int selectedCellsCount)
+        {
+            bool flag = true;
+            //верхняя граница
+            if (lastCell.Y == 0 && dgvCrossword.SelectedCells[0].RowIndex == 0)
+            {
+                //слева сверху по горизонтали
+                if (dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex == 0)
+                {
+                    if (startDirection == (int)direction.right)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex + 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {                        
+                        //проверка есть ли снизу
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //проверка есть ли снизу, где нет пересечений
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() != " " && dgvCrossword.Rows[lastCell.Y + 2].Cells[i].Value.ToString() == " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Слева сверху по горизонтали");
+                }
+                //справа сверху по горизонтали
+                else if (dgvCrossword.SelectedCells[0].ColumnIndex == dgvCrossword.ColumnCount - 1 || dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex == dgvCrossword.ColumnCount - 1)
+                {
+                    if (startDirection == (int)direction.right)
+                    {
+                        if (dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли снизу
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //проверка есть ли снизу, где нет пересечений
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() != " "  && dgvCrossword.Rows[lastCell.Y + 2].Cells[i].Value.ToString() == " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Справа сверху по горизонтали");
+                }
+                //сверху по горизонтали
+                else
+                {
+                    if (startDirection == (int)direction.right)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " " || dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex + 1].Value.ToString() != " " || dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли снизу
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //проверка есть ли снизу, где нет пересечений
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() != " " && dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() == " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Сверху по горизонтали");
+                }
+            }
+            //нижняя граница
+            else if (dgvCrossword.SelectedCells[0].RowIndex == dgvCrossword.RowCount - 1)
+            {
+                //слева снизу по горизонтали
+                if (dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex == 0)
+                {
+                    if (startDirection == (int)direction.right)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex + 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли сверху
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y - 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //проверка есть ли сверху, где нет пересечений
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y - 1].Cells[i].Value.ToString() != " " && dgvCrossword.Rows[lastCell.Y - 2].Cells[i].Value.ToString() == " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Слева снизу по горизонтали");
+                }
+                //справа снизу по горизонтали
+                else if (dgvCrossword.SelectedCells[0].ColumnIndex == dgvCrossword.ColumnCount - 1 || dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex == dgvCrossword.ColumnCount - 1)
+                {
+                    if (startDirection == (int)direction.right)
+                    {
+                        if (dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли сверху
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y - 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //проверка есть ли сверху, где нет пересечений
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y - 1].Cells[i].Value.ToString() != " " && dgvCrossword.Rows[lastCell.Y - 2].Cells[i].Value.ToString() == " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Справа снизу по горизонтали");
+                }
+                //снизу по горизонтали
+                else
+                {
+                    if (startDirection == (int)direction.right)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " " || dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex + 1].Value.ToString() != " " || dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли сверху
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y - 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //проверка есть ли сверху, где нет пересечений
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y - 1].Cells[i].Value.ToString() != " " && dgvCrossword.Rows[lastCell.Y - 2].Cells[i].Value.ToString() == " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Снизу по горизонтали");
+                }
+            }
+            //не на верхней/нижней границе границе
+            else
+            {
+                if (dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex == 0)
+                {
+                    if (startDirection == (int)direction.right)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex + 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли снизу
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                        //проверка есть ли сверху
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y - 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //проверка есть ли снизу, где нет пересечений
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                        //проверка есть ли сверху, где нет пересечений
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y - 1].Cells[i].Value.ToString() != " " && dgvCrossword.Rows[lastCell.Y - 2].Cells[i].Value.ToString() == " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Слева по горизонтали");
+                }
+                else if (dgvCrossword.SelectedCells[0].ColumnIndex == dgvCrossword.ColumnCount - 1 || dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex == dgvCrossword.ColumnCount - 1)
+                {
+                    if (startDirection == (int)direction.right)
+                    {
+                        if (dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли снизу
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                        //проверка есть ли сверху
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y - 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Справа по горизонтали");
+                }
+                else
+                {
+                    if (startDirection == (int)direction.right)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " " || dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex + 1].Value.ToString() != " " || dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли снизу
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                        //проверка есть ли сверху
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y - 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Общий случай");
+                }
+            }
+            return flag;
+        }
+        private bool checkLeft(int selectedCellsCount)
+        {
+            bool flag = true;
+            //верхняя граница
+            if (lastCell.Y == 0 && dgvCrossword.SelectedCells[0].RowIndex == 0)
+            {
+                //слева сверху по горизонтали
+                if (dgvCrossword.SelectedCells[0].ColumnIndex == 0)
+                {
+                    if (startDirection == (int)direction.left)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex + 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли снизу
+                        for (int i = dgvCrossword.SelectedCells[0].ColumnIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Слева сверху по горизонтали");
+                }
+                //справа сверху по горизонтали
+                else if (dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex == dgvCrossword.ColumnCount - 1)
+                {
+                    if (startDirection == (int)direction.left)
+                    {
+                        if (dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли снизу
+                        for (int i = dgvCrossword.SelectedCells[0].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+
+                            if (dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Справа сверху по горизонтали");
+                }
+                //сверху по горизонтали
+                else
+                {
+                    if (startDirection == (int)direction.left)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex + 1].Value.ToString() != " " || dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " " || dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли снизу
+                        for (int i = dgvCrossword.SelectedCells[0].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Сверху по горизонтали");
+                }
+            }
+            //нижняя граница
+            else if (dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex == dgvCrossword.RowCount - 1)//?
+            {
+                //слева снизу по горизонтали
+                if (dgvCrossword.SelectedCells[0].ColumnIndex == 0)
+                {
+                    if (startDirection == (int)direction.left)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex + 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли сверху
+                        for (int i = dgvCrossword.SelectedCells[0].ColumnIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y - 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Слева снизу по горизонтали");
+                }
+                //справа снизу по горизонтали
+                else if (dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex == dgvCrossword.ColumnCount - 1)
+                {
+                    if (startDirection == (int)direction.left)
+                    {
+                        if (dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли сверху
+                        for (int i = dgvCrossword.SelectedCells[0].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y - 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Справа снизу по горизонтали");
+                }
+                //снизу по горизонтали
+                else
+                {
+                    if (startDirection == (int)direction.left)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex + 1].Value.ToString() != " " || dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " " || dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли сверху
+                        for (int i = dgvCrossword.SelectedCells[0].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y - 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Снизу по горизонтали");
+                }
+            }
+            //не на верхней/нижней границе
+            else
+            {
+                if (dgvCrossword.SelectedCells[0].ColumnIndex == 0)
+                {
+                    if (startDirection == (int)direction.left)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex + 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли снизу
+                        for (int i = dgvCrossword.SelectedCells[0].ColumnIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                        //проверка есть ли сверху
+                        for (int i = dgvCrossword.SelectedCells[0].ColumnIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y - 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Слева по горизонтали");
+                }
+                else if (dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex == dgvCrossword.ColumnCount - 1)
+                {
+                    if (startDirection == (int)direction.left)
+                    {
+                        if (dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли снизу
+                        for (int i = dgvCrossword.SelectedCells[0].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                        //проверка есть ли сверху
+                        for (int i = dgvCrossword.SelectedCells[0].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y - 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Справа по горизонтали");
+                }
+                else
+                {
+                    if (startDirection == (int)direction.left)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex + 1].Value.ToString() != " " || dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " " || dgvCrossword.Rows[lastCell.Y].Cells[dgvCrossword.SelectedCells[selectedCellsCount - 1].ColumnIndex - 1].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли снизу
+                        for (int i = dgvCrossword.SelectedCells[0].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y + 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                        //проверка есть ли сверху
+                        for (int i = dgvCrossword.SelectedCells[0].ColumnIndex; i < dgvCrossword.SelectedCells[0].ColumnIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[lastCell.Y - 1].Cells[i].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Общий случай");
+                }
+            }
+            return flag;
+        }
+        private bool checkDown(int selectedCellsCount)
+        {
+            bool flag = true;
+            //левая граница
+            if (lastCell.X == 0 && dgvCrossword.SelectedCells[0].ColumnIndex == 0)
+            {
+                //слева сверху по вертикали
+                if (dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex == 0)
+                {
+                    if (startDirection == (int)direction.down)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли cправа
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Слева сверху по вертикали");
+                }
+                //слева снизу по вертикали
+                else if (lastCell.Y == dgvCrossword.RowCount - 1)
+                {
+                    if (startDirection == (int)direction.down)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли cправа
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex; i < dgvCrossword.SelectedCells[0].RowIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Слева снизу по вертикали");
+                }
+                //слева
+                else
+                {
+                    if (startDirection == (int)direction.down)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " " || dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " " || dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли cправа
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex; i < dgvCrossword.SelectedCells[0].RowIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Cлева по вертикали");
+                }
+            }
+            //правая граница
+            else if (lastCell.X == dgvCrossword.ColumnCount - 1)
+            {
+                //справа сверху по вертикали
+                if (dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex == 0)
+                {
+                    if (startDirection == (int)direction.down)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли cлева
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Справа сверху по вертикали");
+                }
+                //справа снизу по вертикали
+                else if (lastCell.Y == dgvCrossword.RowCount - 1)
+                {
+                    if (startDirection == (int)direction.down)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        
+                        //проверка есть ли cлева
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex; i < dgvCrossword.SelectedCells[0].RowIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Справа снизу по вертикали");
+                }
+                //справа
+                else
+                {
+                    if (startDirection == (int)direction.down)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " " || dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " " || dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        
+                        //проверка есть ли cлева
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex; i < dgvCrossword.SelectedCells[0].RowIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Cправа по вертикали");
+                }
+            }
+            //не на левой/правой границе
+            else
+            {
+                if (dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex == 0)
+                {
+                    if (startDirection == (int)direction.down)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли cправа
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                        //проверка есть ли cлева
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Сверху по вертикали");
+                }
+                else if (dgvCrossword.SelectedCells[0].RowIndex == dgvCrossword.RowCount - 1 || dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex == dgvCrossword.RowCount - 1)
+                {
+                    if (startDirection == (int)direction.down)
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли cправа
+                        for (int i = dgvCrossword.SelectedCells[0].RowIndex; i < dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                        //проверка есть ли cлева
+                        for (int i = dgvCrossword.SelectedCells[0].RowIndex; i < dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Снизу по вертикали");
+                }
+                else
+                {
+                    if (startDirection == (int)direction.down) //обратная индексация грида
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " " || dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    else
+                    {
+                        if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " " || dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                        {
+                            dgvVocabularyOfC.Rows.Clear();
+                            flag = false;
+                        }
+                    }
+                    if (crossingCount == 0)
+                    {
+                        //проверка есть ли cправа
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex; i < dgvCrossword.SelectedCells[0].RowIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                        //проверка есть ли cлева
+                        for (int i = dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex; i < dgvCrossword.SelectedCells[0].RowIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Общий случай");
+                }
+            }
+            return flag;
+        }
+        private bool checkUp(int selectedCellsCount)
+        {
+            bool flag = true;
+            //левая граница
+            if (lastCell.X == 0 && dgvCrossword.SelectedCells[0].ColumnIndex == 0)
+            {
+                //слева сверху по вертикали
+                if (dgvCrossword.SelectedCells[0].RowIndex == 0 || dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex == 0)
+                {
+                    if (crossingCount == 0)
+                    {
+                        if (startDirection == (int)direction.up) //прямой порядок нумерации
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+                        }
+                        else //обратный порядок нумерации
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+                        }
+                        //проверка есть ли cправа
+                        for (int i = dgvCrossword.SelectedCells[0].RowIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Слева сверху по вертикали");
+                }
+                //слева снизу по вертикали
+                else  if (dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex == dgvCrossword.RowCount - 1)
+                {
+                    if (crossingCount == 0)
+                    {
+                        if (startDirection == (int)direction.up)
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+                        }
+                        else
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+
+                        }
+                        //проверка есть ли cправа
+                        for (int i = dgvCrossword.SelectedCells[0].RowIndex; i < dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Слева снизу по вертикали");
+                }
+                //слева
+                else
+                {
+                    if (crossingCount == 0)
+                    {
+                        if (startDirection == (int)direction.up)
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " " || dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+                        }
+                        else
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " " || dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+                        }
+                        //проверка есть ли cправа
+                        for (int i = dgvCrossword.SelectedCells[0].RowIndex; i < dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Cлева по вертикали");
+                }
+            }
+            //правая граница
+            else if (lastCell.X == dgvCrossword.ColumnCount - 1)
+            {
+                //справа сверху по вертикали
+                if (dgvCrossword.SelectedCells[0].RowIndex == 0)
+                {
+                    if (crossingCount == 0)
+                    {
+                        if (startDirection == (int)direction.up)
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+                        }
+                        else
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+                        }
+                        //проверка есть ли cлева
+                        for (int i = dgvCrossword.SelectedCells[0].RowIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Справа сверху по вертикали");
+                }
+                //справа снизу по вертикали
+                else if (dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex == dgvCrossword.RowCount - 1)
+                {
+                    if (crossingCount == 0)
+                    {
+                        if (startDirection == (int)direction.up)
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+                        }
+                        else
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+
+                        }
+                        //проверка есть ли cлева
+                        for (int i = dgvCrossword.SelectedCells[0].RowIndex; i < dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Справа снизу по вертикали");
+                }
+                //справа
+                else
+                {
+                    if (crossingCount == 0)
+                    {
+                        if (startDirection == (int)direction.up)
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " " || dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+                        }
+                        else
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " " || dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+                        }
+                        //проверка есть ли cлева
+                        for (int i = dgvCrossword.SelectedCells[0].RowIndex; i < dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Cправа по вертикали");
+                }
+            }
+            //не на левой/правой границе
+            else
+            {
+                if (dgvCrossword.SelectedCells[0].RowIndex == 0)
+                {
+                    if (crossingCount == 0)
+                    {
+                        if (startDirection == (int)direction.up)
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+                        }
+                        else
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+                        }
+                        //проверка есть ли cправа
+                        for (int i = dgvCrossword.SelectedCells[0].RowIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                        //проверка есть ли cлева
+                        for (int i = dgvCrossword.SelectedCells[0].RowIndex; i < selectedCellsCount; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Сверху по вертикали");
+                }
+                else if (dgvCrossword.SelectedCells[selectedCellsCount-1].RowIndex == dgvCrossword.RowCount - 1)
+                {
+                    if (crossingCount == 0)
+                    {
+                        if (startDirection == (int)direction.up)
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+                        }
+                        else
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+
+                        }
+                        //проверка есть ли cправа
+                        for (int i = dgvCrossword.SelectedCells[0].RowIndex; i < dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                        //проверка есть ли cлева
+                        for (int i = dgvCrossword.SelectedCells[0].RowIndex; i < dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Снизу по вертикали");
+                }
+                else
+                {
+                    if (crossingCount == 0)
+                    {
+                        if (startDirection == (int)direction.up)
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " " || dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+                        }
+                        else
+                        {
+                            if (dgvCrossword.Rows[dgvCrossword.SelectedCells[0].RowIndex + 1].Cells[lastCell.X].Value.ToString() != " " || dgvCrossword.Rows[dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex - 1].Cells[lastCell.X].Value.ToString() != " ")
+                            {
+                                dgvVocabularyOfC.Rows.Clear();
+                                flag = false;
+                            }
+                        }
+                        //проверка есть ли cправа
+                        for (int i = dgvCrossword.SelectedCells[0].RowIndex; i < dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex + 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                        //проверка есть ли cлева
+                        for (int i = dgvCrossword.SelectedCells[0].RowIndex; i < dgvCrossword.SelectedCells[selectedCellsCount - 1].RowIndex + 1; i++)
+                        {
+                            if (dgvCrossword.Rows[i].Cells[dgvCrossword.SelectedCells[0].ColumnIndex - 1].Value.ToString() != " ")
+                            {
+                                dgvCrossword.ClearSelection();
+                                return false;
+                            }
+                        }
+                    }
+                    //MessageBox.Show("Общий случай");
+                }
+            }
+            return flag;
+        }
+
         private void dgvCrossword_SelectionChanged(object sender, EventArgs e)
         {
             decFlag = false;
@@ -440,162 +1895,164 @@ namespace ClassicCrossword
 
             if (selectedCellsCount == 1)
             {
-                lastCell = new Point(dgvCrossword.SelectedCells[0].RowIndex, dgvCrossword.SelectedCells[0].ColumnIndex);
+                lastCell = new Point(dgvCrossword.SelectedCells[0].ColumnIndex, dgvCrossword.SelectedCells[0].RowIndex);
                 lastDirection = (int)direction.right;
                 dgvVocabularyOfC.Rows.Clear();
                 mask = "";
+                crossingCount = 0;
             }
-            if (selectedCellsCount == 2)
+            else if (selectedCellsCount == 2)
             {
-                dgvVocabularyOfC.Rows.Clear(); //?
-                mask = ""; //?
+                dgvVocabularyOfC.Rows.Clear();
+                mask = "";
                 if (dgvCrossword.SelectedCells[0].RowIndex == dgvCrossword.SelectedCells[1].RowIndex &&
                     dgvCrossword.SelectedCells[0].ColumnIndex == dgvCrossword.SelectedCells[1].ColumnIndex + 1)
                 {
-                    lastCell = new Point(dgvCrossword.SelectedCells[0].ColumnIndex, dgvCrossword.SelectedCells[0].RowIndex + 1);
+                    lastCell = new Point(lastCell.X + 1, lastCell.Y);
                     lastDirection = (int)direction.right;
 
                     //вправо
-                    dir = 3;
+                    startDirection = (int)direction.right;
+                    currentDirection = (int)direction.right;
+
                     rowInd = dgvCrossword.SelectedCells[0].RowIndex;
 
                     if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" ") && dgvCrossword.SelectedCells[1].Value.ToString().Equals(" "))
                         mask = "^\\w\\w$";
                     else if (dgvCrossword.SelectedCells[1].Value.ToString().Equals(" "))
+                    {
+                        crossingCount++;
                         mask = "^\\w" + dgvCrossword.SelectedCells[0].Value.ToString() + '$';
+                    }
                     else if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" "))
+                    {
+                        crossingCount++;
                         mask = '^' + dgvCrossword.SelectedCells[1].Value.ToString() + "\\w" + '$';
+                    }
                     else mask = '^' + dgvCrossword.SelectedCells[1].Value.ToString() + dgvCrossword.SelectedCells[0].Value.ToString() + '$';
 
-                    int i = dgvCrossword.SelectedCells[0].RowIndex;
-                    int j = dgvCrossword.SelectedCells[0].ColumnIndex;
-                    
-                    //выделение по границе
-                    //if (i == 0 || j == 0 || j == dgvCrossword.)
-                    //левая граница
-                    //правая граница
-                    //нижняя граница
-                    //верхняя граница
-
-                    //общий случай
-                    if (!Char.IsLetter(dgvCrossword.Rows[i].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) ||
-                        !Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) ||
-                        !Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]))
-                    {
-                        MessageBox.Show("Неверная область");
-                    }
+                    checkRight(selectedCellsCount);
                 }
                 else if (dgvCrossword.SelectedCells[0].RowIndex == dgvCrossword.SelectedCells[1].RowIndex &&
                     dgvCrossword.SelectedCells[0].ColumnIndex == dgvCrossword.SelectedCells[1].ColumnIndex - 1)
                 {
-                    lastCell = new Point(dgvCrossword.SelectedCells[0].ColumnIndex, dgvCrossword.SelectedCells[0].RowIndex - 1);
+                    lastCell = new Point(lastCell.X - 1, lastCell.Y);
                     lastDirection = (int)direction.left;
 
                     //влево
-                    dir = 1;
+                    startDirection = (int)direction.left;
+                    currentDirection = (int)direction.left;
                     rowInd = dgvCrossword.SelectedCells[0].RowIndex;
 
                     if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" ") && dgvCrossword.SelectedCells[1].Value.ToString().Equals(" "))
                         mask = "^\\w\\w$";
                     else if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" "))
+                    {
+                        crossingCount++;
                         mask = "^\\w" + dgvCrossword.SelectedCells[1].Value.ToString() + '$';
+                    }
                     else if (dgvCrossword.SelectedCells[1].Value.ToString().Equals(" "))
+                    {
+                        crossingCount++;
                         mask = '^' + dgvCrossword.SelectedCells[0].Value.ToString() + "\\w" + '$';
+                    }
                     else mask = '^' + dgvCrossword.SelectedCells[0].Value.ToString() + dgvCrossword.SelectedCells[1].Value.ToString() + '$';
 
-                    int i = dgvCrossword.SelectedCells[0].RowIndex;
-                    int j = dgvCrossword.SelectedCells[0].ColumnIndex;
-                    if (!dgvCrossword.Rows[i].Cells[j - 1].Value.ToString().Equals(" ") ||
-                        !Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) ||
-                        !Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]))
-                        MessageBox.Show("Неверная область");
+                    checkLeft(selectedCellsCount);
                 }
                 else if (dgvCrossword.SelectedCells[0].RowIndex == dgvCrossword.SelectedCells[1].RowIndex + 1 &&
                     dgvCrossword.SelectedCells[0].ColumnIndex == dgvCrossword.SelectedCells[1].ColumnIndex)
                 {
-                    lastCell = new Point(dgvCrossword.SelectedCells[0].ColumnIndex + 1, dgvCrossword.SelectedCells[0].RowIndex);
+                    lastCell = new Point(lastCell.X, lastCell.Y + 1);
                     lastDirection = (int)direction.down;
 
                     //вниз
-                    dir = 0;
+                    startDirection = (int)direction.down;
+                    currentDirection = (int)direction.down;
                     colInd = dgvCrossword.SelectedCells[0].ColumnIndex;
+
+                    
 
                     if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" ") && dgvCrossword.SelectedCells[1].Value.ToString().Equals(" "))
                         mask = "^\\w\\w$";
                     else if (dgvCrossword.SelectedCells[1].Value.ToString().Equals(" "))
+                    {
+                        crossingCount++;
                         mask = "^\\w" + dgvCrossword.SelectedCells[0].Value.ToString() + '$';
+                    }
                     else if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" "))
+                    {
+                        crossingCount++;
                         mask = '^' + dgvCrossword.SelectedCells[1].Value.ToString() + "\\w" + '$';
-                    else mask = '^' + dgvCrossword.SelectedCells[1].Value.ToString() + dgvCrossword.SelectedCells[0].Value.ToString() + '$';
+                    }                        
+                    else mask = '^' + dgvCrossword.SelectedCells[1].Value.ToString() + dgvCrossword.SelectedCells[0].Value.ToString() + '$';//??
 
-                    int i = dgvCrossword.SelectedCells[0].RowIndex;
-                    int j = dgvCrossword.SelectedCells[0].ColumnIndex;
-                    if (!dgvCrossword.Rows[i + 1].Cells[j].Value.ToString().Equals(" ") ||
-                        !Char.IsLetter(dgvCrossword.Rows[i].Cells[j + 1].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i].Cells[j - 1].Value.ToString()[0]) ||
-                        !Char.IsLetter(dgvCrossword.Rows[i].Cells[j - 1].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i].Cells[j + 1].Value.ToString()[0]))
-                        MessageBox.Show("Неверная область");
+                    checkDown(selectedCellsCount);
                 }
                 else if (dgvCrossword.SelectedCells[0].RowIndex == dgvCrossword.SelectedCells[1].RowIndex - 1 &&
                     dgvCrossword.SelectedCells[0].ColumnIndex == dgvCrossword.SelectedCells[1].ColumnIndex)
                 {
-                    lastCell = new Point(dgvCrossword.SelectedCells[0].ColumnIndex - 1, dgvCrossword.SelectedCells[0].RowIndex);
+                    lastCell = new Point(lastCell.X, lastCell.Y - 1);
                     lastDirection = (int)direction.up;
 
                     //вверх
-                    dir = 2;
+                    startDirection = (int)direction.up;
+                    currentDirection = (int)direction.up;
                     colInd = dgvCrossword.SelectedCells[0].ColumnIndex;
+
                     if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" ") && dgvCrossword.SelectedCells[1].Value.ToString().Equals(" "))
+                    {
                         mask = "^\\w\\w$";
+                    }
                     else if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" "))
+                    {
+                        crossingCount++;
                         mask = "^\\w" + dgvCrossword.SelectedCells[1].Value.ToString() + '$';
+                    }
                     else if (dgvCrossword.SelectedCells[1].Value.ToString().Equals(" "))
+                    {
+                        crossingCount++;
                         mask = '^' + dgvCrossword.SelectedCells[0].Value.ToString() + "\\w" + '$';
+                    }
                     else mask = '^' + dgvCrossword.SelectedCells[0].Value.ToString() + dgvCrossword.SelectedCells[1].Value.ToString() + '$';
 
-                    int i = dgvCrossword.SelectedCells[0].RowIndex;
-                    int j = dgvCrossword.SelectedCells[0].ColumnIndex;
-                    if (!dgvCrossword.Rows[i - 1].Cells[j].Value.ToString().Equals(" ") ||
-                        !Char.IsLetter(dgvCrossword.Rows[i].Cells[j + 1].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i].Cells[j - 1].Value.ToString()[0]) ||
-                        !Char.IsLetter(dgvCrossword.Rows[i].Cells[j - 1].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i].Cells[j + 1].Value.ToString()[0]))
-                        MessageBox.Show("Неверная область");
+                    checkUp(selectedCellsCount);
                 }
                 else
                     MessageBox.Show("Неверная область");
 
                 lastSelectionLength = selectedCellsCount;
             }
-            if (selectedCellsCount > 2)
+            else if (selectedCellsCount > 2)
             {
-                //todo по последнему движению определить направление dir
-
                 //если накапливание
                 if (selectedCellsCount > lastSelectionLength)
                 {
                     //если прежде двигались вправо, накопление идет вправо и сейчас идём вправо
                     if (lastDirection == (int)direction.right && dgvCrossword.SelectedCells[1].ColumnIndex + 1 == dgvCrossword.SelectedCells[0].ColumnIndex)
-                        dir = 3;
+                        currentDirection = (int)direction.right;
                     //если прежде двигались вправо, накопление идет влево и сейчас идём влево
-                    else if (lastDirection == (int)direction.right && dgvCrossword.SelectedCells[1].ColumnIndex - 1 == dgvCrossword.SelectedCells[0].ColumnIndex)//??
-                        dir = 1;
+                    else if (lastDirection == (int)direction.right && dgvCrossword.SelectedCells[1].ColumnIndex - 1 == dgvCrossword.SelectedCells[0].ColumnIndex)
+                        currentDirection = (int)direction.left;
                     //если прежде двигались влево, накопление идет вправо и сейчас идём вправо
                     else if (lastDirection == (int)direction.left && dgvCrossword.SelectedCells[1].ColumnIndex + 1 == dgvCrossword.SelectedCells[0].ColumnIndex)
-                        dir = 3;
+                        currentDirection = (int)direction.right;
                     //если прежде двигались влево , накопление идет влево и сейчас идём влево
                     else if (lastDirection == (int)direction.left && dgvCrossword.SelectedCells[1].ColumnIndex - 1 == dgvCrossword.SelectedCells[0].ColumnIndex)
-                        dir = 1;
+                        currentDirection = (int)direction.left;
 
                     //если прежде двигались вниз, накопление идет вниз и сейчас идём вниз
                     else if (lastDirection == (int)direction.down && dgvCrossword.SelectedCells[1].RowIndex + 1 == dgvCrossword.SelectedCells[0].RowIndex)
-                        dir = 0;
+                        currentDirection = (int)direction.down;
                     //если прежде двигались вниз, накопление идет вверх и сейчас идём вверх
                     else if (lastDirection == (int)direction.down && dgvCrossword.SelectedCells[1].RowIndex - 1 == dgvCrossword.SelectedCells[0].RowIndex)
-                        dir = 2;
+                        currentDirection = (int)direction.up;
                     //если прежде двигались вверх, накопление идет вниз и сейчас идём вниз
                     else if (lastDirection == (int)direction.up && dgvCrossword.SelectedCells[1].RowIndex + 1 == dgvCrossword.SelectedCells[0].RowIndex)
-                        dir = 0;
+                        currentDirection = (int)direction.down;
                     //если прежде двигались вверх, накопление идет вверх и сейчас идём вверх
                     else if (lastDirection == (int)direction.up && dgvCrossword.SelectedCells[1].RowIndex - 1 == dgvCrossword.SelectedCells[0].RowIndex)
-                        dir = 2;
+                        currentDirection = (int)direction.up;
                 }
                 //если декремент выделения
                 else
@@ -603,39 +2060,34 @@ namespace ClassicCrossword
                     decFlag = true;
                     //если прежде двигались вправо, декремент идет влево и сейчас идём влево
                     if (lastDirection == (int)direction.right && dgvCrossword.SelectedCells[0].ColumnIndex == lastCell.X - 1)
-                        dir = 1;
+                        currentDirection = (int)direction.left;
                     //если прежде двигались влево, декремент идет влево и сейчас идём влево
                     else if (lastDirection == (int)direction.left && dgvCrossword.SelectedCells[0].ColumnIndex == lastCell.X - 1)
-                        dir = 1;
+                        currentDirection = (int)direction.left;
                     //если прежде двигались влево, декремент идет вправо и сейчас идем вправо
                     else if (lastDirection == (int)direction.left && dgvCrossword.SelectedCells[0].ColumnIndex == lastCell.X + 1)
-                        dir = 3;
+                        currentDirection = (int)direction.right;
                     //если прежде двигались вправо, декремент идет вправо и сейчас идем вправо
                     else if (lastDirection == (int)direction.right && dgvCrossword.SelectedCells[0].ColumnIndex == lastCell.X + 1)
-                        dir = 3;
+                        currentDirection = (int)direction.right;
+
                     //если прежде двигались вниз, декремент вверх и сейчас идём вверх
                     else if (lastDirection == (int)direction.down && dgvCrossword.SelectedCells[0].RowIndex == lastCell.Y - 1)
-                        dir = 2;
+                        currentDirection = (int)direction.up;
                     //если прежде двигались вниз, декремент вниз и сейчас идём вниз
                     else if (lastDirection == (int)direction.down && dgvCrossword.SelectedCells[0].RowIndex == lastCell.Y + 1)
-                        dir = 0;
+                        currentDirection = (int)direction.down;
                     //если прежде двигались вверх, декремент идет вниз и сейчас идём вниз
                     else if (lastDirection == (int)direction.up && dgvCrossword.SelectedCells[0].RowIndex == lastCell.Y + 1)
-                        dir = 0;
+                        currentDirection = (int)direction.down;
                     //если прежде двигались вверх, декремент вверх и сейчас идём вверх
                     else if (lastDirection == (int)direction.up && dgvCrossword.SelectedCells[0].RowIndex == lastCell.Y - 1)
-                        dir = 2;
+                        currentDirection = (int)direction.up;
                 }
                 //вправо
-                if (dir == 3)
+                if (currentDirection == (int)direction.right)
                 {
-                    int i = dgvCrossword.SelectedCells[0].RowIndex;
-                    int j = dgvCrossword.SelectedCells[0].ColumnIndex;
-                    if (!(dgvCrossword.SelectedCells[0].ColumnIndex == lastCell.X + 1) ||
-                        rowInd != dgvCrossword.SelectedCells[0].RowIndex ||
-                        !Char.IsLetter(dgvCrossword.Rows[i].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) ||
-                        !Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) ||
-                        !Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]))
+                    if (rowInd != dgvCrossword.SelectedCells[0].RowIndex || dgvCrossword.SelectedRows.Count > 1)
                     {
                         dgvCrossword.ClearSelection();
                         dgvVocabularyOfC.Rows.Clear();
@@ -648,6 +2100,7 @@ namespace ClassicCrossword
                             {
                                 mask = mask.Remove(mask.Length - 1);
                                 mask += dgvCrossword.SelectedCells[0].Value.ToString() + '$';
+                                crossingCount++;
                             }
                             else
                             {
@@ -657,26 +2110,34 @@ namespace ClassicCrossword
                         }
                         else if (decFlag)
                         {
-                            mask = mask.Remove(mask.Length - 3);
-                            mask += '$';
+                            String m = mask.Substring(0, 3);
+                            if (m != "^\\w")
+                            {
+                                mask = mask.Remove(1, 1);
+                                crossingCount--;
+                            }
+                            else if (m == "^\\w")
+                            {
+                                mask = mask.Remove(1, 2);
+                            }
                         }
 
                         lastDirection = (int)direction.right;
-                        lastCell = new Point(dgvCrossword.SelectedCells[0].ColumnIndex, dgvCrossword.SelectedCells[0].RowIndex + 1);
-                        updateDGV(dgvVocabularyOfC, mask);
+                        lastCell = new Point(lastCell.X + 1, lastCell.Y);
+                        if (checkRight(selectedCellsCount))
+                        {
+                            updateDGV(dgvVocabularyOfC, mask);
+                        }
+                        else
+                        {  }
+
                     }
                 }
                 //влево
-                else if (dir == 1)
+                else if (currentDirection == (int)direction.left)
                 {
-                    int i = dgvCrossword.SelectedCells[0].RowIndex;
-                    int j = dgvCrossword.SelectedCells[0].ColumnIndex;
-
-                    if (!(dgvCrossword.SelectedCells[0].ColumnIndex == lastCell.X - 1) ||
-                        rowInd != dgvCrossword.SelectedCells[0].RowIndex ||
-                        !dgvCrossword.Rows[i].Cells[j - 1].Value.ToString().Equals(" ") ||
-                        !Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) ||
-                        !Char.IsLetter(dgvCrossword.Rows[i - 1].Cells[j].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i + 1].Cells[j].Value.ToString()[0]))
+                   
+                    if (rowInd != dgvCrossword.SelectedCells[0].RowIndex || dgvCrossword.SelectedRows.Count > 1)
                     {
                         dgvCrossword.ClearSelection();
                         dgvVocabularyOfC.Rows.Clear();
@@ -694,30 +2155,40 @@ namespace ClassicCrossword
                             {
                                 mask = mask.Remove(0, 1);
                                 mask = mask.Insert(0, '^' + dgvCrossword.SelectedCells[0].Value.ToString());
+                                crossingCount++;
                             }
                         }
-                        
                         else if (decFlag)
                         {
-                            mask = mask.Remove(mask.Length - 3);
+                            String m = mask.Substring(mask.Length - 2, 1);
+                            if (mask.Substring(mask.Length - 2, 1) != "w")
+                            {
+                                mask = mask.Remove(mask.Length - 2);
+                                crossingCount--;
+                            }
+                            else
+                            {
+                                mask = mask.Remove(mask.Length - 3);
+                            }
                             mask += '$';
                         }
-
                         lastDirection = (int)direction.left;
                         lastCell = new Point(lastCell.X - 1, lastCell.Y);
-                        updateDGV(dgvVocabularyOfC, mask);
+                        if (checkLeft(selectedCellsCount))
+                        {
+                            updateDGV(dgvVocabularyOfC, mask);
+                        }
+                        else
+                        { }
+
+
                     }
                 }
                 //вниз
-                else if (dir == 0)
+                else if (currentDirection == (int)direction.down)
                 {
-                    int i = dgvCrossword.SelectedCells[0].RowIndex;
-                    int j = dgvCrossword.SelectedCells[0].ColumnIndex;
-                    if (!(dgvCrossword.SelectedCells[0].RowIndex == lastCell.Y + 1) ||
-                        colInd != dgvCrossword.SelectedCells[0].ColumnIndex ||
-                        !dgvCrossword.Rows[i + 1].Cells[j].Value.ToString().Equals(" ") ||
-                        !Char.IsLetter(dgvCrossword.Rows[i].Cells[j + 1].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i].Cells[j - 1].Value.ToString()[0]) ||
-                        !Char.IsLetter(dgvCrossword.Rows[i].Cells[j - 1].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i].Cells[j + 1].Value.ToString()[0]))
+                    
+                    if (colInd != dgvCrossword.SelectedCells[0].ColumnIndex || dgvCrossword.SelectedColumns.Count > 1)
                     {
                         dgvCrossword.ClearSelection();
                         dgvVocabularyOfC.Rows.Clear();
@@ -728,36 +2199,46 @@ namespace ClassicCrossword
                         {
                             if (dgvCrossword.SelectedCells[0].Value.ToString().Equals(" "))
                             {
-                                mask = mask.Remove(0, 1);
-                                mask = mask.Insert(0, "^\\w");
+                                mask = mask.Remove(mask.Length - 1);
+                                mask = mask.Insert(mask.Length, "\\w$");
                             }
                             else
                             {
-                                mask = mask.Remove(0, 1);
-                                mask = mask.Insert(0, '^' + dgvCrossword.SelectedCells[0].Value.ToString());
+                                mask = mask.Remove(mask.Length - 1);
+                                mask = mask.Insert(mask.Length, dgvCrossword.SelectedCells[0].Value.ToString() + '$');
+                                crossingCount++;
                             }
                         }
                         else if (decFlag)
                         {
-                            mask = mask.Remove(mask.Length - 3);
-                            mask += '$';
+                            String m = mask.Substring(0, 3);
+                            if (m != "^\\w")
+                            {
+                                mask = mask.Remove(1, 1);
+                                crossingCount--;
+                            }
+                            else if (m == "^\\w")
+                            {
+                                mask = mask.Remove(1, 2);
+                            }
                         }
 
                         lastDirection = (int)direction.down;
-                        lastCell = new Point(dgvCrossword.SelectedCells[0].ColumnIndex + 1, dgvCrossword.SelectedCells[0].RowIndex);
-                        updateDGV(dgvVocabularyOfC, mask);
+                        lastCell = new Point(lastCell.X, lastCell.Y + 1);
+                        if (checkDown(selectedCellsCount))
+                        {
+                            updateDGV(dgvVocabularyOfC, mask);
+                        }
+                        else
+                        { }
+
                     }
                 }
                 //вверх
                 else
                 {
-                    int i = dgvCrossword.SelectedCells[0].RowIndex;
-                    int j = dgvCrossword.SelectedCells[0].ColumnIndex;
-                    if (!(dgvCrossword.SelectedCells[0].RowIndex == lastCell.Y - 1) ||
-                        colInd != dgvCrossword.SelectedCells[0].ColumnIndex ||
-                        !dgvCrossword.Rows[i - 1].Cells[j].Value.ToString().Equals(" ") ||
-                        !Char.IsLetter(dgvCrossword.Rows[i].Cells[j + 1].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i].Cells[j - 1].Value.ToString()[0]) ||
-                        !Char.IsLetter(dgvCrossword.Rows[i].Cells[j - 1].Value.ToString()[0]) && Char.IsLetter(dgvCrossword.Rows[i].Cells[j + 1].Value.ToString()[0]))
+                    
+                    if (colInd != dgvCrossword.SelectedCells[0].ColumnIndex || dgvCrossword.SelectedColumns.Count > 1)
                     {
                         dgvCrossword.ClearSelection();
                         dgvVocabularyOfC.Rows.Clear();
@@ -775,17 +2256,33 @@ namespace ClassicCrossword
                             {
                                 mask = mask.Remove(0, 1);
                                 mask = mask.Insert(0, '^' + dgvCrossword.SelectedCells[0].Value.ToString());
+                                crossingCount++;
                             }
                         }
                         else if (decFlag)
                         {
-                            mask = mask.Remove(mask.Length - 3);
+                            String m = mask.Substring(mask.Length - 2, 1);
+                            if (mask.Substring(mask.Length - 2, 1) != "w")
+                            {
+                                mask = mask.Remove(mask.Length - 2);
+                                crossingCount--;
+                            }
+                            else
+                            {
+                                mask = mask.Remove(mask.Length - 3);
+                            }
                             mask += '$';
                         }
-
                         lastDirection = (int)direction.up;
-                        lastCell = new Point(dgvCrossword.SelectedCells[0].ColumnIndex - 1, dgvCrossword.SelectedCells[0].RowIndex);
-                        updateDGV(dgvVocabularyOfC, mask);
+                        lastCell = new Point(lastCell.X, lastCell.Y - 1);
+                        if (checkUp(selectedCellsCount))
+                        {
+                            updateDGV(dgvVocabularyOfC, mask);
+                        }
+                        else
+                        { }
+
+
                     }
                 }
                 lastSelectionLength = selectedCellsCount;
@@ -820,25 +2317,25 @@ namespace ClassicCrossword
 
                 string s = dgvVocabularyOfC.SelectedCells[0].Value.ToString();
 
-                if (dir == 3)
+                if (currentDirection == (int)direction.right)
                 {
                     int xPos = dgvCrossword.SelectedCells[dgvCrossword.SelectedCells.Count - 1].RowIndex;
                     int yPos = dgvCrossword.SelectedCells[dgvCrossword.SelectedCells.Count - 1].ColumnIndex;
                     _board.AddWord(s, dict[s], xPos, yPos, 0);
                 }
-                else if (dir == 1)
+                else if (currentDirection == (int)direction.left)
                 {
                     int xPos = dgvCrossword.SelectedCells[0].RowIndex;
                     int yPos = dgvCrossword.SelectedCells[0].ColumnIndex;
                     _board.AddWord(s, dict[s], xPos, yPos, 0);
                 }
-                else if (dir == 0)
+                else if (currentDirection == (int)direction.down)
                 {
                     int xPos = dgvCrossword.SelectedCells[dgvCrossword.SelectedCells.Count - 1].RowIndex;
                     int yPos = dgvCrossword.SelectedCells[dgvCrossword.SelectedCells.Count - 1].ColumnIndex;
                     _board.AddWord(s, dict[s], xPos, yPos, 1);
                 }
-                else if (dir == 2)
+                else if (currentDirection == (int)direction.up)
                 {
                     int xPos = dgvCrossword.SelectedCells[0].RowIndex;
                     int yPos = dgvCrossword.SelectedCells[0].ColumnIndex;
