@@ -1,5 +1,6 @@
 ﻿using ClassicCrossword.Controller;
 using ClassicCrossword.Model;
+using ClassicCrossword.Forms;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,9 +18,29 @@ namespace ClassicCrossword
 {
     public partial class AdminWindowForm : Form
     {
-        public static int n = 20; // максимальное число строк в сетке
-        public static int m = 20; // максимальное число столбцов в сетке
-        
+        private static int n = 20; // максимальное число строк в сетке
+
+        private static int m = 20; // максимальное число столбцов в сетке
+
+        int counter = 0;
+
+        public DataGridView DGV
+        {
+            get { return this.dgvCrossword; }
+            set { this.dgvCrossword = value; }
+        }
+
+        public static int N
+        {
+            get { return n; }
+            set { n = value; }
+        }
+        public static int M
+        {
+            get {return m; }
+            set { m = value; }
+        }
+
         private Dictionary<string, string> dict = new Dictionary<string, string>();
         private List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
 
@@ -47,6 +68,7 @@ namespace ClassicCrossword
 
         Crossword _board = new Crossword(n, m);
 
+
         public AdminWindowForm()
         {
             InitializeComponent();
@@ -60,6 +82,11 @@ namespace ClassicCrossword
             var editPlayerForm = new AddNewPlayerForm(id, login, pass);
             editPlayerForm.Closing += AddNewPlayerForm_Closing;
             editPlayerForm.ShowDialog();
+        }
+
+        internal static void clearDGV(object dataGridView)
+        {
+            throw new NotImplementedException();
         }
 
         private void deleteAccountToolStripMenuItem_Click(object sender, EventArgs e)
@@ -102,6 +129,24 @@ namespace ClassicCrossword
 
         private void AdminWindowForm_Load(object sender, EventArgs e)
         {
+            fillGrid(n, m);
+            fillDict();
+        }
+
+        public void deleteGrid()
+        {
+            while (dgvCrossword.Rows.Count > 1)
+            {
+                dgvCrossword.Rows.RemoveAt(0);
+            }
+            while (dgvCrossword.Columns.Count > 0)
+            {
+                dgvCrossword.Columns.RemoveAt(0);
+            }
+        }
+
+        public void fillGrid(int n , int m)
+        {
             playerTableAdapter.Fill(crosswordDataSet.Player);
             idDataGridViewTextBoxColumn.Visible = false;
 
@@ -121,9 +166,9 @@ namespace ClassicCrossword
                 dgvCrossword.Rows[k].Height = 25;
             }
 
-            for (var i = 0; i < _board.N; i++)
+            for (var i = 0; i < n; i++)
             {
-                for (var j = 0; j < _board.M; j++)
+                for (var j = 0; j < m; j++)
                 {
                     dgvCrossword.Rows[i].Cells[j].Value = " ";
                     dgvCrossword.Rows[i].Cells[j].ReadOnly = true;
@@ -131,7 +176,10 @@ namespace ClassicCrossword
                     dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
                 }
             }
+        }
 
+        public void fillDict()
+        {
             try
             {
                 parseDict(@"..\..\Dict\Glavny.dict");
@@ -143,26 +191,33 @@ namespace ClassicCrossword
                 textBoxVocabularyWordsCountOnV.Text = "0";
                 return;
             }
+            dictShow();
+        }
 
+        public void dictShow()
+        {
             groupBoxVocabularyOfC.Text = "Glavny.dict";
             groupBoxVocabularyOfV.Text = "Glavny.dict";
+                if (list.Count > 0 )  list.Clear();
+                list.AddRange(dict);
+                listNot = dict.Keys.ToList();
+                listDef = dict.Values.ToList();
 
-            list.AddRange(dict);
-
-            listNot = dict.Keys.ToList();
-            listDef = dict.Values.ToList();
+            List<string> tmplist = new List<string>();
 
             foreach (var item in list)
             {
-                dgvVocabularyOfC.Rows.Add(item.Key);
-                dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
+                if (!tmplist.Equals(item.Key)) {
+                    dgvVocabularyOfC.Rows.Add(item.Key);
+                    dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
+                }
+                else{ }
             }
-
             textBoxVocabularyWordsCountOnC.Text = dict.Count.ToString();
             textBoxVocabularyWordsCountOnV.Text = dict.Count.ToString();
         }
 
-        private void parseDict(string filename) 
+        public void parseDict(string filename) 
         {
             string[] words = File.ReadAllLines(filename, Encoding.GetEncoding("utf-8")).Take(500).ToArray();
             for (int i = 0; i < words.Length; i++)
@@ -184,48 +239,55 @@ namespace ClassicCrossword
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                dict.Clear();
-                list.Clear();
-                listNot.Clear();
-                listDef.Clear();
-                dgvVocabularyOfC.Rows.Clear();
-                dgvVocabularyOfV.Rows.Clear();
-                try
-                {
-                    parseDict(openFileDialog1.FileName);
-                }
-                catch (ArgumentException)
-                {
-                    MessageBox.Show("В словаре имеются одинаковые понятия");
-                    textBoxVocabularyWordsCountOnC.Text = "0";
-                    textBoxVocabularyWordsCountOnV.Text = "0";
-                    return;
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    MessageBox.Show("В словаре отсутствует понятие | определение");
-                    textBoxVocabularyWordsCountOnC.Text = "0";
-                    textBoxVocabularyWordsCountOnV.Text = "0";
-                    return;
-                }
-
-                groupBoxVocabularyOfC.Text = openFileDialog1.SafeFileName;
-                groupBoxVocabularyOfV.Text = openFileDialog1.SafeFileName;
-
-                list.AddRange(dict);
-
-                listNot = dict.Keys.ToList();
-                listDef = dict.Values.ToList();
-
-                foreach (var item in list)
-                {
-                    dgvVocabularyOfC.Rows.Add(item.Key);
-                    dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
-                }
-
-                textBoxVocabularyWordsCountOnC.Text = dict.Count.ToString();
-                textBoxVocabularyWordsCountOnV.Text = dict.Count.ToString();
+                chooseVocabulary(openFileDialog1);
             }
+        }
+
+        public void chooseVocabulary(OpenFileDialog openFileDialog1)
+        {
+            dict.Clear();
+            list.Clear();
+            listNot.Clear();
+            listDef.Clear();
+            dgvVocabularyOfC.Rows.Clear();
+            dgvVocabularyOfV.Rows.Clear();
+
+
+            try
+            {
+                parseDict(openFileDialog1.FileName);
+            }
+            catch (ArgumentException)
+            {
+                MessageBox.Show("В словаре имеются одинаковые понятия");
+                textBoxVocabularyWordsCountOnC.Text = "0";
+                textBoxVocabularyWordsCountOnV.Text = "0";
+                return;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                MessageBox.Show("В словаре отсутствует понятие | определение");
+                textBoxVocabularyWordsCountOnC.Text = "0";
+                textBoxVocabularyWordsCountOnV.Text = "0";
+                return;
+            }
+
+            groupBoxVocabularyOfC.Text = openFileDialog1.SafeFileName;
+            groupBoxVocabularyOfV.Text = openFileDialog1.SafeFileName;
+
+            list.AddRange(dict);
+
+            listNot = dict.Keys.ToList();
+            listDef = dict.Values.ToList();
+
+            foreach (var item in list)
+            {
+                dgvVocabularyOfC.Rows.Add(item.Key);
+                dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
+            }
+
+            textBoxVocabularyWordsCountOnC.Text = dict.Count.ToString();
+            textBoxVocabularyWordsCountOnV.Text = dict.Count.ToString();
         }
 
         private void buttonGenerate_Click(object sender, EventArgs e)
@@ -255,7 +317,7 @@ namespace ClassicCrossword
             }
         }
 
-        void GenerateCrossword()
+        public void GenerateCrossword()
         {
             notUsedDict = new SortedDictionary<string, string>();
             tmpDict = new SortedDictionary<string, string>();
@@ -323,7 +385,7 @@ namespace ClassicCrossword
             }
         }
 
-        void clearDGV(DataGridView dgv)
+        public void clearDGV(DataGridView dgv)
         {
             for (int i = 0; i < dgv.RowCount; i++)
             {
@@ -2457,7 +2519,7 @@ namespace ClassicCrossword
 
             switch(toggle){
               case true:   tempList.Sort(new ComparerForAlphabetAsc()) ; break;
-               case false:  tempList.Sort(new ComparerForAlphabetDesc()); break;
+              case false:  tempList.Sort(new ComparerForAlphabetDesc()); break;
             }
 
             foreach (var item in tempList)
@@ -2499,7 +2561,7 @@ namespace ClassicCrossword
                 }
             }
             _board.Reset();
-            clearDGV(dgvCrossword);
+            clearDGV(dgvCrossword);    
         }
 
         private void dgvVocabularyOfV_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -2577,8 +2639,7 @@ namespace ClassicCrossword
                         dgvCrossword.Rows[i].Cells[j].Style.ForeColor = Color.Black;
                     }
                 }
-
-                Actualize();
+                  Actualize();
             }
         }
 
@@ -2685,6 +2746,11 @@ namespace ClassicCrossword
                 }
                 else { deleteRowVocabularyToolStripMenuItem.Enabled = true; }
             }
+        }
+
+        private void crosswordPropertiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new CrosswordSettings().Show();
         }
     }
 }

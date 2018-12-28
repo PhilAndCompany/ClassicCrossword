@@ -10,6 +10,7 @@ namespace ClassicCrossword
 {
     static class Program
     {
+        public static AdminWindowForm adminForm;
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -24,7 +25,7 @@ namespace ClassicCrossword
                 if (authForm.ShowDialog() == DialogResult.OK)
                 {
                     if (authForm.Usr.GetType() == typeof(Admin))
-                        Application.Run(new AdminWindowForm());
+                        Application.Run(adminForm = new AdminWindowForm());
                     else
                         Application.Run(new PlayerWindowForm((Player)authForm.Usr));
 
