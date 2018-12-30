@@ -18,6 +18,8 @@ namespace ClassicCrossword
 {
     public partial class AdminWindowForm : Form
     {
+        private DictController dictController;
+
         private static int n = 20; // максимальное число строк в сетке
 
         private static int m = 20; // максимальное число столбцов в сетке
@@ -68,10 +70,10 @@ namespace ClassicCrossword
 
         Crossword _board = new Crossword(n, m);
 
-
         public AdminWindowForm()
         {
             InitializeComponent();
+            dictController = new DictController();
         }
   
         private void editAccountToolStripMenuItem_Click(object sender, EventArgs e)
@@ -134,6 +136,7 @@ namespace ClassicCrossword
         {
             playerTableAdapter.Fill(crosswordDataSet.Player);
             idDataGridViewTextBoxColumn.Visible = false;
+
             fillGrid(n, m);
             fillDict();
         }
@@ -184,7 +187,7 @@ namespace ClassicCrossword
         {
             try
             {
-                parseDict(@"..\..\Dict\Glavny.dict");
+                dict = dictController.ParseDict(@"..\..\Dict\Glavny.dict");
             }
             catch (ArgumentException)
             {
@@ -221,16 +224,7 @@ namespace ClassicCrossword
             textBoxVocabularyWordsCountOnV.Text = dict.Count.ToString();
         }
 
-        public void parseDict(string filename) 
-        {
-            string[] words = File.ReadAllLines(filename, Encoding.GetEncoding("utf-8")).Take(500).ToArray();
-            for (int i = 0; i < words.Length; i++)
-            {
-                string word = words[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];
-                string question = words[i].Substring(words[i].IndexOf(words[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[1]));
-                dict.Add(word, question);
-            }
-        }
+        
 
         private void chooseVocabularyOfCToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -259,7 +253,7 @@ namespace ClassicCrossword
 
             try
             {
-                parseDict(openFileDialog1.FileName);
+                dict = dictController.ParseDict(openFileDialog1.FileName); 
             }
             catch (ArgumentException)
             {
@@ -437,11 +431,8 @@ namespace ClassicCrossword
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName, false, System.Text.Encoding.UTF8))
-                {
-                    sw.Write(s);
-                }
-                MessageBox.Show("Словарь успешно создан");
+                if(dictController.SaveDict(s, saveFileDialog1.FileName))
+                    MessageBox.Show("Словарь успешно создан");
             }
         }
 
@@ -2703,7 +2694,7 @@ namespace ClassicCrossword
                 dgvVocabularyOfV.Rows.Clear();
                 try
                 {
-                    parseDict(openFileDialog1.FileName);
+                    dict = dictController.ParseDict(openFileDialog1.FileName);
                 }
                 catch (ArgumentException)
                 {

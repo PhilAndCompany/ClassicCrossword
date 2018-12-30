@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\DictController.cs" />
     <Compile Include="Controller\UserController.cs" />
     <Compile Include="CrosswordDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
