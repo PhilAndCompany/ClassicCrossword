@@ -18,8 +18,6 @@ namespace ClassicCrossword.Model
         int _hCount, _vCount;
         private static IList<string> _wordsToInsert;
         private static char[,] _tempBoard;
-        private static int _bestSolution;
-        DateTime initialTime;
         Random _rand = new Random();
         private List<string> temp = new List<string>();
 
@@ -68,21 +66,6 @@ namespace ClassicCrossword.Model
             for (var i = 0; i < N; i++)
                 for (var j = 0; j < M; j++)
                     _board[i, j] = ' ';
-        }
-
-        public override string ToString()
-        {
-            string result = "";
-            for (int i = 0; i < N; i++)
-            {
-                for (int j = 0; j < M; j++)
-                {
-                    result += Letters.Contains(_board[i, j].ToString()) ? _board[i, j] : ' ';
-                }
-                if (i < N - 1)
-                    result += '\n';
-            }
-            return result;
         }
 
         bool IsValidPosition(int x, int y)
@@ -268,58 +251,6 @@ namespace ClassicCrossword.Model
             }
             defHorDict.Clear();
             defVerDict.Clear();
-        }
-
-        public void AddWords(IList<string> words)
-        {
-            _wordsToInsert = words;
-            _bestSolution = N * M;
-            initialTime = DateTime.Now;
-            Gen(0);
-
-            _board = _tempBoard;
-        }
-
-        int FreeSpaces()
-        {
-            var count = 0;
-            for (var i = 0; i < N; i++)
-            {
-                for (var j = 0; j < M; j++)
-                {
-                    if (_board[i, j] == ' ' || _board[i, j] == '*')
-                        count++;
-                }
-            }
-            return count;
-        }
-
-        void Gen(int pos)
-        {
-            if (pos >= _wordsToInsert.Count || (DateTime.Now - initialTime).Minutes > 1)
-                return;
-
-            for (int i = pos; i < _wordsToInsert.Count; i++)
-            {
-                var posi = BestPosition(_wordsToInsert[i]);
-                if (posi != null)
-                {
-                    var word = _wordsToInsert[i];
-
-                    var value = posi.Item3 == 0 ? _hCount : _vCount;
-                    PutWord(word, posi.Item1, posi.Item2, posi.Item3, value);
-                    Gen(pos + 1);
-                    RemoveWord(word, posi.Item1, posi.Item2, posi.Item3);
-                }
-                else
-                {
-                    Gen(pos + 1);
-                }
-            }
-            var c = FreeSpaces();
-            if (c >= _bestSolution) return;
-            _bestSolution = c;
-            _tempBoard = _board.Clone() as char[,];
         }
 
         private void RemoveWord(string word, int x, int y, int dir)

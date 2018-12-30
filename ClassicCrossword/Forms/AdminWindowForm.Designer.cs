@@ -274,7 +274,7 @@
             this.groupBoxVocabularyInstruments.Size = new System.Drawing.Size(311, 85);
             this.groupBoxVocabularyInstruments.TabIndex = 33;
             this.groupBoxVocabularyInstruments.TabStop = false;
-            this.groupBoxVocabularyInstruments.Text = "%VOCABULARYNAME% INSTRUMENTS";
+            this.groupBoxVocabularyInstruments.Text = "Фильтры";
             // 
             // buttonClearMask
             // 
@@ -356,6 +356,7 @@
             this.crosswordPropertiesToolStripMenuItem.Name = "crosswordPropertiesToolStripMenuItem";
             this.crosswordPropertiesToolStripMenuItem.Size = new System.Drawing.Size(166, 20);
             this.crosswordPropertiesToolStripMenuItem.Text = "Параметры кроссворда";
+            this.crosswordPropertiesToolStripMenuItem.Click += new System.EventHandler(this.crosswordPropertiesToolStripMenuItem_Click);
             // 
             // saveCrosswordToolStripMenuItem
             // 

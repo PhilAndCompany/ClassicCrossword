@@ -25,11 +25,16 @@ namespace ClassicCrossword.Model
             //get current folderpath of the .exe
             string ProgramPath = AppDomain.CurrentDomain.BaseDirectory;
             //jump back relative to the .exe-Path to the Resources Path
-            string FileName = string.Format("{0}Resources\\Кроссворд_Руководство_Пользователя.pdf"
+            string FileName = string.Format("{0}Resources\\crosswordGuide.chm"
                 , Path.GetFullPath(Path.Combine(ProgramPath, @"..\..\")));
 
             //Open PDF
-            System.Diagnostics.Process.Start(@"" + FileName + "");
+            // System.Diagnostics.Process.Start(@"" + FileName + "");
+            if (System.IO.File.Exists(FileName))
+            {
+                System.Diagnostics.Process.Start(FileName);
+            }
+
         }
 
     /*    public static void Help()
