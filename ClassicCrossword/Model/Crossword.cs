@@ -18,8 +18,6 @@ namespace ClassicCrossword.Model
         int _hCount, _vCount;
         private static IList<string> _wordsToInsert;
         private static char[,] _tempBoard;
-        private static int _bestSolution;
-        DateTime initialTime;
         Random _rand = new Random();
         private List<string> temp = new List<string>();
 

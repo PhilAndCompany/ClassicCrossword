@@ -94,9 +94,12 @@ namespace ClassicCrossword
             if (MessageBox.Show("Вы действительно хотите удалить выбранного игрока?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 int id = Convert.ToInt32(dgvAccount.CurrentRow.Cells[0].Value);
+                string log = dgvAccount.CurrentRow.Cells[1].Value.ToString();
+                string pass = dgvAccount.CurrentRow.Cells[2].Value.ToString();
                 try
                 {
-                    new UserController().DeleteById(id);
+                    playerTableAdapter.Delete(id, log, pass);
+                    //new UserController().DeleteById(id);
                     playerTableAdapter.Fill(crosswordDataSet.Player);
                 }
                 catch (System.Data.SqlClient.SqlException)
@@ -129,6 +132,8 @@ namespace ClassicCrossword
 
         private void AdminWindowForm_Load(object sender, EventArgs e)
         {
+            playerTableAdapter.Fill(crosswordDataSet.Player);
+            idDataGridViewTextBoxColumn.Visible = false;
             fillGrid(n, m);
             fillDict();
         }
@@ -147,9 +152,6 @@ namespace ClassicCrossword
 
         public void fillGrid(int n , int m)
         {
-            playerTableAdapter.Fill(crosswordDataSet.Player);
-            idDataGridViewTextBoxColumn.Visible = false;
-
             Font font = new Font("Microsoft Sans Serif", 8.0f, FontStyle.Bold);
             dgvCrossword.Font = font;
 
@@ -198,21 +200,23 @@ namespace ClassicCrossword
         {
             groupBoxVocabularyOfC.Text = "Glavny.dict";
             groupBoxVocabularyOfV.Text = "Glavny.dict";
-                if (list.Count > 0 )  list.Clear();
-                list.AddRange(dict);
-                listNot = dict.Keys.ToList();
-                listDef = dict.Values.ToList();
+
+            if (list.Count > 0 )
+                list.Clear();
+
+            list.AddRange(dict);
+
+            listNot = dict.Keys.ToList();
+            listDef = dict.Values.ToList();
 
             List<string> tmplist = new List<string>();
 
             foreach (var item in list)
             {
-                if (!tmplist.Equals(item.Key)) {
-                    dgvVocabularyOfC.Rows.Add(item.Key);
-                    dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
-                }
-                else{ }
+                dgvVocabularyOfC.Rows.Add(item.Key);
+                dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
             }
+
             textBoxVocabularyWordsCountOnC.Text = dict.Count.ToString();
             textBoxVocabularyWordsCountOnV.Text = dict.Count.ToString();
         }

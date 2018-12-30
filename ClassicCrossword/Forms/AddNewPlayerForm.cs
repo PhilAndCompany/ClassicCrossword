@@ -16,6 +16,8 @@ namespace ClassicCrossword
     public partial class AddNewPlayerForm : Form
     {
         private int id;
+        private string origLog;
+        private string origPass;
         UserController usrController;
 
         public AddNewPlayerForm()
@@ -47,31 +49,26 @@ namespace ClassicCrossword
                 {
                     if (id == 0)
                     {
-                        Player player = new Player(tbLogin.Text.Trim(), tbPassword.Text.Trim());
-                        if (!usrController.Insert(player))
+                        try
+                        {
+                            playerTableAdapter.Insert(tbLogin.Text, tbPassword.Text);
+                            this.Close();
+                        }
+                        catch
                         {
                             MessageBox.Show("Невозможно добавить нового игрока!\nИгрок с таким логином уже существует.", "Ошибка добавления", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                        else this.Close();
                     }
                     else
                     {
                         try
                         {
-                            Player player = new Player(id, tbLogin.Text.Trim(), tbPassword.Text.Trim());
-                            if (!usrController.Update(player))
-                            {
-                                MessageBox.Show("Невозможно добавить нового игрока!\nИгрок с таким логином уже существует.", "Ошибка добавления", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                            else this.Close();
+                            playerTableAdapter.Update(tbLogin.Text, tbPassword.Text, id, origLog, origPass);
+                            this.Close();
                         }
-                        catch (System.Data.SqlClient.SqlException)
+                        catch
                         {
-                            MessageBox.Show("Невозможно изменить игрока!\nИгрок с таким логином уже существует.", "Ошибка изменения", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("Ошибка работы с базой данных!", "Изменение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Невозможно добавить нового игрока!\nИгрок с таким логином уже существует.", "Ошибка добавления", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
@@ -84,6 +81,18 @@ namespace ClassicCrossword
                     MessageBox.Show("Ошибка работы с базой данных!", "Удаление", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void AddNewPlayerForm_Load(object sender, EventArgs e)
+        {
+            playerTableAdapter.Fill(crosswordDataSet.Player);
+            origLog = tbLogin.Text;
+            origPass = tbPassword.Text;
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

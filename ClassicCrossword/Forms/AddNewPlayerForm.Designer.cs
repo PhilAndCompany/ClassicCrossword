@@ -35,6 +35,9 @@
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.labelAddAccount = new System.Windows.Forms.Label();
+            this.playerTableAdapter = new ClassicCrossword.CrosswordDataSetTableAdapters.PlayerTableAdapter();
+            this.crosswordDataSet = new ClassicCrossword.CrosswordDataSet();
+            ((System.ComponentModel.ISupportInitialize)(this.crosswordDataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // labelPassword
@@ -91,6 +94,7 @@
             this.buttonCancel.TabIndex = 24;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // labelAddAccount
             // 
@@ -101,6 +105,15 @@
             this.labelAddAccount.Size = new System.Drawing.Size(262, 29);
             this.labelAddAccount.TabIndex = 25;
             this.labelAddAccount.Text = "ДОБАВЛЕНИЕ ИГРОКА";
+            // 
+            // playerTableAdapter
+            // 
+            this.playerTableAdapter.ClearBeforeFill = true;
+            // 
+            // crosswordDataSet
+            // 
+            this.crosswordDataSet.DataSetName = "CrosswordDataSet";
+            this.crosswordDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // AddNewPlayerForm
             // 
@@ -117,6 +130,8 @@
             this.MaximizeBox = false;
             this.Name = "AddNewPlayerForm";
             this.Text = "EFM - ДОБАВЛЕНИЕ ИГРОКА";
+            this.Load += new System.EventHandler(this.AddNewPlayerForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.crosswordDataSet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -131,6 +146,9 @@
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.labelAddAccount = new System.Windows.Forms.Label();
+            this.playerTableAdapter = new ClassicCrossword.CrosswordDataSetTableAdapters.PlayerTableAdapter();
+            this.crosswordDataSet = new ClassicCrossword.CrosswordDataSet();
+            ((System.ComponentModel.ISupportInitialize)(this.crosswordDataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // labelPassword
@@ -175,7 +193,7 @@
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(75, 23);
             this.buttonAdd.TabIndex = 23;
-            this.buttonAdd.Text = "Добавить";
+            this.buttonAdd.Text = "Изменить";
             this.buttonAdd.UseVisualStyleBackColor = true;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
@@ -187,6 +205,7 @@
             this.buttonCancel.TabIndex = 24;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // labelAddAccount
             // 
@@ -196,13 +215,22 @@
             this.labelAddAccount.Name = "labelAddAccount";
             this.labelAddAccount.Size = new System.Drawing.Size(297, 29);
             this.labelAddAccount.TabIndex = 25;
-            this.labelAddAccount.Text = "ДОБАВЛЕНИЕ ИГРОКА";
+            this.labelAddAccount.Text = "ИЗМЕНЕНИЕ ИГРОКА";
+            // 
+            // playerTableAdapter
+            // 
+            this.playerTableAdapter.ClearBeforeFill = true;
+            // 
+            // crosswordDataSet
+            // 
+            this.crosswordDataSet.DataSetName = "CrosswordDataSet";
+            this.crosswordDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // AddNewPlayerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(312, 261);
+            this.ClientSize = new System.Drawing.Size(284, 261);
             this.Controls.Add(this.labelAddAccount);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonAdd);
@@ -212,7 +240,9 @@
             this.Controls.Add(this.tbLogin);
             this.MaximizeBox = false;
             this.Name = "AddNewPlayerForm";
-            this.Text = "EFM - ДОБАВЛЕНИЕ ИГРОКА";
+            this.Text = "EFM - ИЗМЕНЕНИЕ ИГРОКА";
+            this.Load += new System.EventHandler(this.AddNewPlayerForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.crosswordDataSet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -227,5 +257,7 @@
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Label labelAddAccount;
+        private CrosswordDataSetTableAdapters.PlayerTableAdapter playerTableAdapter;
+        private CrosswordDataSet crosswordDataSet;
     }
 }
