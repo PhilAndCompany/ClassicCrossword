@@ -491,12 +491,28 @@ namespace ClassicCrossword.Forms
 
         private void обАвторахToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Other.AboutAuthors();
+            AboutAuthors form = new AboutAuthors();
+            form.Show();
+        }
+
+        static void UserManual()
+        {
+            //get current folderpath of the .exe
+            string ProgramPath = AppDomain.CurrentDomain.BaseDirectory;
+            //jump back relative to the .exe-Path to the Resources Path
+            string FileName = string.Format("{0}Resources\\crosswordGuide.chm", Path.GetFullPath(Path.Combine(ProgramPath, @"..\..\")));
+
+            //Open PDF
+            // System.Diagnostics.Process.Start(@"" + FileName + "");
+            if (System.IO.File.Exists(FileName))
+            {
+                System.Diagnostics.Process.Start(FileName);
+            }
         }
 
         private void руководствоПользователяToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Other.UserManual();
+            UserManual();
         }
 
         private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
