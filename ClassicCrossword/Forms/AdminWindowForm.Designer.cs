@@ -274,7 +274,7 @@
             this.groupBoxVocabularyInstruments.Size = new System.Drawing.Size(311, 85);
             this.groupBoxVocabularyInstruments.TabIndex = 33;
             this.groupBoxVocabularyInstruments.TabStop = false;
-            this.groupBoxVocabularyInstruments.Text = "%VOCABULARYNAME% INSTRUMENTS";
+            this.groupBoxVocabularyInstruments.Text = "Фильтры";
             // 
             // buttonClearMask
             // 

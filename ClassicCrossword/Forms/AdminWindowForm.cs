@@ -396,13 +396,12 @@ namespace ClassicCrossword
 
         private void saveVocabularyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dict.Clear();
-
+            Dictionary<string, string> localDict = new Dictionary<string, string>();
             try
             {
                 for (int i = 0; i < dgvVocabularyOfV.RowCount - 1; i++)
                 {
-                    dict.Add(dgvVocabularyOfV.Rows[i].Cells[0].Value.ToString(), dgvVocabularyOfV.Rows[i].Cells[1].Value.ToString());
+                    localDict.Add(dgvVocabularyOfV.Rows[i].Cells[0].Value.ToString(), dgvVocabularyOfV.Rows[i].Cells[1].Value.ToString());
                 }
             }
             catch (ArgumentException)
@@ -415,12 +414,11 @@ namespace ClassicCrossword
                 MessageBox.Show("Вы не ввели понятие | определение или не вышли из режима редактирования");
                 return;
             }
-
-            list.Clear();
-            list.AddRange(dict);
+            List<KeyValuePair<string, string>> localList = new List<KeyValuePair<string, string>>();
+            localList.AddRange(localDict);
 
             string s = "";
-            foreach (var item in list)
+            foreach (var item in localList)
                 s += item.Key + " " + item.Value + "\n";
 
             saveFileDialog1.DefaultExt = ".dict";
@@ -2599,8 +2597,6 @@ namespace ClassicCrossword
                 Int32.TryParse(textBoxVocabularyWordsCountOnV.Text, out number);
                 number--;
                 textBoxVocabularyWordsCountOnV.Text = number.ToString();
-             //   if (dgvVocabularyOfV.Rows.Count == 1) deleteRowVocabularyToolStripMenuItem.Enabled = false;
-
             }
         }
 
@@ -2686,47 +2682,36 @@ namespace ClassicCrossword
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                dict.Clear();
-                list.Clear();
-                listNot.Clear();
-                listDef.Clear();
-                dgvVocabularyOfC.Rows.Clear();
                 dgvVocabularyOfV.Rows.Clear();
+                Dictionary<string, string> localDict = new Dictionary<string, string>();
                 try
                 {
-                    dict = dictController.ParseDict(openFileDialog1.FileName);
+                    localDict = dictController.ParseDict(openFileDialog1.FileName);
                 }
                 catch (ArgumentException)
                 {
                     MessageBox.Show("В словаре имеются одинаковые понятия");
-                    textBoxVocabularyWordsCountOnC.Text = "0";
                     textBoxVocabularyWordsCountOnV.Text = "0";
                     return;
                 }
                 catch (IndexOutOfRangeException)
                 {
                     MessageBox.Show("В словаре отсутствует понятие | определение");
-                    textBoxVocabularyWordsCountOnC.Text = "0";
                     textBoxVocabularyWordsCountOnV.Text = "0";
                     return;
                 }
 
-                groupBoxVocabularyOfC.Text = openFileDialog1.SafeFileName;
                 groupBoxVocabularyOfV.Text = openFileDialog1.SafeFileName;
 
-                list.AddRange(dict);
+                List<KeyValuePair<string, string>> localList = new List<KeyValuePair<string, string>>();
+                localList.AddRange(localDict);
 
-                listNot = dict.Keys.ToList();
-                listDef = dict.Values.ToList();
-
-                foreach (var item in list)
+                foreach (var item in localList)
                 {
-                    dgvVocabularyOfC.Rows.Add(item.Key);
                     dgvVocabularyOfV.Rows.Add(item.Key, item.Value);
                 }
 
-                textBoxVocabularyWordsCountOnC.Text = dict.Count.ToString();
-                textBoxVocabularyWordsCountOnV.Text = dict.Count.ToString();
+                textBoxVocabularyWordsCountOnV.Text = localDict.Count.ToString();
             }
         }
 

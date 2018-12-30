@@ -27,9 +27,11 @@ namespace ClassicCrossword.Controller
         {
             try
             {
-                StreamWriter sw = new StreamWriter(filename, false, System.Text.Encoding.UTF8);
-                sw.Write(text);
-                return true;
+                using (StreamWriter sw = new StreamWriter(filename, false, System.Text.Encoding.UTF8))
+                {
+                    sw.Write(text);
+                    return true;
+                }
             }
             catch { return false; }
         }
