@@ -69,7 +69,6 @@
     </Compile>
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\Crossword.cs" />
-    <Compile Include="Model\Other.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Program.cs" />

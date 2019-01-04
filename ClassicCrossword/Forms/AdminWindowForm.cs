@@ -315,13 +315,18 @@ namespace ClassicCrossword
             }
         }
 
+        static IComparer<string> GetComparerForDict()
+        {
+            return new ComparerForDict();
+        }
+
         public void GenerateCrossword()
         {
             notUsedDict = new SortedDictionary<string, string>();
             tmpDict = new SortedDictionary<string, string>();
             try
             {
-                SortedDictionary<string, string> srcDict = new SortedDictionary<string, string>(dict, new ComparerForDict());
+                SortedDictionary<string, string> srcDict = new SortedDictionary<string, string>(dict, GetComparerForDict());
                 _board.Temp = srcDict.Keys.ToList();
                 GenCrossword(srcDict, srcDict.Count);
 
@@ -2412,6 +2417,11 @@ namespace ClassicCrossword
             }
         }
 
+        static IComparer<string> GetComparerForLengthAsc()
+        {
+            return new ComparerForLengthAsc();
+        }
+
         class ComparerForLengthDesc : IComparer<string>
         {
             public int Compare(string not1, string not2)
@@ -2422,6 +2432,11 @@ namespace ClassicCrossword
                     return 1;
                 else return 0;
             }
+        }
+
+        static IComparer<string> GetComparerForLengthDesc()
+        {
+            return new ComparerForLengthDesc();
         }
 
         class ComparerForAlphabetAsc : IComparer<string>
@@ -2436,6 +2451,11 @@ namespace ClassicCrossword
             }
         }
 
+        static IComparer<string> GetComparerForAlphabetAsc()
+        {
+            return new ComparerForAlphabetAsc();
+        }
+
         class ComparerForAlphabetDesc : IComparer<string>
         {
             public int Compare(string not1, string not2)
@@ -2446,6 +2466,11 @@ namespace ClassicCrossword
                     return -1;
                 else return 0;
             }
+        }
+
+        static IComparer<string> GetComparerForAlphabetDesc()
+        {
+            return new ComparerForAlphabetDesc();
         }
 
         private void buttonSortByLength_Click(object sender, EventArgs e)
@@ -2464,8 +2489,8 @@ namespace ClassicCrossword
             dgvVocabularyOfC.Rows.Clear();
 
             switch (toggle) {
-                case true: tempList.Sort(new ComparerForLengthAsc()); break;
-                case false: tempList.Sort(new ComparerForLengthDesc()); break;
+                case true: tempList.Sort(GetComparerForLengthAsc()); break;
+                case false: tempList.Sort(GetComparerForLengthDesc()); break;
             }
 
             foreach (var item in tempList)
@@ -2511,8 +2536,8 @@ namespace ClassicCrossword
             dgvVocabularyOfC.Rows.Clear();
 
             switch(toggle){
-              case true:   tempList.Sort(new ComparerForAlphabetAsc()) ; break;
-              case false:  tempList.Sort(new ComparerForAlphabetDesc()); break;
+              case true:   tempList.Sort(GetComparerForAlphabetAsc()) ; break;
+              case false:  tempList.Sort(GetComparerForAlphabetDesc()); break;
             }
 
             foreach (var item in tempList)
