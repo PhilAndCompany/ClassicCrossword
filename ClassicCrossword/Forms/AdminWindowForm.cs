@@ -303,7 +303,7 @@ namespace ClassicCrossword
             GenerateCrossword();
         }
 
-        class ComparerForDict : IComparer<string>
+        private class ComparerForDict : IComparer<string>
         {
             public int Compare(string not1, string not2)
             {
@@ -2405,7 +2405,7 @@ namespace ClassicCrossword
             }
         }
 
-        class ComparerForLengthAsc : IComparer<string>
+        private class ComparerForLengthAsc : IComparer<string>
         {
             public int Compare(string not1, string not2)
             {
@@ -2422,7 +2422,7 @@ namespace ClassicCrossword
             return new ComparerForLengthAsc();
         }
 
-        class ComparerForLengthDesc : IComparer<string>
+        private class ComparerForLengthDesc : IComparer<string>
         {
             public int Compare(string not1, string not2)
             {
@@ -2439,7 +2439,7 @@ namespace ClassicCrossword
             return new ComparerForLengthDesc();
         }
 
-        class ComparerForAlphabetAsc : IComparer<string>
+        private class ComparerForAlphabetAsc : IComparer<string>
         {
             public int Compare(string not1, string not2)
             {
@@ -2456,7 +2456,7 @@ namespace ClassicCrossword
             return new ComparerForAlphabetAsc();
         }
 
-        class ComparerForAlphabetDesc : IComparer<string>
+        private class ComparerForAlphabetDesc : IComparer<string>
         {
             public int Compare(string not1, string not2)
             {
