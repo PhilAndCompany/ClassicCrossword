@@ -12,14 +12,14 @@ namespace ClassicCrossword.Model
         public string Login { get; set; }
         public string Pass { get; set; }
 
-        public User(int id, string login, string pass)
+        protected User(int id, string login, string pass)
         {
             Id = id;
             Login = login;
             Pass = pass;
         }
 
-        public User(string login, string pass)
+        protected User(string login, string pass)
         {
             Login = login;
             Pass = pass;
