@@ -96,6 +96,7 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.playerTableAdapter = new ClassicCrossword.CrosswordDataSetTableAdapters.PlayerTableAdapter();
+            this.сменитьПользователяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVocabularyOfC)).BeginInit();
             this.groupBoxVocabularyOfC.SuspendLayout();
             this.tabControlMenu.SuspendLayout();
@@ -645,6 +646,7 @@
             this.editAccountToolStripMenuItem,
             this.deleteAccountToolStripMenuItem,
             this.watchAccountDetailsToolStripMenuItem,
+            this.сменитьПользователяToolStripMenuItem,
             this.helpAccountToolStripMenuItem,
             this.exitAccountToolStripMenuItem});
             this.menuStripAccount.Location = new System.Drawing.Point(0, 0);
@@ -732,6 +734,13 @@
             // playerTableAdapter
             // 
             this.playerTableAdapter.ClearBeforeFill = true;
+            // 
+            // сменитьПользователяToolStripMenuItem
+            // 
+            this.сменитьПользователяToolStripMenuItem.Name = "сменитьПользователяToolStripMenuItem";
+            this.сменитьПользователяToolStripMenuItem.Size = new System.Drawing.Size(145, 20);
+            this.сменитьПользователяToolStripMenuItem.Text = "Сменить пользователя";
+            this.сменитьПользователяToolStripMenuItem.Click += new System.EventHandler(this.сменитьПользователяToolStripMenuItem_Click);
             // 
             // AdminWindowForm
             // 
@@ -842,5 +851,6 @@
         private System.Windows.Forms.ToolStripMenuItem deleteRowVocabularyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadCrosswordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem chooseVocabularyOfVToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem сменитьПользователяToolStripMenuItem;
     }
 }
