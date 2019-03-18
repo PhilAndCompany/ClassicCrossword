@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ClassicCrossword.DAO
 {
-    public class UserMSSQLDAO : IUserDAO
+    public class UserDAO
     {
 
         public bool Insert(Player player)
@@ -18,7 +18,7 @@ namespace ClassicCrossword.DAO
             {
                 if (!HasSameType(player, false))
                 {
-                    SqlConnection sqlConnection = Connect();
+                    SqlConnection sqlConnection = ConnectionDB.Connect();
                     string sql = string.Format("Insert into Player (login, pass) Values (@player_login, @player_pass);");
 
                     using (SqlCommand cmd = new SqlCommand(sql, sqlConnection))
@@ -39,7 +39,7 @@ namespace ClassicCrossword.DAO
 
                         cmd.ExecuteNonQuery();
                     }
-                    Disconnect(sqlConnection);
+                    ConnectionDB.Disconnect(sqlConnection);
                     return true;
                 }
                 else return false;
@@ -56,7 +56,7 @@ namespace ClassicCrossword.DAO
             {
                 if (!HasSameType(player, true))
                 {
-                    SqlConnection sqlConnection = Connect();
+                    SqlConnection sqlConnection = ConnectionDB.Connect();
                     string sql = "Update Player Set login=@player_login, pass=@player_pass  Where id=(@player_id);";
 
                     using (SqlCommand cmd = new SqlCommand(sql, sqlConnection))
@@ -84,7 +84,7 @@ namespace ClassicCrossword.DAO
 
                         cmd.ExecuteNonQuery();
                     }
-                    Disconnect(sqlConnection);
+                    ConnectionDB.Disconnect(sqlConnection);
                     return true;
                 }
                 else
@@ -100,11 +100,11 @@ namespace ClassicCrossword.DAO
         {
             try
             {
-                SqlConnection sqlConnection = Connect();
+                SqlConnection sqlConnection = ConnectionDB.Connect();
                 string sql = string.Format("Delete From Player Where id= '{0}'", id);
                 SqlCommand cmd = new SqlCommand(sql, sqlConnection);
                 cmd.ExecuteNonQuery();
-                Disconnect(sqlConnection);
+                ConnectionDB.Disconnect(sqlConnection);
             }
             catch (SqlException ex)
             {
@@ -117,7 +117,7 @@ namespace ClassicCrossword.DAO
             User user = null;
             try
             {
-                SqlConnection sqlConnection = Connect();
+                SqlConnection sqlConnection = ConnectionDB.Connect();
                 string sql = string.Format("Select login, pass From Player Where login= Lower('{0}') AND pass='{1}'", login.ToLower(), password);
 
 
@@ -129,7 +129,7 @@ namespace ClassicCrossword.DAO
                     user = new Player(dataReader[0].ToString(), dataReader[1].ToString());
                 }
                 dataReader.Close();
-                Disconnect(sqlConnection);
+                ConnectionDB.Disconnect(sqlConnection);
             }
             catch (SqlException ex)
             {
@@ -142,7 +142,7 @@ namespace ClassicCrossword.DAO
         {
             try
             {
-                SqlConnection sqlConnection = Connect();
+                SqlConnection sqlConnection = ConnectionDB.Connect();
                 string sql = string.Format("Select count(id) From Player Where UPPER(REPLACE(login,' ',''))=UPPER(REPLACE('{0}',' ',''))", player.Login);
                 if (isUpdate)
                     sql = string.Format("Select count(id) From Player Where UPPER(REPLACE(login,' ',''))=UPPER(REPLACE('{0}',' ','')) AND id!='{1}'", player.Login, player.Id);
@@ -155,7 +155,7 @@ namespace ClassicCrossword.DAO
                     count = Convert.ToInt32(dataReader[0]);
                 }
                 dataReader.Close();
-                Disconnect(sqlConnection);
+                ConnectionDB.Disconnect(sqlConnection);
                 if (count > 0) return true;
                 else
                     return false;
@@ -165,37 +165,6 @@ namespace ClassicCrossword.DAO
                 throw ex;
             }
         }
-
-        static SqlConnection Connect()
-        {
-            SqlConnection sqlConnection = null;
-            try
-            {
-                string connectionString = @"Data Source=localhost;Initial Catalog=CrosswordDB;Integrated Security=True";
-                sqlConnection = new SqlConnection();
-                sqlConnection.ConnectionString = connectionString;
-                sqlConnection.Open();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return sqlConnection;
-        }
-
-        static void Disconnect(SqlConnection sqlConnection)
-        {
-            try
-            {
-                if (sqlConnection != null)
-                {
-                    sqlConnection.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        
     }
 }

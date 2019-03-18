@@ -303,7 +303,7 @@ namespace ClassicCrossword
             GenerateCrossword();
         }
 
-        class ComparerForDict : IComparer<string>
+        private class ComparerForDict : IComparer<string>
         {
             public int Compare(string not1, string not2)
             {
@@ -315,13 +315,18 @@ namespace ClassicCrossword
             }
         }
 
+        static IComparer<string> GetComparerForDict()
+        {
+            return new ComparerForDict();
+        }
+
         public void GenerateCrossword()
         {
             notUsedDict = new SortedDictionary<string, string>();
             tmpDict = new SortedDictionary<string, string>();
             try
             {
-                SortedDictionary<string, string> srcDict = new SortedDictionary<string, string>(dict, new ComparerForDict());
+                SortedDictionary<string, string> srcDict = new SortedDictionary<string, string>(dict, GetComparerForDict());
                 _board.Temp = srcDict.Keys.ToList();
                 GenCrossword(srcDict, srcDict.Count);
 
@@ -2400,7 +2405,7 @@ namespace ClassicCrossword
             }
         }
 
-        class ComparerForLengthAsc : IComparer<string>
+        private class ComparerForLengthAsc : IComparer<string>
         {
             public int Compare(string not1, string not2)
             {
@@ -2412,7 +2417,12 @@ namespace ClassicCrossword
             }
         }
 
-        class ComparerForLengthDesc : IComparer<string>
+        static IComparer<string> GetComparerForLengthAsc()
+        {
+            return new ComparerForLengthAsc();
+        }
+
+        private class ComparerForLengthDesc : IComparer<string>
         {
             public int Compare(string not1, string not2)
             {
@@ -2424,7 +2434,12 @@ namespace ClassicCrossword
             }
         }
 
-        class ComparerForAlphabetAsc : IComparer<string>
+        static IComparer<string> GetComparerForLengthDesc()
+        {
+            return new ComparerForLengthDesc();
+        }
+
+        private class ComparerForAlphabetAsc : IComparer<string>
         {
             public int Compare(string not1, string not2)
             {
@@ -2436,7 +2451,12 @@ namespace ClassicCrossword
             }
         }
 
-        class ComparerForAlphabetDesc : IComparer<string>
+        static IComparer<string> GetComparerForAlphabetAsc()
+        {
+            return new ComparerForAlphabetAsc();
+        }
+
+        private class ComparerForAlphabetDesc : IComparer<string>
         {
             public int Compare(string not1, string not2)
             {
@@ -2446,6 +2466,11 @@ namespace ClassicCrossword
                     return -1;
                 else return 0;
             }
+        }
+
+        static IComparer<string> GetComparerForAlphabetDesc()
+        {
+            return new ComparerForAlphabetDesc();
         }
 
         private void buttonSortByLength_Click(object sender, EventArgs e)
@@ -2464,8 +2489,8 @@ namespace ClassicCrossword
             dgvVocabularyOfC.Rows.Clear();
 
             switch (toggle) {
-                case true: tempList.Sort(new ComparerForLengthAsc()); break;
-                case false: tempList.Sort(new ComparerForLengthDesc()); break;
+                case true: tempList.Sort(GetComparerForLengthAsc()); break;
+                case false: tempList.Sort(GetComparerForLengthDesc()); break;
             }
 
             foreach (var item in tempList)
@@ -2511,8 +2536,8 @@ namespace ClassicCrossword
             dgvVocabularyOfC.Rows.Clear();
 
             switch(toggle){
-              case true:   tempList.Sort(new ComparerForAlphabetAsc()) ; break;
-              case false:  tempList.Sort(new ComparerForAlphabetDesc()); break;
+              case true:   tempList.Sort(GetComparerForAlphabetAsc()) ; break;
+              case false:  tempList.Sort(GetComparerForAlphabetDesc()); break;
             }
 
             foreach (var item in tempList)
@@ -2662,12 +2687,28 @@ namespace ClassicCrossword
 
         private void aboutAuthorsCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Other.AboutAuthors();
+            AboutAuthors form = new AboutAuthors();
+            form.Show();
+        }
+
+        static void UserManual()
+        {
+            //get current folderpath of the .exe
+            string ProgramPath = AppDomain.CurrentDomain.BaseDirectory;
+            //jump back relative to the .exe-Path to the Resources Path
+            string FileName = string.Format("{0}Resources\\crosswordGuide.chm", Path.GetFullPath(Path.Combine(ProgramPath, @"..\..\")));
+
+            //Open PDF
+            // System.Diagnostics.Process.Start(@"" + FileName + "");
+            if (System.IO.File.Exists(FileName))
+            {
+                System.Diagnostics.Process.Start(FileName);
+            }
         }
 
         private void manualCrosswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Other.UserManual();
+            UserManual();
         }
 
         //todo при открытии словаря во вкладке "словарь", datagrid словаря во вкладке "кроссворд" становится равным ему, и активный словарь также

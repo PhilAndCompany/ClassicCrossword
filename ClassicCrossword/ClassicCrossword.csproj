@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -53,8 +54,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CrosswordDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="DAO\IUserDAO.cs" />
-    <Compile Include="DAO\UserMSSQLDAO.cs" />
+    <Compile Include="DAO\ConnectionDB.cs" />
+    <Compile Include="DAO\UserDAO.cs" />
     <Compile Include="Forms\AboutAuthors.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,7 +70,6 @@
     </Compile>
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\Crossword.cs" />
-    <Compile Include="Model\Other.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Program.cs" />
@@ -161,7 +161,9 @@
     <None Include="Resources\Кроссворд_Руководство_Пользователя.pdf" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\page-with-one-curled-corner.png" />
