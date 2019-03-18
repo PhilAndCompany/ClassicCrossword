@@ -520,6 +520,8 @@ namespace ClassicCrossword.Forms
 
         }
 
+        
+
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -564,6 +566,25 @@ namespace ClassicCrossword.Forms
             Size size3 = Size.Ceiling(sizef3);
             rect3 = new Rectangle(e.MarginBounds.Location.X, e.MarginBounds.Location.Y + 550 , size3.Width, size3.Height);
             g.DrawImage(g3, rect3);
+        }
+
+        private void сменитьПользователяToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.FormClosed += closeForm;
+            Hide();
+            Close();
+        }
+
+        private void closeForm(object sender, FormClosedEventArgs e)
+        {
+            var authForm = new AuthForm();
+            if (authForm.ShowDialog() == DialogResult.OK)
+            {
+                if (authForm.Usr.GetType() == typeof(Admin))
+                    new AdminWindowForm().ShowDialog();
+                else
+                    new PlayerWindowForm((Player)authForm.Usr).ShowDialog();
+            }
         }
     }
 }

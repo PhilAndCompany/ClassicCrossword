@@ -2773,6 +2773,25 @@ namespace ClassicCrossword
         {
             new CrosswordSettings().Show();
         }
+
+        private void сменитьПользователяToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.FormClosed += closeForm;
+            Hide();
+            Close();
+        }
+
+        private void closeForm(object sender, FormClosedEventArgs e)
+        {
+            var authForm = new AuthForm();
+            if (authForm.ShowDialog() == DialogResult.OK)
+            {
+                if (authForm.Usr.GetType() == typeof(Admin))
+                    new AdminWindowForm().ShowDialog();
+                else
+                    new PlayerWindowForm((Player)authForm.Usr).ShowDialog();
+            }
+        }
     }
 }
  
